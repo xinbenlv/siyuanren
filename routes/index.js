@@ -17,3 +17,7 @@ exports.profile = function(req, res){
   res.render('profile', { title: TITLE });
 };
 
+exports.query = function(req, res){
+  res.render('index', { title: TITLE });
+};
+

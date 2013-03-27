@@ -3,12 +3,47 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js'></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      // Use this submit handler for all forms in document
+      $(document).on('submit', 'form', function(e) {
+        // Form being submitted
+        var form = e.currentTarget;
+        // Issue an ajax request
+        $.ajax({
+          url: form.action,          // the forms 'action' attribute
+          type: 'POST',               // use 'PUT' (not supported in all browsers)
+                                     // Alt. the 'method' attribute (form.method)
+          data: $(form).serialize(), // Serialize the form's fields and values
+          success: function() {},
+          error: function() {}
+        });
+        // Prevent the browser from submitting the form
+        e.preventDefault();
+      });
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>欢迎来到 <%= title %></p>
-    <div id='querybox' class='container'/>
-    <div id='results' class='container'/>
+    <form id="queryBox" action="/query" method="post">
+      <div>
+
+          <label for="searchBy">Search By: </label>
+          <select>
+            <option value="name">name</option>
+            <option value="year">year</option>
+            <option value="job">job</option>
+            <option value="dept">dept</option>
+          </select>
+          
+          <label for="query">Type query: </label>
+          <input type="text" id="query" name="query"></input>
+      
+      </div>
+     <input type="submit" value="Submit"></input>
+    </form>
 
   </body>
 </html>
