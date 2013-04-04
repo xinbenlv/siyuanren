@@ -1,2 +1,16 @@
+# Siyuan Ren
 A web app for a community like siyuan.
 Data is stored at data/, which is ignored by git
+
+# Version 0.0.0
+    start
+# Version 0.0.1 (In Progress)
+    TODO working mongodb structure for teec and siyuan, read and write
+    TODO get json for querying the teec and siyuan working
+    TODO basic web ui for table view and profile view
+    TODO basic authentication
+    TODO email support
+# Version 0.0.2 (Not started yet)
+    TODO better UI
+# Version 0.0.3 ()
+# 
