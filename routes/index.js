@@ -18,6 +18,6 @@ exports.profile = function(req, res){
 };
 
 exports.query = function(req, res){
-  res.render('index', { title: TITLE });
+  res.render('query', { title: TITLE });
 };
 
