@@ -60,6 +60,8 @@
         }
       });
       console.log(markers);
+
+      sorttable.makeSortable(table);
     }
 
     var sampleTable = {
