@@ -1,4 +1,10 @@
-      console.log("sdf");
+/*
+ * Client-side logic for search
+ *
+ * Copyright (c) 2013 Zainan Victor Zhou
+ * Licensed under the MIT licenses
+ */
+
     var createTable = function (tableData) {
       console.log(tableData);
       var doc = document;
@@ -14,17 +20,17 @@
       for (i in tableData["headers"]) { //array
         var header = tableData["headers"][i];
         var th = doc.createElement("th");
-        th.appendChild(doc.createTextNode(header))
-        tr.appendChild(th)
+        th.appendChild(doc.createTextNode(header));
+        tr.appendChild(th);
       }
       thead.appendChild(tr);
-      table.appendChild(thead)
+      table.appendChild(thead);
       var tbody = doc.createElement("tbody");
-      for (i in tableData["rows"]) { // array
+      for (var i in tableData["rows"]) { // array
         var tr = doc.createElement("tr");
-        var row = tableData["rows"][i]
-        for (j in row) { // array
-          var col = row[j]
+        var row = tableData["rows"][i];
+        for (var j in row) { // array
+          var col = row[j];
           var td = doc.createElement("td");
           td.appendChild(doc.createTextNode(col));
           tr.appendChild(td);
@@ -73,8 +79,10 @@
         ["曹操","155","无业系","曹魏 CEO 董事长","Haozhou, Anhui, China"],
         ["孙权","182","贵族系","东吴 CEO 董事长","Fuyang, Zhejiang, China"],
       ]
-    }
+    };
     
+    var queryData  = {};
+
     $('#queryBtn').click(function (e) {
       queryData = $("form#queryBox").serializeObject();
       console.log(queryData);
@@ -93,5 +101,26 @@
     });
       
     $(document).ready(function() {
-      createTable(sampleTable);
+      // createTable(sampleTable);
+      $.ajax({
+        url: "/api/query",
+        type: "POST",
+        data: queryData,
+        dataType: 'json',
+        async: false,
+        success: function(tableData) {
+          console.log("hello table data");
+          console.log(tableData);
+          createTable(tableData);
+          editableGrid = new EditableGrid( "DemoGridJsData", {
+            enableSort: true,
+            modelChanged: function(rowIndex, columnIndex, oldValue, newValue, row) {
+            console.log(rowIndex, columnIndex, oldValue, newValue, row);
+          }
+          });
+          editableGrid.load({"metadata": tableData["metadata"], "data": tableData["data"]});
+          editableGrid.renderGrid("tablecontent", "testgrid");
+        }
+      });
+
     });

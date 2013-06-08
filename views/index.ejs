@@ -25,6 +25,17 @@
 
     </style>
 
+    <link rel="stylesheet" href="/editablegrid/editablegrid-2.0.1.css" type="text/css" media="screen">
+    <style>
+      body { font-family:'lucida grande', tahoma, verdana, arial, sans-serif; font-size:11px; }
+      h1 { font-size: 15px; }
+      a { color: #548dc4; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 800px; }
+      table.testgrid td, table.testgrid th { padding: 5px; border: 1px solid #E0E0E0; }
+      table.testgrid th { background: #E5E5E5; text-align: left; }
+      input.invalid { background: red; color: #FDFDFD; }
+    </style>
   </head>
   <body data-twttr-rendered="true">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -97,10 +108,10 @@
         <div class="row">
           <div id="googleMap" style="height:400px;" class="span12" ></div>
         </div>
-
-      </div>
-     
+      </div>   
     </div>
+    <div id="tablecontent"></div>
+
     <script src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js'></script>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=true"></script>
@@ -119,7 +130,16 @@
     <script src="/flatui/js/bootstrap-tooltip.js"></script>
     <script src="/flatui/js/jquery.placeholder.js"></script>
     <script src="http://vjs.zencdn.net/c/video.js"></script>
-    <script src="/flatui/js/application.js"></script>
+ 
+    <!-- For EditableGrid -->
+    <script src="/editablegrid/editablegrid-2.0.1.js"></script>
 
+    <!-- For Application -->
+    <script src="/flatui/js/application.js"></script>
+    <script>
+      window.onload = function() {
+
+      } 
+    </script>
   </body>
 </html>

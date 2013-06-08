@@ -32,6 +32,7 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
+app.get('/peopletable', routes.peopletable);
 app.get('/login', routes.login);
 app.get('/logout', routes.logout);
 app.get('/profile', routes.profile);
@@ -39,6 +40,7 @@ app.get('/users', user.list);
 
 app.post('/api/query', api.query);
 app.get('/api/query', api.query);
+app.get('/api/peopletable', api.peopletable);
 
 
 http.createServer(app).listen(app.get('port'), function(){
