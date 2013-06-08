@@ -15,6 +15,10 @@ Data is stored at data/, which is ignored by git
     TODO better UI
 ## Version 0.0.3 ()
 
+# Style Guide
+[[json][http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml]]
+[[javascript][http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml]]
+[[html/css][http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml]]
 
 # Worklog
 ## 2013-04-06 
