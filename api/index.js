@@ -1,16 +1,10 @@
 var log4js = require('log4js');
+var schema = require('./schema');
+
 var logger = log4js.getLogger();
 
 var log = console.log;
-var USERNAME = 'testuser';
-var PASSWORD = 'testpass';
-var MONGO_HOST = 'alex.mongohq.com';
-var MONGO_PORT = '10077';
-var MONGO_DBNAME = 'app14616351';
-var MONGO_LOCAL_URL = 'mongodb://' +
-  USERNAME + ':' + PASSWORD +
-  '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + MONGO_DBNAME;
-var mongoUri = process.env.MONGOHQ_URL || MONGO_LOCAL_URL;
+
 
 /**
  * A function to be called on use request to create data
@@ -166,7 +160,7 @@ exports.peopletable = function(req, res) {
     });
   } else if (action === 'load') {
     logger.debug('load triggered');
-    onReqLoadData(req.query.values, function(data) {
+    schema.onReqLoadData(req.query.values, function(data) {
       res.send(data);
     });
   } else if (action === 'delete') {

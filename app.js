@@ -1,14 +1,20 @@
 
 /**
- * Module dependencies.
+ * External dependencies.
  */
 
+var http = require('http');
+var path = require('path');
 var express = require('express');
+
+
+/**
+ * Internal dependencies
+ */
+
 var routes = require('./routes');
 var api = require('./api');
 var user = require('./routes/user');
-var http = require('http');
-var path = require('path');
 
 var app = express();
 
