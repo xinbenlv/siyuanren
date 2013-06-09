@@ -13,18 +13,60 @@ var getImagePath = function(relativePath) {
 // declaring editableGrid
 var editableGrid;
 
-var actionCellRenderer = new CellRenderer({render: function(cell, value) {
-  console.log('render!');
-  // this action will remove the row,
-  // so first find the ID of the row containing this cell.
-  var rowId = editableGrid.getRowId(cell.rowIndex);
+var onClickDelete = function(rowIndex) {
+  console.log('onDelete!');
+  if (confirm('Are you sure you want to delete this person ? ')) {
 
-  cell.innerHTML = '<a onclick=\' ' +
-    'if (confirm(\'Are you sure you want to delete this person ? \')) ' +
-    '{ editableGrid.remove(' + cell.rowIndex + '); } \' ' +
+    // Send request
+    $.ajax({
+      url: '/api/peopletable',
+      type: 'GET',
+      data: {'action': 'delete', values: {
+        id: editableGrid.getRowId(rowIndex)
+      }},
+      dataType: 'json',
+      async: false,
+      success: function(tableData) {
+        loadEntireTable(tableData);
+      }
+    });
+  }
+};
+
+/**
+ *
+ * @param {Integer} rowIndex integer representing which place to insert.
+ * @param {Object} values object representing the value to create.
+ */
+var onClickCreate = function(rowIndex, values) {
+  var values;
+
+  console.log('onCreate!');
+    // Send request
+    $.ajax({
+      url: '/api/peopletable',
+      type: 'GET',
+      data: {
+        'action': 'create',
+        id: editableGrid.getRowId(rowIndex)
+      },
+      dataType: 'json',
+      async: false,
+      success: function(tableData) {
+        loadEntireTable(tableData);
+      }
+    });
+};
+
+var actionCellRenderer = new CellRenderer({render: function(cell, value) {
+  var rowId = editableGrid.getRowId(cell.rowIndex);
+  var deleteButton = '<a onclick=onClickDelete(' + cell.rowIndex + ') ' +
     'style=\'cursor:pointer\'>' +
     '<img src=\'' + getImagePath('delete.png') +
     '\' border=\'0\' alt=\'delete\' title=\'Delete row\'/></a>';
+  var createButton = '<a onclick=onClickCreate(' + cell.rowIndex + ') ' +
+    'style=\'cursor:pointer\'>&nbsp;+</a>';
+  cell.innerHTML = deleteButton + createButton;
 }});
 
 var loadEntireTable = function(tableData) {
@@ -38,14 +80,14 @@ var updateCellValue = function(rowIndex, columnIndex, oldValue, newValue, row) {
     url: '/api/peopletable',
     type: 'GET',
     dataType: 'html',
-    data: {
+    data: { 'action': 'update', values: {
       tablename: editableGrid.name,
       id: editableGrid.getRowId(rowIndex),
       newvalue: editableGrid.getColumnType(columnIndex) ==
         'boolean' ? (newValue ? 1 : 0) : newValue,
       colname: editableGrid.getColumnName(columnIndex),
       coltype: editableGrid.getColumnType(columnIndex)
-    },
+    }},
     success: function(response) {
       // reset old value if failed then highlight row
       var success = (response == 'ok' || !isNaN(parseInt(response)));
@@ -70,10 +112,11 @@ $(document).ready(function() {
   $.ajax({
     url: '/api/peopletable',
     type: 'GET',
-    data: null,
+    data: {action: 'load', 'values': {}},
     dataType: 'json',
     async: false,
     success: function(tableData) {
+      console.log('DBG: tableData: ' + JSON.stringify(tableData));
       loadEntireTable(tableData);
     }
   });
