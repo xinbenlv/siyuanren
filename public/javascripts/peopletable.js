@@ -51,7 +51,7 @@ var onClickCreate = function(rowIndex, values) {
   $.ajax({
     url: '/api/siyuan/post',
     type: 'GET',
-    data: values,
+    data: {newDoc: values},
     dataType: 'json',
     async: false,
     success: function(doc) {
