@@ -10,6 +10,14 @@ var getImagePath = function(relativePath) {
   return '/editablegrid/images/' + relativePath;
 };
 
+var metadata = [
+  { name: 'name', label: 'NAME', datatype: 'string', editable: true},
+  { name: 'year', label: 'YEAR', datatype: 'integer', editable: true},
+  { name: 'dept', label: 'DEPT', datatype: 'string', editable: true},
+  { name: 'job', label: 'JOB', datatype: 'string', editable: true},
+  { name: 'city', label: 'CITY', datatype: 'string', editable: true},
+  { name: 'action', datatype: 'html', editable: false }];
+
 // declaring editableGrid
 var editableGrid;
 
@@ -19,15 +27,12 @@ var onClickDelete = function(rowIndex) {
 
     // Send request
     $.ajax({
-      url: '/api/peopletable',
+      url: '/api/siyuan/delete/' + editableGrid.getRowId(rowIndex),
       type: 'GET',
-      data: {'action': 'delete', values: {
-        id: editableGrid.getRowId(rowIndex)
-      }},
-      dataType: 'json',
       async: false,
-      success: function(tableData) {
-        loadEntireTable(tableData);
+      success: function(rep) {
+        console.log('removed! rowIndex = ' + rowIndex);
+        editableGrid.remove(rowIndex);
       }
     });
   }
@@ -39,23 +44,20 @@ var onClickDelete = function(rowIndex) {
  * @param {Object} values object representing the value to create.
  */
 var onClickCreate = function(rowIndex, values) {
-  var values;
+  var values = {name: 'new guy'};
 
   console.log('onCreate!');
-    // Send request
-    $.ajax({
-      url: '/api/peopletable',
-      type: 'GET',
-      data: {
-        'action': 'create',
-        id: editableGrid.getRowId(rowIndex)
-      },
-      dataType: 'json',
-      async: false,
-      success: function(tableData) {
-        loadEntireTable(tableData);
-      }
-    });
+  // Send request
+  $.ajax({
+    url: '/api/siyuan/post',
+    type: 'GET',
+    data: values,
+    dataType: 'json',
+    async: false,
+    success: function(doc) {
+      editableGrid.insertAfter(rowIndex, doc._id, values, true);
+    }
+  });
 };
 
 var actionCellRenderer = new CellRenderer({render: function(cell, value) {
@@ -76,18 +78,13 @@ var loadEntireTable = function(tableData) {
 };
 
 var updateCellValue = function(rowIndex, columnIndex, oldValue, newValue, row) {
-  $.ajax({
-    url: '/api/peopletable',
+    var updateValue = {};
+    updateValue[editableGrid.getColumnName(columnIndex)] = newValue;
+    $.ajax({
+    url: '/api/siyuan/put/' + editableGrid.getRowId(rowIndex),
     type: 'GET',
-    dataType: 'html',
-    data: { 'action': 'update', values: {
-      tablename: editableGrid.name,
-      id: editableGrid.getRowId(rowIndex),
-      newvalue: editableGrid.getColumnType(columnIndex) ==
-        'boolean' ? (newValue ? 1 : 0) : newValue,
-      colname: editableGrid.getColumnName(columnIndex),
-      coltype: editableGrid.getColumnType(columnIndex)
-    }},
+    dataType: 'json',
+    data: updateValue,
     success: function(response) {
       // reset old value if failed then highlight row
       var success = (response == 'ok' || !isNaN(parseInt(response)));
@@ -110,13 +107,20 @@ $(document).ready(function() {
 
   // Send request
   $.ajax({
-    url: '/api/peopletable',
-    type: 'GET',
-    data: {action: 'load', 'values': {}},
+    url: '/api/query/?collection=SiyuanUserProfile',
+    type: 'POST',
+    data: null,
     dataType: 'json',
     async: false,
-    success: function(tableData) {
-      console.log('DBG: tableData: ' + JSON.stringify(tableData));
+    success: function(rawData) {
+      console.log('DBG: rawData: ' + JSON.stringify(rawData));
+      var tableData = {};
+      tableData.metadata = metadata;
+      var data = [];
+      for (i in rawData) {
+        data.push({id: rawData[i]._id, values: rawData[i]});
+      }
+      tableData.data = data;
       loadEntireTable(tableData);
     }
   });

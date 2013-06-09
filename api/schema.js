@@ -5,20 +5,10 @@
  * Time: 8:28 AM
  * To change this template use File | Settings | File Templates.
  */
-var mongoose = require('mongoose');
-var logger = require('log4js').getLogger();
-var Schema = mongoose.Schema;
 
-var USERNAME = 'testuser';
-var PASSWORD = 'testpass';
-var MONGO_HOST = 'alex.mongohq.com';
-var MONGO_PORT = '10077';
-var MONGO_DBNAME = 'app14616351';
-var MONGO_LOCAL_URL = 'mongodb://' +
-  USERNAME + ':' + PASSWORD +
-  '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + MONGO_DBNAME;
-var mongoUri = process.env.MONGOHQ_URL || MONGO_LOCAL_URL;
-mongoose.connect(mongoUri);
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var logger = require('log4js').getDefaultLogger();
 
 var siyuanUserProfileSchema = Schema({
   name: String,
@@ -79,11 +69,13 @@ var dataList = [{name: '刘备', year: '158', dept: '卖草鞋系', job: '蜀汉
 exports.createSampleData = function() {
 
   logger.debug('creating schema');
-  SiyuanUserProfile.create(dataList, function(err) {
+  SiyuanUserProfile.create(dataList, function(err, docs) {
     if (err) logger.warn(err);
-    else logger.debug('created:');
+    else logger.debug('created:' + JSON.stringify(docs));
   });
 };
+
+// this.createSampleData();
 
 /**
  *
@@ -102,3 +94,39 @@ exports.onReqLoadData = function(criteria, onSuccess) {
     }
   });
 };
+
+/**
+ *
+ * @param data
+ * @param onSuccess
+ */
+exports.onReqCreateData = function(data, onSuccess) {
+
+};
+
+/**
+ *
+ * @param id
+ * @param data
+ * @param onSuccess
+ */
+exports.onReqUpdateData = function(id, data, onSuccess) {
+
+};
+
+/**
+ *
+ * @param id
+ * @param onSuccess
+ */
+exports.onReqDeleteData = function(id, onSuccess) {
+
+};
+
+/**
+ *
+ * @type {{SiyuanUserProfile: *}} the Model of SiyuanUserProfile.
+ */
+module.exports = {
+  SiyuanUserProfile: SiyuanUserProfile
+}

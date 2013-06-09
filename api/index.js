@@ -1,10 +1,8 @@
 var log4js = require('log4js');
 var schema = require('./schema');
-
 var logger = log4js.getLogger();
-
 var log = console.log;
-
+var $ = require('jquery');
 
 /**
  * A function to be called on use request to create data
@@ -119,32 +117,6 @@ var loadData = function() {
 
 /**
  *
- * @deprecated Use query of people table.
- *
- * Method handling a normal query.
- *
- * @param {object} req Request for a query.
- * @param {object} res Response for a query.
- */
-exports.query = function(req, res) {
-  req.accepts(['html', 'json']);
-  //console.log(req);
-
-  var sampleTableData = {
-    'headers': ['name', 'year', 'dept', 'job', 'residency city'],
-    'rows': [
-      ['刘备', '158', '卖草鞋系', '蜀汉 皇帝', 'Zhuzhou, Hebei, China'],
-      ['关羽', '160', '卖大枣系', '蜀汉 寿亭侯', 'Yuncheng, Shanxi, China'],
-      ['张飞', '163', '卖肉系', '蜀汉 车骑将军', 'Zhuzhou, Hebei, China']
-    ]
-  };
-
-  res.send(sampleTableData);
-};
-
-
-/**
- *
  * Method handling a normal peoplequery.
  *
  * @param {object} req Request for a query.
@@ -175,6 +147,38 @@ exports.peopletable = function(req, res) {
     });
   }
 };
+
+/**
+ *
+ * @param req
+ * @param res
+ */
+exports.query = function(req, res) {
+  var collection = req.query.collection;
+  if (collection == 'SiyuanUserProfile') {
+    logger.info('Query criteria: ' + req.query.criteria);
+    var criteria = $.parseJSON(req.query.criteria);
+
+    var SiyuanUserProfile = require('./schema').SiyuanUserProfile;
+    SiyuanUserProfile.find(criteria, function(err, docs) {
+      logger.info('Query criteria: ' + JSON.stringify(criteria));
+      res.send(docs);
+    });
+  }
+  else {
+    res.send('failed, collection not specified or collection ' + collection +
+      ' is not supported for query');
+    // TODO(zzn): handle error
+    // TODO(zzn): support more type of collections
+  }
+
+
+};
+
+/**
+ * Exporting siyuan API
+ */
+exports.siyuan = require('./siyuan');
 
 
 

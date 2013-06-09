@@ -6,7 +6,28 @@
 var http = require('http');
 var path = require('path');
 var express = require('express');
+var mongoose = require('mongoose');
 
+var logger = require('log4js').getLogger();
+
+
+/**
+ * Constants
+ */
+var USERNAME = 'testuser';
+var PASSWORD = 'testpass';
+var MONGO_HOST = 'alex.mongohq.com';
+var MONGO_PORT = '10077';
+var MONGO_DBNAME = 'app14616351';
+var MONGO_LOCAL_URL = 'mongodb://' +
+  USERNAME + ':' + PASSWORD +
+  '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + MONGO_DBNAME;
+
+/**
+ * Mongooses set up
+ */
+var mongoUri = process.env.MONGOHQ_URL || MONGO_LOCAL_URL;
+mongoose.connect(mongoUri);
 
 /**
  * Internal dependencies
@@ -46,6 +67,15 @@ app.post('/api/query', api.query);
 app.get('/api/query', api.query);
 app.get('/api/peopletable', api.peopletable);
 
+app.get('/api/siyuan', function(req, res) {
+  res.send('API working');}
+);
+
+// DELETE and PUT is not supported by all browser
+app.get('/api/siyuan/post', api.siyuan.post);
+app.get('/api/siyuan/get/:theid', api.siyuan.get);
+app.get('/api/siyuan/put/:theid', api.siyuan.put);
+app.get('/api/siyuan/delete/:theid', api.siyuan.delete);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

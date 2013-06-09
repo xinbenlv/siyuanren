@@ -2,24 +2,25 @@
 A web app for a community like siyuan.
 Data is stored at data/, which is ignored by git
 
-# Roadmap
-## Version 0.0.0
-    start
-## Version 0.0.1 (In Progress)
-    TODO working mongodb structure for teec and siyuan, read and write
-    TODO get json for querying the teec and siyuan working
-    TODO basic web ui for table view and profile view
-    TODO basic authentication
-    TODO email support
-## Version 0.0.2 (Not started yet)
-    TODO better UI
-## Version 0.0.3 ()
+# Current version: 0.0.0 (dev)
+Go to git commit history for details of development
+
+# RESTful API
+
+| URL                       | Action        | Request Object        | Description             |
+|---------------------------|---------------|-----------------------|-------------------------|
+| /api/siyuan/get/:uid      | GET           | N/A                   | get a siyuan contact    |
+| /api/siyuan/put/:uid      | PUT           | obj for mongodb $set  | update a siyuan contact |
+| /api/siyuan/delete/:uid   | DELETE        | N/A                   | delete a siyuan contact |
+| /api/siyuan/post          | POST          | a Mongoose  doc       | create a siyuan contact |
+|---------------------------|---------------|-----------------------|-------------------------|
+| /api/query/               | POST          | query object          | create a siyuan contact |
+
+Sample Query Obj:
+http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
+
 
 # Style Guide
 [[json][http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml]]
 [[javascript][http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml]]
 [[html/css][http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml]]
-
-# Worklog
-## 2013-04-06 
-Added https://github.com/macek/jquery-serialize-object/blob/master/jquery.serialize-object.compiled.js
