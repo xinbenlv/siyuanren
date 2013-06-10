@@ -90,11 +90,6 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-roles.use('access private page', function(req) {
-  if (req.isAuthenticated()) {
-    return true;
-  } else false;
-});
 
 // Setup routes
 require('./routes')(app);
