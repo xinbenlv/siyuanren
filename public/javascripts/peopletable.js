@@ -48,7 +48,7 @@ var onClickDelete = function(rowIndex) {
  * @param {Object} values object representing the value to create.
  */
 var onClickCreate = function(rowIndex, values) {
-  var values = {name: 'new guy'};
+  var values = {name: '无名氏'};
 
   console.log('onCreate!');
   // Send request
@@ -59,7 +59,9 @@ var onClickCreate = function(rowIndex, values) {
     dataType: 'json',
     async: false,
     success: function(doc) {
-      editableGrid.insertAfter(rowIndex, doc._id, values, true);
+      console.log('suc!');
+      console.dir(doc);
+      editableGrid.insert(rowIndex, doc._id, values, true);
     }
   });
 };
