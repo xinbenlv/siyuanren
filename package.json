@@ -19,7 +19,7 @@
     "passport-local": "0.1.6",
     "connect-roles": "2.0.3",
     "connect-flash": "0.1.1",
-    "charlatan":"0.1.4",
+    "charlatan":"0.1.4"
   },
   "engines": {
     "node": "0.8.x",
