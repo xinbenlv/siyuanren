@@ -16,7 +16,9 @@
     "jquery": "1.8.3",
     "passport": "0.1.17",
     "passport-local-mongoose": "0.2.3",
-    "passport-local":"0.1.6"
+    "passport-local": "0.1.6",
+    "connect-roles": "2.0.3",
+    "connect-flash": "0.1.1"
   },
   "engines": {
     "node": "0.8.x",

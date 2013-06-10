@@ -7,10 +7,10 @@ var http = require('http');
 var path = require('path');
 var express = require('express');
 var mongoose = require('mongoose');
-
+var roles = require('connect-roles');
 var logger = require('log4js').getLogger();
 var User = require('./models/user');
-
+var flash = require('connect-flash');
 LocalStrategy = require('passport-local').Strategy;
 /**
  * Constants
@@ -50,8 +50,11 @@ app.configure(function() {
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
 
+  app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
+
+  app.use(roles);
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
@@ -71,8 +74,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+roles.use('access private page', function(req) {
+  if (req.isAuthenticated()) {
+    return true;
+  } else false;
+});
+
 app.get('/', routes.index);
-app.get('/peopletable', routes.peopletable);
+app.get('/peopletable',
+  roles.can('access private page'),
+  routes.peopletable);
 
 app.get('/register', function(req, res) {
   res.render('register', { });
@@ -107,19 +118,23 @@ app.get('/logout', function(req, res) {
 app.get('/profile', routes.profile);
 app.get('/users', user.list);
 
-app.post('/api/query', api.query);
-app.get('/api/query', api.query);
-app.get('/api/peopletable', api.peopletable);
+app.post('/api/query', roles.can('access private page'), api.query);
+app.get('/api/query', roles.can('access private page'), api.query);
 
 app.get('/api/siyuan', function(req, res) {
   res.send('API working');}
 );
 
 // DELETE and PUT is not supported by all browser
-app.get('/api/siyuan/post', api.siyuan.post);
-app.get('/api/siyuan/get/:theid', api.siyuan.get);
-app.get('/api/siyuan/put/:theid', api.siyuan.put);
-app.get('/api/siyuan/delete/:theid', api.siyuan.delete);
+app.get('/api/siyuan/post',
+  roles.can('access private page'), api.siyuan.post);
+app.get('/api/siyuan/get/:theid',
+  roles.can('access private page'), api.siyuan.get);
+app.get('/api/siyuan/put/:theid',
+  roles.can('access private page'), api.siyuan.put);
+app.get('/api/siyuan/delete/:theid',
+  roles.can('access private page'), api.siyuan.delete);
+
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
