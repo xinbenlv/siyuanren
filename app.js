@@ -25,19 +25,12 @@ var MONGO_LOCAL_URL = 'mongodb://' +
   '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + MONGO_DBNAME;
 var passport = require('passport');
 
-/**
- * Mongooses set up
- */
-var mongoUri = process.env.MONGOHQ_URL || MONGO_LOCAL_URL;
-mongoose.connect(mongoUri);
 
 /**
  * Internal dependencies
  */
 
 var routes = require('./routes');
-var api = require('./api');
-var user = require('./routes/user');
 var app = express();
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
@@ -61,10 +54,33 @@ app.configure(function() {
 });
 
 app.configure('development', function() {
+  logger.info('Development Setup');
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+
+  /**
+   * Mongooses set up
+   */
+  var mongoUri = MONGO_LOCAL_URL;
+  mongoose.connect(mongoUri);
+
+  // Test if we have already populated some test data
+
+  var SiyuanUserProfile = require('./models/siyuanuserprofile');
+  logger.info('Verify sample data');
+  SiyuanUserProfile.find({}, function(err, docs) {
+    logger.info('Found:' + JSON.stringify(docs));
+    if (docs.length == 0) {
+      logger.info('No sample data found! Populate some!');
+      SiyuanUserProfile.create(require('./sample').staticData, function() {
+        logger.info('Populated static data');
+      });
+    }
+  });
 });
 
 app.configure('production', function() {
+  var mongoUri = process.env.MONGOHQ_URL;
+  mongoose.connect(mongoUri);
   app.use(express.errorHandler());
 });
 
@@ -80,61 +96,8 @@ roles.use('access private page', function(req) {
   } else false;
 });
 
-app.get('/', routes.index);
-app.get('/peopletable',
-  roles.can('access private page'),
-  routes.peopletable);
-
-app.get('/register', function(req, res) {
-  res.render('register', { });
-});
-
-app.post('/register', function(req, res) {
-  logger.info('create u: ' + req.body.username +
-  ' p: ' + req.body.password);
-  User.register(new User({username: req.body.username }),
-    req.body.password, function(err, account) {
-    if (err) {
-      return res.render('register', {account: account});
-    }
-
-    res.redirect('/');
-  });
-});
-
-app.get('/login', function(req, res) {
-  res.render('login', {user: req.user});
-});
-
-app.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
-});
-
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
-
-app.get('/profile', routes.profile);
-app.get('/users', user.list);
-
-app.post('/api/query', roles.can('access private page'), api.query);
-app.get('/api/query', roles.can('access private page'), api.query);
-
-app.get('/api/siyuan', function(req, res) {
-  res.send('API working');}
-);
-
-// DELETE and PUT is not supported by all browser
-app.get('/api/siyuan/post',
-  roles.can('access private page'), api.siyuan.post);
-app.get('/api/siyuan/get/:theid',
-  roles.can('access private page'), api.siyuan.get);
-app.get('/api/siyuan/put/:theid',
-  roles.can('access private page'), api.siyuan.put);
-app.get('/api/siyuan/delete/:theid',
-  roles.can('access private page'), api.siyuan.delete);
-
+// Setup routes
+require('./routes')(app);
 
 http.createServer(app).listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

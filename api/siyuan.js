@@ -6,14 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 var mongoose = require('mongoose');
-var schema = require('./schema');
-var SiyuanUserProfile = schema.SiyuanUserProfile;
+var SiyuanUserProfile =
+  require('../models/siyuanuserprofile');
 var logger = require('log4js').getDefaultLogger();
 
 /**
  * Create a siyuan object
- * @param req
- * @param res
+ *
+ * @param {object} req Request for a query.
+ * @param {object} res Response for a query.
  */
 exports.post = function(req, res) {
   logger.info('post!');
@@ -29,8 +30,8 @@ exports.post = function(req, res) {
 
 /**
  *
- * @param req
- * @param res
+ * @param {object} req Request for a query.
+ * @param {object} res Response for a query.
  */
 exports.get = function(req, res) {
   var theid = req.params.theid;
@@ -41,8 +42,8 @@ exports.get = function(req, res) {
 
 /**
  * Update a siyuan object
- * @param req
- * @param res
+ * @param {object} req Request for a query.
+ * @param {object} res Response for a query.
  */
 exports.put = function(req, res) {
   logger.info('put: ' + JSON.stringify(req.query));
@@ -59,8 +60,8 @@ exports.put = function(req, res) {
 
 /**
  *
- * @param req
- * @param res
+ * @param {object} req Request for a query.
+ * @param {object} res Response for a query.
  */
 exports.delete = function(req, res) {
   var theid = req.params.theid;

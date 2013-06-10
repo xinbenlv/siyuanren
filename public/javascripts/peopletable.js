@@ -12,11 +12,14 @@ var getImagePath = function(relativePath) {
 var currentFilter;
 
 var metadata = [
-  { name: 'name', label: 'NAME', datatype: 'string', editable: true},
-  { name: 'year', label: 'YEAR', datatype: 'integer', editable: true},
-  { name: 'dept', label: 'DEPT', datatype: 'string', editable: true},
-  { name: 'job', label: 'JOB', datatype: 'string', editable: true},
-  { name: 'city', label: 'CITY', datatype: 'string', editable: true},
+  { name: 'name', label: 'Name', datatype: 'string', editable: true},
+  { name: 'siyuan_year', label: 'Siyuan Year',
+    datatype: 'integer', editable: true},
+  { name: 'email', label: 'Email', datatype: 'string', editable: true},
+  { name: 'mobile_phone', label: 'Mobile Phone',
+    datatype: 'string', editable: true},
+  { name: 'department', label: 'Dept', datatype: 'string', editable: true},
+  { name: 'job_title', label: 'Job Title', datatype: 'string', editable: true},
   { name: 'action', datatype: 'html', editable: false }];
 
 // declaring editableGrid
