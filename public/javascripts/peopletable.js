@@ -9,6 +9,7 @@
 var getImagePath = function(relativePath) {
   return '/editablegrid/images/' + relativePath;
 };
+var currentFilter;
 
 var metadata = [
   { name: 'name', label: 'NAME', datatype: 'string', editable: true},
@@ -104,6 +105,8 @@ $(document).ready(function() {
   editableGrid = new EditableGrid('PeopleTable', {
     enableSort: true,
     modelChanged: updateCellValue });
+  console.log('set up filter!');
+
 
   // Send request
   $.ajax({
@@ -122,6 +125,14 @@ $(document).ready(function() {
       }
       tableData.data = data;
       loadEntireTable(tableData);
+
+
+
     }
   });
+
+  // filter when something is typed into filter
+  _$('filter').onkeyup = function() {
+    editableGrid.filter(_$('filter').value);
+  };
 });
