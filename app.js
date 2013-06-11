@@ -69,6 +69,7 @@ app.configure('development', function() {
 });
 
 app.configure('production', function() {
+  logger.info('Production Setup');
   var mongoUri = process.env.MONGOHQ_URL;
   mongoose.connect(mongoUri);
   app.use(express.errorHandler());
