@@ -19,12 +19,16 @@ var logger = require('log4js').getDefaultLogger();
 module.exports = function(app) {
 
   roles.setFailureHandler(function(req, res, action) {
+    logger.warn('error, try to redirect! req=' +
+      JSON.stringify(req.isAuthenticated));
     var accept = req.headers.accept || '';
     res.status(403);
     res.redirect('/login');
   });
 
   roles.use(function(req, action) {
+    return true;
+    logger.info('try to authenticate action ' + action);
     if (!req.user.isAuthenticated) return action === 'access home page';
   });
 
@@ -32,9 +36,22 @@ module.exports = function(app) {
   //they might not be the only one so we don't return
   //false if the user isn't a moderator
   roles.use('access private page', function(req) {
-    if (req.user.role === 'moderator') {
-      return true;
-    }
+    User.find({username: req.user.username}, function(err) {
+      if (!err) {
+        logger.info('Accessing private page: req.isAuthenticated()=' +
+          JSON.stringify(req.isAuthenticated()));
+        logger.info('enabled' + req.user.enabled);
+        // TODO(zzn): migrate to use promises.
+//        if (req.user !== undefined &&
+//          req.isAuthenticated() &&
+//          req.user.enabled) {
+//          return true;
+//        }
+
+      }
+    });
+    logger.warn('failed to allow');
+    return false;
   });
 
   //admin users can access all pages
@@ -42,13 +59,7 @@ module.exports = function(app) {
     if (req.user.role === 'admin') {
       return true;
     }
-  });
-
-  roles.use('access private page', function(req) {
-    logger.info('authentication test: ' + req.isAuthenticated);
-    if (req.user.isAuthenticated) {
-      return true;
-    } else false;
+    return false;
   });
 
   app.get('/', function(req, res) {
@@ -65,16 +76,59 @@ module.exports = function(app) {
     res.render('register', { });
   });
 
+  app.get('/register/verify', function(req, res) {
+    logger.info('Registration verification:' + JSON.stringify(req.query));
+    User.find({username: req.query.username}, function(err, user) {
+      if (err) {
+        res.send('Sorry, the verification URL is invalid');
+      } else {
+        user.enabled = true;
+        res.send('Congratulations, your account is now enabled');
+
+      }
+    });
+    res.send('Thank you, you have successfully verified');
+  });
+
+  app.get('/register/', function(req, res) {
+    res.render('register', { });
+  });
+
   app.post('/register', function(req, res) {
     logger.info('create u: ' + req.body.username +
       ' p: ' + req.body.password);
     User.register(new User({username: req.body.username }),
-      req.body.password, function(err, account) {
+      req.body.password, function(err, user) {
         if (err) {
-          return res.render('register', {account: account});
-        }
+          logger.warn('Register failure: ' + JSON.stringify(err));
+          //res.statusCode(400);
+          return res.render('register');
+          // TODO(zzn): change to registration failure
+        } else {
+          user.email = req.body.email;
+          user.resetVerificationRandomToken();
+          user.save(function(err) {
+            MailService = require('./services/mailservice').MailService;
+            var mail = {
+              text: 'Congratulatons! You have registered at ' +
+                process.env.PROJECT_DOMAIN + '\n' +
+                'Here is the confirmation link: ' +
+                'http://www.' + process.env.PROJECT_DOMAIN +
+                '/register/verify?' +
+                'username=' + user.username +
+                '&verify=' + user.verificationRandomToken,
+              from: 'admin@' + process.env.PROJECT_DOMAIN,
+              to: user.email,
+              subject: '[Verification] of membership at ' +
+                process.env.PROJECT_DOMAIN};
+            MailService.send(mail, function(err) {
+              logger.info('Sent to: ' + JSON.stringify(mail));
+              logger.info('Err: ' + JSON.stringify(err));
+              res.redirect('/');
+            });
+          });
 
-        res.redirect('/');
+        }
       });
   });
 

@@ -12,19 +12,7 @@ var logger = require('log4js').getLogger();
 var User = require('./models/user');
 var flash = require('connect-flash');
 LocalStrategy = require('passport-local').Strategy;
-/**
- * Constants
- */
-var USERNAME = 'testuser';
-var PASSWORD = 'testpass';
-var MONGO_HOST = 'alex.mongohq.com';
-var MONGO_PORT = '10077';
-var MONGO_DBNAME = 'app14616351';
-var MONGO_LOCAL_URL = 'mongodb://' +
-  USERNAME + ':' + PASSWORD +
-  '@' + MONGO_HOST + ':' + MONGO_PORT + '/' + MONGO_DBNAME;
 var passport = require('passport');
-
 
 /**
  * Internal dependencies
@@ -60,11 +48,10 @@ app.configure('development', function() {
   /**
    * Mongooses set up
    */
-  var mongoUri = MONGO_LOCAL_URL;
+  var mongoUri = process.env.MONGOHQ_DEV_URL;
   mongoose.connect(mongoUri);
 
   // Test if we have already populated some test data
-
   var SiyuanUserProfile = require('./models/siyuanuserprofile');
   logger.info('Verify sample data');
   SiyuanUserProfile.find({}, function(err, docs) {
@@ -76,6 +63,9 @@ app.configure('development', function() {
       });
     }
   });
+
+  require('./services/mailservice').printMandrillInfo();
+  require('./services/mailservice').sendDevInstanceStartEmail();
 });
 
 app.configure('production', function() {

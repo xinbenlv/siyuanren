@@ -10,8 +10,16 @@ var mongoose = require('mongoose'),
   passportLocalMongoose = require('passport-local-mongoose');
 
 var User = new Schema({
-  email: String
+  email: String,
+  enabled: { type: Boolean, default: false },
+  isGlobalAdmin: { type: Boolean, default: false },
+  verificationRandomToken: String
 });
+
+
+User.methods.resetVerificationRandomToken = function(){
+  this.verificationRandomToken = require("randomstring").generate(32);
+};
 
 User.plugin(passportLocalMongoose);
 
