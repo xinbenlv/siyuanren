@@ -62,6 +62,12 @@ module.exports = function(app) {
     return false;
   });
 
+  // TODO(zzn) set robots.txt accordingly, for
+  // now just disable all.
+  app.get('/robots.txt', function(req, res) {
+    res.send('User-agent: *\nDisallow: /');
+  });
+
   app.get('/', function(req, res) {
     res.render('index', {title: TITLE});
   });
