@@ -35,6 +35,8 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
 4. Set up Environment variables:
  * PROJECT_DOMAIN
     heroku config:set PROJECT_DOMAIN=youdomain.com
+ * PROJECT_HOSTNAME
+    heroku config:set PROJECT_HOSTNAME=www
  *
 ## How to set up local development environment
 
@@ -44,7 +46,7 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
 4. Set up Environment variables
   * MONGOHQ_DEV_URL, you can get it from MongoHq, [here is how](https://devcenter.heroku.com/articles/mongohq#mongohq-web-tools).
   * MANDRILL_APIKEY, MANDRILL_USERNAME, you can get it from [Mandrill SMTP & API Credentials](https://mandrillapp.com/settings/index)
-  * PROJECT_DOMAIN, give it your domain name
+  * PROJECT_DOMAIN give it your domain name, PROJECT_HOSTNAME give it your host name.
 5. Run NPM install in local folder.
     npm install
 

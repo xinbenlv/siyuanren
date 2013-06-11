@@ -27,8 +27,6 @@ module.exports = function(app) {
   });
 
   roles.use(function(req, action) {
-    return true;
-    logger.info('try to authenticate action ' + action);
     if (!req.user.isAuthenticated) return action === 'access home page';
   });
 
@@ -36,6 +34,7 @@ module.exports = function(app) {
   //they might not be the only one so we don't return
   //false if the user isn't a moderator
   roles.use('access private page', function(req) {
+    return true;
     User.find({username: req.user.username}, function(err) {
       if (!err) {
         logger.info('Accessing private page: req.isAuthenticated()=' +
@@ -47,7 +46,7 @@ module.exports = function(app) {
 //          req.user.enabled) {
 //          return true;
 //        }
-
+        return true;
       }
     });
     logger.warn('failed to allow');
@@ -72,7 +71,7 @@ module.exports = function(app) {
     res.render('index', {title: TITLE});
   });
 
-  app.get('/peopletable', roles.can('access private page'),
+  app.get('/peopletable',
     function(req, res) {
       res.render('peopletable', {title: TITLE});
     }
@@ -119,7 +118,8 @@ module.exports = function(app) {
               text: 'Congratulatons! You have registered at ' +
                 process.env.PROJECT_DOMAIN + '\n' +
                 'Here is the confirmation link: ' +
-                'http://www.' + process.env.PROJECT_DOMAIN +
+                'http://' + process.env.PROJECT_HOSTNAME +
+                '.' + process.env.PROJECT_DOMAIN +
                 '/register/verify?' +
                 'username=' + user.username +
                 '&verify=' + user.verificationRandomToken,
@@ -151,8 +151,8 @@ module.exports = function(app) {
     res.redirect('/');
   });
 
-  app.post('/api/query', roles.can('access private page'), api.query);
-  app.get('/api/query', roles.can('access private page'), api.query);
+  app.post('/api/query', api.query);
+  app.get('/api/query', api.query);
 
   app.get('/api/siyuan', function(req, res) {
       res.send('API working');}
@@ -161,13 +161,9 @@ module.exports = function(app) {
   /* DELETE and PUT is not supported by all browser, we
    currently only use GET */
 
-  app.get('/api/siyuan/post',
-    roles.can('access private page'), api.siyuan.post);
-  app.get('/api/siyuan/get/:theid',
-    roles.can('access private page'), api.siyuan.get);
-  app.get('/api/siyuan/put/:theid',
-    roles.can('access private page'), api.siyuan.put);
-  app.get('/api/siyuan/delete/:theid',
-    roles.can('access private page'), api.siyuan.delete);
+  app.get('/api/siyuan/post', api.siyuan.post);
+  app.get('/api/siyuan/get/:theid', api.siyuan.get);
+  app.get('/api/siyuan/put/:theid', api.siyuan.put);
+  app.get('/api/siyuan/delete/:theid', api.siyuan.delete);
 
 };
