@@ -23,8 +23,8 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 
 ## To-add external modules
 [ ] Add Mongoose-Filter-Denormalize
-[ ] Start using AngularJS
-[ ] Use Mocha as testing framework
+[X] Start using AngularJS
+[ ] Use Karma as testing framework
 [ ] Add i18n
 
 ## To-add tests

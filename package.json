@@ -24,6 +24,12 @@
     "mandrill-api": ">=1.0.2",
     "randomstring": "1.0.2"
   },
+  "devDependencies": {
+    "karma": "~0.8"
+  },
+  "scripts": {
+     "test": "./node_modules/.bin/karma start --single-run --browsers=Firefox ./tests/client/karma.conf.js"
+  },
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
