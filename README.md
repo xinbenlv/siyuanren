@@ -1,11 +1,12 @@
 # Siyuan Ren
+[![Build Status](https://travis-ci.org/xinbenlv/siyuanren.png?branch=master)](https://travis-ci.org/xinbenlv/siyuanren)
 A web app for a community like siyuan.
 Data is stored at data/, which is ignored by git
 
-# Current version: 0.0.0 (dev)
+## Current version: 0.0.0 (dev)
 Go to git commit history for details of development
 
-# RESTful API
+## RESTful API
 
 | URL                       | Action        | Request Object        | Description             |
 |---------------------------|---------------|-----------------------|-------------------------|
@@ -19,26 +20,26 @@ Go to git commit history for details of development
 Sample Query Obj:
 http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
 
-# TODOs and Dones
+## TODOs and Dones
 
-## To-add external modules
+### To-add external modules
   [ ] Add Mongoose-Filter-Denormalize
   [X] Start using AngularJS
   [X] Use Karma as testing framework
   [ ] Add jasmine
   [ ] Add i18n
 
-## To-add tests
+### To-add tests
 [ ] Write test for authentication
 
 
 
-# How-Tos
+## How-Tos
 
-## Prerequisites
+### Prerequisites
 The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJS, Javascript.
 
-## How to release onto GitHub
+### How to release onto GitHub
 1. Set up a Heroku nodejs application, [Get Started](https://devcenter.heroku.com/articles/nodejs)
 2. Enable Heroku add-on: MongoHq
 3. Enable Heroku add-on: Mandrill
@@ -49,7 +50,7 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
  * PROJECT_HOSTNAME
     heroku config:set PROJECT_HOSTNAME=www
 
-## How to set up local development environment
+### How to set up local development environment
 
 1. [Getting Start with NodeJS](https://devcenter.heroku.com/articles/nodejs)
 2. Go get your favorite NodeJS/Javascript IDE, WebStorm on OS X is my Choice
@@ -61,7 +62,7 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
 5. Run NPM install in local folder.
     npm install
 
-# Style Guide
+## Style Guide
 [json](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
 [javascript](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
 [html/css](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
