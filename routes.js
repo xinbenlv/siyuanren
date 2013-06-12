@@ -166,4 +166,8 @@ module.exports = function(app) {
   app.get('/api/siyuan/put/:theid', api.siyuan.put);
   app.get('/api/siyuan/delete/:theid', api.siyuan.delete);
 
+  app.get('/main', function(req, res) {
+    res.render('main');
+  });
+
 };
