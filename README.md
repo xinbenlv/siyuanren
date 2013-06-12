@@ -1,7 +1,6 @@
 # Siyuan Ren
 [![Build Status](https://travis-ci.org/xinbenlv/siyuanren.png?branch=master)](https://travis-ci.org/xinbenlv/siyuanren)
-A web app for a community like siyuan.
-Data is stored at data/, which is ignored by git
+A web app for a THU Siyuan Alumni community.
 
 ## Current version: 0.0.0 (dev)
 Go to git commit history for details of development
@@ -30,7 +29,8 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 - [ ] Add i18n
 
 ### To-add tests
-[ ] Write test for authentication
+
+- [ ] Write test for authentication
 
 
 

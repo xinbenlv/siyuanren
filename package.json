@@ -25,10 +25,10 @@
     "randomstring": "1.0.2"
   },
   "devDependencies": {
-    "karma": "~0.8"
+    "vows": "0.7.0"
   },
   "scripts": {
-     "test": "./node_modules/.bin/karma start --single-run --browsers=Firefox ./tests/client/karma.conf.js"
+     "test": "vows tests/* --spec"
   },
   "engines": {
     "node": "0.8.x",
