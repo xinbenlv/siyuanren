@@ -22,10 +22,11 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 # TODOs and Dones
 
 ## To-add external modules
-[ ] Add Mongoose-Filter-Denormalize
-[X] Start using AngularJS
-[ ] Use Karma as testing framework
-[ ] Add i18n
+  [ ] Add Mongoose-Filter-Denormalize
+  [X] Start using AngularJS
+  [X] Use Karma as testing framework
+  [ ] Add jasmine
+  [ ] Add i18n
 
 ## To-add tests
 [ ] Write test for authentication
