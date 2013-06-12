@@ -7,7 +7,7 @@
 
 // helper function to get path of a demo image
 var getImagePath = function(relativePath) {
-  return '/editablegrid/images/' + relativePath;
+  return '/thirdparty/editablegrid/images/' + relativePath;
 };
 var currentFilter;
 
