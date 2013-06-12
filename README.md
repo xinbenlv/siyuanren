@@ -14,7 +14,6 @@ Go to git commit history for details of development
 | /api/siyuan/put/:uid      | PUT           | obj for mongodb $set  | update a siyuan contact |
 | /api/siyuan/delete/:uid   | DELETE        | N/A                   | delete a siyuan contact |
 | /api/siyuan/post          | POST          | a Mongoose  doc       | create a siyuan contact |
-|---------------------------|---------------|-----------------------|-------------------------|
 | /api/query/               | POST          | query object          | create a siyuan contact |
 
 Sample Query Obj:
@@ -23,6 +22,7 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 ## TODOs and Dones
 
 ### To-add external modules
+
 - [ ] Add Mongoose-Filter-Denormalize
 - [X] Start using AngularJS
 - [X] Use Karma as testing framework
