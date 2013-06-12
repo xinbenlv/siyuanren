@@ -19,8 +19,18 @@ Go to git commit history for details of development
 Sample Query Obj:
 http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
 
-# TODOs
-1. Add Mongoose-Filter-Denormalize
+# TODOs and Dones
+
+## To-add external modules
+[ ] Add Mongoose-Filter-Denormalize
+[ ] Start using AngularJS
+[ ] Use Mocha as testing framework
+[ ] Add i18n
+
+## To-add tests
+[ ] Write test for authentication
+
+
 
 # How-Tos
 
@@ -37,7 +47,7 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
     heroku config:set PROJECT_DOMAIN=youdomain.com
  * PROJECT_HOSTNAME
     heroku config:set PROJECT_HOSTNAME=www
- *
+
 ## How to set up local development environment
 
 1. [Getting Start with NodeJS](https://devcenter.heroku.com/articles/nodejs)
