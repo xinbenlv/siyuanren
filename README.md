@@ -23,11 +23,11 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 ## TODOs and Dones
 
 ### To-add external modules
-  [ ] Add Mongoose-Filter-Denormalize
-  [X] Start using AngularJS
-  [X] Use Karma as testing framework
-  [ ] Add jasmine
-  [ ] Add i18n
+- [ ] Add Mongoose-Filter-Denormalize
+- [X] Start using AngularJS
+- [X] Use Karma as testing framework
+- [ ] Add jasmine
+- [ ] Add i18n
 
 ### To-add tests
 [ ] Write test for authentication
@@ -63,6 +63,6 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
     npm install
 
 ## Style Guide
-[json](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
-[javascript](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
-[html/css](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
+* [json](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
+* [javascript](http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml)
+* [html/css](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
