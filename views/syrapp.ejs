@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="syrapp">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>思源人</title>
+
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+  <!-- required libraries -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+  <script src="//mgcrea.github.com/angular-strap/js/angular-strap.js"></script>
+
+  <!-- optional libraries -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.js"></script>
+
+  <script src="/javascripts/syrapp.js"></script>
+  <script src="/javascripts/controllers.js"></script>
+</head>
+
+<body ng-controller="MainCtrl">
+<syrnavbar />
+<div ng-view> </div>
+</body>
+
+</html>
