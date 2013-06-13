@@ -14,6 +14,8 @@
     "connect-roles": "2.0.3",
     "connect-flash": "0.1.1",
 
+    "underscore": "*",
+    "validator": "~1.1.1",
     "stylus": "*",
     "mongodb": "1.1.11",
     "q": "0.9.4",
