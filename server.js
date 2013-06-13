@@ -2,6 +2,7 @@ var express =       require('express')
     , http =        require('http')
     , passport =    require('passport')
     , path =        require('path')
+    , mongoose =    require('mongoose')
     , User =        require('./server/models/User.js');
 
 var app = express();
@@ -28,6 +29,8 @@ passport.use(User.linkedInStrategy()); // Comment out this line if you don't wan
 
 passport.serializeUser(User.serializeUser);
 passport.deserializeUser(User.deserializeUser);
+
+mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 
 require('./server/routes.js')(app);
 

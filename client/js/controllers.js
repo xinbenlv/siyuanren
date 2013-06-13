@@ -91,3 +91,9 @@ angular.module('angular-client-side-auth')
 
 }]);
 
+angular.module('angular-client-side-auth')
+.controller('PeopleTableCtrl',
+['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
+  peopletable.load();
+
+}]);

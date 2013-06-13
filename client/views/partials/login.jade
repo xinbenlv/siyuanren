@@ -1,13 +1,11 @@
 .hero-unit
-    h1 Log in
-    p This site is an example of how one can implement role based authentication in Angular applications as outlined in
-        a(href="http://www.frederiknakstad.com/authentication-in-single-page-applications-with-angular-js/")  this blogpost
-        | . All the code can be found in
-        a(href="https://github.com/fnakstad/angular-client-side-auth")  this GitHub repository
-        | . You can either register a new user, log in with one of the two predefined users...
+    h1 请登录
+    br
+    p 网站还不完整，不过你可以用下面的用户登录
     ul
         li admin/123
         li user/123
+
     form.form-horizontal(ng-submit="login()", name="loginForm")
         .control-group
             label.control-label(for="username") Username
@@ -20,7 +18,7 @@
         .control-group
             .controls
                 label(for="rememberme").checkbox
-                    input(type="checkbox", data-ng-model="rememberme", name="rememberme")
+                    input(type="checkbox", data-ng-model="rememberme", name="rememberme", value="0")
                     | Remember me
         .control-group
             .controls

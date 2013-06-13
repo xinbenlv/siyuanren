@@ -3,6 +3,7 @@ var _ =           require('underscore')
     , passport =  require('passport')
     , AuthCtrl =  require('./controllers/auth')
     , UserCtrl =  require('./controllers/user')
+    , ApiCtrl = require('./controllers/api')
     , User =      require('./models/User.js')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels;
@@ -108,6 +109,44 @@ var routes = [
         httpMethod: 'GET',
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
         accessLevel: accessLevels.admin
+    },
+
+    // API resource
+    {
+      path: '/api/siyuan/get/:theid',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.get],
+      accessLevel: accessLevels.admin
+    },
+    {
+      path: '/api/siyuan/put/:theid',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.put],
+      accessLevel: accessLevels.admin
+    },
+    {
+      path: '/api/siyuan/delete/:theid',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.delete],
+      accessLevel: accessLevels.admin
+    },
+    {
+      path: '/api/siyuan/post',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.post],
+      accessLevel: accessLevels.admin
+    },
+    {
+      path: '/api',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.index],
+      accessLevel: accessLevels.admin
+    },
+    {
+      path: '/api/query',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.query],
+      accessLevel: accessLevels.admin
     },
 
     // All other get requests should be handled by AngularJS's client-side routing system
