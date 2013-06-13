@@ -41,7 +41,7 @@ http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"a
 ### Prerequisites
 The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJS, Javascript.
 
-### How to release onto GitHub
+### How to release onto Heroku
 1. Set up a Heroku nodejs application, [Get Started](https://devcenter.heroku.com/articles/nodejs)
 2. Enable Heroku add-on: MongoHq
 3. Enable Heroku add-on: Mandrill
@@ -63,6 +63,10 @@ The following how-tos assume you are familiar with Git, GitHub, NodeJS, ExpressJ
   * PROJECT_DOMAIN give it your domain name, PROJECT_HOSTNAME give it your host name.
 5. Run NPM install in local folder.
     npm install
+
+
+### Additionally, how to set up authentication
+Remember to set up callback URL in auth-provider, for example twitter and facebook
 
 ## Style Guide
 * [json](http://google-styleguide.googlecode.com/svn/trunk/jsoncstyleguide.xml)
