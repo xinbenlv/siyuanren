@@ -112,7 +112,7 @@ module.exports = {
         return new TwitterStrategy({
             consumerKey: process.env.TWITTER_CONSUMER_KEY,
             consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-            callbackURL: constants.FACEBOOK_AUTH_CALLBACK
+            callbackURL: constants.TWITTER_AUTH_CALLBACK
         },
         function(token, tokenSecret, profile, done) {
             var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
