@@ -7,8 +7,8 @@ var User
     , GoogleStrategy = require('passport-google').Strategy
     , LinkedInStrategy = require('passport-linkedin').Strategy
     , check =           require('validator').check
-    , userRoles =       require('../../client/js/routingConfig').userRoles;
-
+    , userRoles =       require('../../client/js/routingConfig').userRoles
+    , constants =       require('../../shared/constants');
 var users = [
     {
         id:         1,
@@ -112,7 +112,7 @@ module.exports = {
         return new TwitterStrategy({
             consumerKey: process.env.TWITTER_CONSUMER_KEY,
             consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-            callbackURL: process.env.TWITTER_CALLBACK_URL || 'http://localhost:8000/auth/twitter/callback'
+            callbackURL: constants.FACEBOOK_AUTH_CALLBACK
         },
         function(token, tokenSecret, profile, done) {
             var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
@@ -127,7 +127,7 @@ module.exports = {
         return new FacebookStrategy({
             clientID: process.env.FACEBOOK_APP_ID,
             clientSecret: process.env.FACEBOOK_APP_SECRET,
-            callbackURL: process.env.FACEBOOK_CALLBACK_URL || "http://localhost:8000/auth/facebook/callback"
+            callbackURL: constants.FACEBOOK_AUTH_CALLBACK
         },
         function(accessToken, refreshToken, profile, done) {
             var user = module.exports.findOrCreateOauthUser(profile.provider, profile.id);
@@ -138,8 +138,8 @@ module.exports = {
     googleStrategy: function() {
 
         return new GoogleStrategy({
-            returnURL: process.env.GOOGLE_RETURN_URL || "http://localhost:8000/auth/google/return",
-            realm: process.env.GOOGLE_REALM || "http://localhost:8000/"
+            returnURL: constants.GOOGLE_AUTH_RETURN,
+            realm: constants.HOST_ROOL_URL
         },
         function(identifier, profile, done) {
             var user = module.exports.findOrCreateOauthUser('google', identifier);
@@ -154,7 +154,7 @@ module.exports = {
         return new LinkedInStrategy({
             consumerKey: process.env.LINKED_IN_KEY,
             consumerSecret: process.env.LINKED_IN_SECRET,
-            callbackURL: process.env.LINKED_IN_CALLBACK_URL || "http://localhost:8000/auth/linkedin/callback"
+            callbackURL: constants.LINKED_IN_AUTH_CALLBACK
           },
            function(token, tokenSecret, profile, done) {
             var user = module.exports.findOrCreateOauthUser('linkedin', profile.id);
