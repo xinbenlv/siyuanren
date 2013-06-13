@@ -18,22 +18,24 @@ Go to git commit history for details of development
 Sample Query Obj:
 http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
 
-## TODOs and Dones
+## TODOs and DONEs
 
 ### To-add external modules
-
-- [ ] Add Mongoose-Filter-Denormalize
-- [X] Start using AngularJS
-- [X] Use Karma as testing framework
-- [ ] Add jasmine
-- [ ] Add i18n
-
+<pre>
+    - [ ] Add Mongoose-Filter-Denormalize
+    - [X] Start using AngularJS
+    - [X] Use Karma as testing framework
+    - [ ] Add jasmine
+    - [ ] Add i18n
+</pre>
+### To-add functionality
+<pre>
+    - [ ] [Add AngularJS authentication with passport](https://github.com/fnakstad/angular-client-side-auth/)
+</pre>
 ### To-add tests
-
-- [ ] Write test for authentication
-
-
-
+<pre>
+    - [ ] Write test for authentication
+</pre>
 ## How-Tos
 
 ### Prerequisites
