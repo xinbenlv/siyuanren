@@ -69,7 +69,7 @@ module.exports = {
       return new TwitterStrategy({
           consumerKey: process.env.TWITTER_CONSUMER_KEY,
           consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-          callbackURL: process.env.TWITTER_CALLBACK_URL || 'http://localhost:8000/auth/twitter/callback'
+          callbackURL: constants.TWITTER_AUTH_CALLBACK
         },
         function(token, tokenSecret, profile, done) {
           module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
