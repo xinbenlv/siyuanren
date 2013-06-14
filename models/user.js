@@ -16,7 +16,6 @@ var User = new Schema({
   verificationRandomToken: String
 });
 
-
 User.methods.resetVerificationRandomToken = function(){
   this.verificationRandomToken = require("randomstring").generate(32);
 };

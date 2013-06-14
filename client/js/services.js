@@ -27,6 +27,7 @@ angular.module('angular-client-side-auth')
             $http.post('/register', user).success(success).error(error);
         },
         login: function(user, success, error) {
+            console.log('try to login!');//TODO(zzn): remove debug
             $http.post('/login', user).success(function(user){
                 $rootScope.user = user;
                 success(user);

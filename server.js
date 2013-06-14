@@ -3,8 +3,8 @@ var express =       require('express')
     , passport =    require('passport')
     , path =        require('path')
     , mongoose =    require('mongoose')
-    , User =        require('./server/models/User.js');
-
+    , User =        require('./server/models/User.js')
+    , auth =        require('./server/controllers/auth.js')
 var app = express();
 
 app.set('views', __dirname + '/client/views');
@@ -14,21 +14,19 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'client')));
-app.use(express.cookieSession(
-    {
-        secret: process.env.COOKIE_SECRET || "Superdupersecret"
-    }));
+app.use(express.session({ key: 'express.sid', secret: 'keyboard cat'}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(User.localStrategy);
-passport.use(User.twitterStrategy());  // Comment out this line if you don't want to enable login via Twitter
-passport.use(User.facebookStrategy()); // Comment out this line if you don't want to enable login via Facebook
-passport.use(User.googleStrategy());   // Comment out this line if you don't want to enable login via Google
-passport.use(User.linkedInStrategy()); // Comment out this line if you don't want to enable login via LinkedIn
+passport.use(auth.localStrategy);
+passport.use(auth.twitterStrategy());  // Comment out this line if you don't want to enable login via Twitter
+passport.use(auth.facebookStrategy()); // Comment out this line if you don't want to enable login via Facebook
+passport.use(auth.googleStrategy());   // Comment out this line if you don't want to enable login via Google
+passport.use(auth.linkedInStrategy()); // Comment out this line if you don't want to enable login via LinkedIn
 
-passport.serializeUser(User.serializeUser);
-passport.deserializeUser(User.deserializeUser);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 
