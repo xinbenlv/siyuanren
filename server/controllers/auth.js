@@ -72,7 +72,7 @@ module.exports = {
           callbackURL: process.env.TWITTER_CALLBACK_URL || 'http://localhost:8000/auth/twitter/callback'
         },
         function(token, tokenSecret, profile, done) {
-          module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
+          User.findOrCreateOauthUser(profile.provider, profile.id, done);
         });
     },
 
@@ -86,7 +86,7 @@ module.exports = {
           callbackURL: constants.FACEBOOK_AUTH_CALLBACK
         },
         function(accessToken, refreshToken, profile, done) {
-          module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
+          User.findOrCreateOauthUser(profile.provider, profile.id, done);
         });
     },
 
@@ -97,7 +97,7 @@ module.exports = {
           realm: constants.HOST_ROOL_URL
         },
         function(identifier, profile, done) {
-          module.exports.findOrCreateOauthUser('google', identifier, done);
+          User.findOrCreateOauthUser('google', identifier, done);
         });
     },
 
@@ -111,7 +111,7 @@ module.exports = {
           callbackURL: constants.LINKED_IN_AUTH_CALLBACK
         },
         function(token, tokenSecret, profile, done) {
-          module.exports.findOrCreateOauthUser('linkedin', profile.id, done);
+          User.findOrCreateOauthUser('linkedin', profile.id, done);
         }
       );
     }
