@@ -7,14 +7,14 @@
   var currentFilter;
 
   var metadata = [
-    { name: 'name', label: 'Name', datatype: 'string', editable: true},
-    { name: 'siyuan_year', label: 'Siyuan Year',
-      datatype: 'integer', editable: true},
-    { name: 'email', label: 'Email', datatype: 'string', editable: true},
-    { name: 'mobile_phone', label: 'Mobile Phone',
+    { name: '姓名', label: '姓名', datatype: 'string', editable: true},
+    { name: '思源学员期数', label: '思源学员期数',
       datatype: 'string', editable: true},
-    { name: 'department', label: 'Dept', datatype: 'string', editable: true},
-    { name: 'job_title', label: 'Job Title', datatype: 'string', editable: true},
+    { name: '常用邮箱', label: '常用邮箱', datatype: 'string', editable: true},
+    { name: '手机', label: '手机',
+      datatype: 'string', editable: true},
+    { name: '所在院系-要删', label: '所在院系-要删', datatype: 'string', editable: true},
+    { name: '目前职位', label: '目前职位', datatype: 'string', editable: true},
     { name: 'action', datatype: 'html', editable: false }];
 
 // declaring editableGrid
@@ -43,7 +43,7 @@
    * @param {Object} values object representing the value to create.
    */
   exports.onClickCreate = function(rowIndex, values) {
-    var values = {name: '无名氏'};
+    var values = {'姓名': '无名氏'};
 
     console.log('onCreate!');
     // Send request

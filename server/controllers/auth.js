@@ -11,6 +11,8 @@ var passport =  require('passport')
     ;
 module.exports = {
     register: function(req, res, next) {
+
+        return res.send(400, '注册尚未开放，请联系管理员');
         try {
           User.validate(req.body);
         }

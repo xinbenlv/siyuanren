@@ -37,4 +37,4 @@ var SiyuanUserProfile = new Schema({
  *
  * @type {User} a model of user
  */
-module.exports = mongoose.model('SiyuanUserProfile', SiyuanUserProfile);
+module.exports = mongoose.model('things', SiyuanUserProfile);
