@@ -19,15 +19,7 @@ userSchema.methods.resetVerificationRandomToken = function(){
   this.verificationRandomToken = require("randomstring").generate(32);
 };
 
-userSchema.statics.findOrCreateOauthUser = function(provider, providerId, callback) {
-  var query = {};
-  query['auth.' + provider + '.providerId'] = providerId;
-  this.upsert(query, function(err, user) {
-    // TODO(zzn): migrate to Q promises and handle err accordingly
-    if (err) callback(err, null);
-    else callback(null, user);
-  });
-};
+
 
 userSchema.statics.findByProviderId = function(provider, id, callback) {
   var query = {};
