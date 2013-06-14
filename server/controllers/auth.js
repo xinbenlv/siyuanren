@@ -7,6 +7,7 @@ var passport =  require('passport')
     , LinkedInStrategy = require('passport-linkedin').Strategy
     , constants =       require('../../shared/constants')
     , logger    =       require('log4js').getDefaultLogger()
+    , userRoles = require('../../client/js/routingConfig').userRoles
     ;
 module.exports = {
     register: function(req, res, next) {
@@ -23,11 +24,10 @@ module.exports = {
             else if(err)                    return res.send(400, err.message);
             user.setRole(req.body.role);
             user.save(function(err) {
-              res.json(200, { "role": user.role, "username": user.username });
-//              req.logIn(user, function(err) {
-//                  if(err)     { next(err); }
-//                  else        { res.json(200, { "role": user.role, "username": user.username }); }
-//              });
+              req.logIn(user, function(err) {
+                  if(err)     { next(err); }
+                  else        { res.json(200, { "role": user.role, "username": user.username }); }
+              });
             });
         });
     },
@@ -116,14 +116,31 @@ module.exports = {
       );
     },
 
-
     findOrCreateOauthUser : function(provider, providerId, callback) {
       var query = {};
       query['auth.' + provider + '.providerId'] = providerId;
-      User.upsert(query, function(err, user) {
+      User.findByUsername(provider + '_user', function(err, user) {
         // TODO(zzn): migrate to Q promises and handle err accordingly
-        if (err) callback(err, null);
-        else callback(null, user);
+        if (err) {
+          //TODO(zzn) make sure it is that we find a user
+
+        } else {
+          console.log( 'found user:' + JSON.stringify(user));
+          if (user !=null){
+            callback(null, user);
+          } else {
+
+            User.register({username:provider + '_user'}, provider + '_password', function(err, user) {
+              console.log( 'registerred in');
+              if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
+              else if(err)                    return res.send(400, err.message);
+              user.setRole(userRoles.user);
+              user.save(function(err) {
+                callback(null, user);
+              });
+            });
+          }
+        }
       });
     }
 };
