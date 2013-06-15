@@ -7,10 +7,7 @@
  */
 
 var
-  TwitterStrategy = require('passport-twitter').Strategy
-  , FacebookStrategy = require('passport-facebook').Strategy
-  , LinkedInStrategy = require('passport-linkedin').Strategy
-  , logger = require('log4js').getDefaultLogger()
+  logger = require('log4js').getDefaultLogger()
   ;
 
 var HOST_ROOL_URL = process.env.HOST_ROOT_URL || 'http://localhost:5000';
@@ -22,7 +19,7 @@ var getDeauthCallbackUrl = function(provider) {
   return HOST_ROOL_URL + '/deauth/' + provider + '/callback';
 };
 
-var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin'];
+var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'weibo'];
 
 var STRATEGIES = {};
 for (var i in ENABED_PROVIDERS) {
