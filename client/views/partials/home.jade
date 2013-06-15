@@ -1,24 +1,6 @@
-#myCarousel.carousel.slide
-ol.carousel-indicators
-    li.active(data-target='#myCarousel', data-slide-to='0')
-    li(data-target='#myCarousel', data-slide-to='1')
-    li(data-target='#myCarousel', data-slide-to='2')
-.carousel-inner
-    .item.active
-        img(src='http://fmn.rrimg.com/fmn056/xiaozhan/20121217/1535/xlarge_MWBM_4570000080291191.jpg', alt='')
+carousel(interval='myInterval')
+    slide(ng-repeat='slide in slides', active='slide.active')
+        img(ng-src='{{slide.image}}', style='margin: auto;')
         .carousel-caption
-            h4 年会
-            p 思源年会.
-    .item
-        img(src='http://fmn.rrimg.com/fmn065/xiaozhan/20121217/1535/xlarge_pNP8_33e4000099ef118e.jpg', alt='')
-        .carousel-caption
-            h4 朱先生与大家交流
-            p 思源计划发起人朱先生.
-    .item
-        img(src='http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', alt='')
-        .carousel-caption
-            h4 北美思源小聚
-            p 从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~
-
-a.carousel-control.left(href='#myCarousel', data-slide='prev') ‹
-a.carousel-control.right(href='#myCarousel', data-slide='next') ›
+            h4 {{slide.title}}
+            p {{slide.text}}

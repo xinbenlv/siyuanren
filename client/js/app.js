@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angular-client-side-auth', ['ngCookies'])
+angular.module('angular-client-side-auth', ['ngCookies','ui.bootstrap'])
 
     .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 
