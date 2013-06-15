@@ -10,7 +10,7 @@ angular.module('angular-client-side-auth', ['ngCookies'])
         {
             templateUrl:    '/partials/home',
             controller:     'HomeCtrl',
-            access:         access.user
+            access:         access.anon
         });
     $routeProvider.when('/login',
         {
