@@ -35,7 +35,6 @@
     "passport-facebook": "~0.1.5",
     "passport-google": "~0.3.0",
     "passport-linkedin": "~0.1.3",
-    "passport-weibo": "~0.1.15",
     "passport-renren": "*"
   },
   "devDependencies": {
