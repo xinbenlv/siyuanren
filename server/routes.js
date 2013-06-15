@@ -5,52 +5,51 @@ var _ =           require('underscore')
     , UserCtrl =  require('./controllers/user')
     , ApiCtrl = require('./controllers/api')
     , userRoles = require('../client/js/routingConfig').userRoles
-    , accessLevels = require('../client/js/routingConfig').accessLevels;
+    , accessLevels = require('../client/js/routingConfig').accessLevels
+    , constants = require('../shared/constants')
+      logger = require('log4js').getDefaultLogger();
+    ;
 
-var routes = [
+var getProviderRoutes = function(providers){
+  var pRoutes = [];
+  for (var i in providers) {
+    var provider =  providers[i];
+    pRoutes = pRoutes.concat([{
+      path: '/auth/' + provider,
+      httpMethod: 'GET',
+      middleware: [passport.authenticate(provider)],
+      accessLevel: accessLevels.public
+    }, {
+      path: '/auth/' + provider +'/callback',
+      httpMethod: 'GET',
+      middleware: [passport.authenticate(provider, {
+        successRedirect: '/',
+        failureRedirect: '/login'
+      })],
+      accessLevel: accessLevels.public
+    }]);
+  }
+  return pRoutes;
+};
 
+
+routes = []
+  .concat(
     // Views
     {
-        path: '/partials/*',
-        httpMethod: 'GET',
-        middleware: [function (req, res) {
-            var requestedView = path.join('./', req.url);
-            res.render(requestedView);
-        }],
-        accessLevel: accessLevels.public
-    },
+      path: '/partials/*',
+      httpMethod: 'GET',
+      middleware: [function (req, res) {
+        var requestedView = path.join('./', req.url);
+        res.render(requestedView);
+      }],
+      accessLevel: accessLevels.public
+    })
+  .concat(getProviderRoutes(constants.ENABED_PROVIDERS))
+  .concat([
 
-    // OAUTH
-    {
-        path: '/auth/twitter',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('twitter')],
-        accessLevel: accessLevels.public
-    },
-    {
-        path: '/auth/twitter/callback',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('twitter', {
-            successRedirect: '/',
-            failureRedirect: '/login'
-        })],
-        accessLevel: accessLevels.public
-    },
-    {
-        path: '/auth/facebook',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('facebook')],
-        accessLevel: accessLevels.public
-    },
-    {
-        path: '/auth/facebook/callback',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('facebook', {
-            successRedirect: '/',
-            failureRedirect: '/login'
-        })],
-        accessLevel: accessLevels.public
-    },
+
+
     {
         path: '/auth/google',
         httpMethod: 'GET',
@@ -61,21 +60,6 @@ var routes = [
         path: '/auth/google/return',
         httpMethod: 'GET',
         middleware: [passport.authenticate('google', {
-            successRedirect: '/',
-            failureRedirect: '/login'
-        })],
-        accessLevel: accessLevels.public
-    },
-    {
-        path: '/auth/linkedin',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('linkedin')],
-        accessLevel: accessLevels.public
-    },
-    {
-        path: '/auth/linkedin/callback',
-        httpMethod: 'GET',
-        middleware: [passport.authenticate('linkedin', {
             successRedirect: '/',
             failureRedirect: '/login'
         })],
@@ -166,11 +150,12 @@ var routes = [
         }],
         accessLevel: accessLevels.public
     }
-];
+]);
 
 module.exports = function(app) {
 
     _.each(routes, function(route) {
+
         var args = _.flatten([route.path, route.middleware]);
 
         switch(route.httpMethod.toUpperCase()) {

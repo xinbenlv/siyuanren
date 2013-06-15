@@ -9,10 +9,10 @@ module.exports = {
         var users = User.findAll();
         _.each(users, function(user) {
             delete user.password;
-            delete user.twitter;
-            delete user.facebook;
+            for(i in constants.ENABED_PROVIDERS){
+              delete user[provider[i]];
+            }
             delete user.google;
-            delete user.linkedin;
         });
         res.json(users);
     }

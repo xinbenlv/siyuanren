@@ -5,6 +5,9 @@ var express =       require('express')
     , mongoose =    require('mongoose')
     , User =        require('./server/models/User.js')
     , auth =        require('./server/controllers/auth.js')
+    , constants =   require('./shared/constants')
+    , logger =      require('log4js').getDefaultLogger()
+    ;
 var app = express();
 
 app.set('views', __dirname + '/client/views');
@@ -20,10 +23,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(auth.localStrategy);
-passport.use(auth.twitterStrategy());  // Comment out this line if you don't want to enable login via Twitter
-passport.use(auth.facebookStrategy()); // Comment out this line if you don't want to enable login via Facebook
+for(var i in constants.ENABED_PROVIDERS) {
+  var provider = constants.ENABED_PROVIDERS[i];
+  passport.use(auth.getStrategy(provider));
+}
 passport.use(auth.googleStrategy());   // Comment out this line if you don't want to enable login via Google
-passport.use(auth.linkedInStrategy()); // Comment out this line if you don't want to enable login via LinkedIn
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());

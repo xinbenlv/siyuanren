@@ -1,14 +1,12 @@
 var passport =  require('passport')
     , User = require('../models/User.js')
     , LocalStrategy =   require('passport-local').Strategy
-    , TwitterStrategy = require('passport-twitter').Strategy
-    , FacebookStrategy = require('passport-facebook').Strategy
     , GoogleStrategy = require('passport-google').Strategy
-    , LinkedInStrategy = require('passport-linkedin').Strategy
     , constants =       require('../../shared/constants')
     , logger    =       require('log4js').getDefaultLogger()
     , userRoles = require('../../client/js/routingConfig').userRoles
     ;
+
 module.exports = {
     register: function(req, res, next) {
 
@@ -64,34 +62,6 @@ module.exports = {
 
     localStrategy: new LocalStrategy(User.authenticate()),
 
-    twitterStrategy: function() {
-      if(!process.env.TWITTER_CONSUMER_KEY)    throw new Error('A Twitter Consumer Key is required if you want to enable login via Twitter.');
-      if(!process.env.TWITTER_CONSUMER_SECRET) throw new Error('A Twitter Consumer Secret is required if you want to enable login via Twitter.');
-
-      return new TwitterStrategy({
-          consumerKey: process.env.TWITTER_CONSUMER_KEY,
-          consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-          callbackURL: constants.TWITTER_AUTH_CALLBACK
-        },
-        function(token, tokenSecret, profile, done) {
-          module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
-        });
-    },
-
-    facebookStrategy: function() {
-      if(!process.env.FACEBOOK_APP_ID)     throw new Error('A Facebook App ID is required if you want to enable login via Facebook.');
-      if(!process.env.FACEBOOK_APP_SECRET) throw new Error('A Facebook App Secret is required if you want to enable login via Facebook.');
-
-      return new FacebookStrategy({
-          clientID: process.env.FACEBOOK_APP_ID,
-          clientSecret: process.env.FACEBOOK_APP_SECRET,
-          callbackURL: constants.FACEBOOK_AUTH_CALLBACK
-        },
-        function(accessToken, refreshToken, profile, done) {
-          module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
-        });
-    },
-
     googleStrategy: function() {
 
       return new GoogleStrategy({
@@ -101,21 +71,6 @@ module.exports = {
         function(identifier, profile, done) {
           module.exports.findOrCreateOauthUser('google', identifier, done);
         });
-    },
-
-    linkedInStrategy: function() {
-      if(!process.env.LINKED_IN_KEY)     throw new Error('A LinkedIn App Key is required if you want to enable login via LinkedIn.');
-      if(!process.env.LINKED_IN_SECRET) throw new Error('A LinkedIn App Secret is required if you want to enable login via LinkedIn.');
-
-      return new LinkedInStrategy({
-          consumerKey: process.env.LINKED_IN_KEY,
-          consumerSecret: process.env.LINKED_IN_SECRET,
-          callbackURL: constants.LINKED_IN_AUTH_CALLBACK
-        },
-        function(token, tokenSecret, profile, done) {
-          module.exports.findOrCreateOauthUser('linkedin', profile.id, done);
-        }
-      );
     },
 
     findOrCreateOauthUser : function(provider, providerId, callback) {
@@ -144,5 +99,18 @@ module.exports = {
           }
         }
       });
+    },
+
+    getStrategy : function(provider) {
+      return new constants.STRATEGIES[provider]({
+          clientID: constants.PROVIDER_CREDENTIALS[provider].app_id,
+          clientSecret: constants.PROVIDER_CREDENTIALS[provider].app_secret,
+          consumerKey: constants.PROVIDER_CREDENTIALS[provider].app_id,     // Some strategy call it different name
+          consumerSecret: constants.PROVIDER_CREDENTIALS[provider].app_secret,
+          callbackURL: constants.PROVIDER_CREDENTIALS[provider].app_auth_callback_url
+        },
+        function(accessToken, refreshToken, profile, done) {
+          module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
+        });
     }
 };
