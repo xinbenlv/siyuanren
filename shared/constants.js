@@ -23,11 +23,12 @@ var getDeauthCallbackUrl = function(provider) {
 };
 
 var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin'];
-var STRATEGIES = {
-  'facebook': FacebookStrategy,
-  'twitter': TwitterStrategy,
-  'linkedin': LinkedInStrategy
-};
+
+var STRATEGIES = {};
+for (var i in ENABED_PROVIDERS) {
+  var provider = ENABED_PROVIDERS[i];
+  STRATEGIES[provider] =  require('passport-' + provider).Strategy;
+}
 
 var GOOGLE_AUTH_RETURN = HOST_ROOL_URL + '/auth/google/return';
 
