@@ -101,6 +101,8 @@
   exports.load = function () {
     editableGrid = new EditableGrid('PeopleTable', {
       enableSort: true,
+      doubleclick: true,
+      editmode: 'static',
       modelChanged: updateCellValue
     });
 
@@ -114,7 +116,6 @@
       dataType: 'json',
       async: false,
       success: function(rawData) {
-        console.log('DBG: rawData: ' + JSON.stringify(rawData));
         var tableData = {};
         tableData.metadata = metadata;
         var data = [];

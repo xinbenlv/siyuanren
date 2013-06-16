@@ -7,8 +7,9 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         link(href="/thirdparty/lexrus-fontdiao-830f6e7/css/fontdiao.css", rel="stylesheet")
-        // From peopletable
-        link(rel='stylesheet', href='/thirdparty/editablegrid/editablegrid-2.0.1.css', type='text/css', media='screen')
+
+        // Editable.git
+        link(rel='stylesheet', href='/thirdparty/editablegrid.git/editablegrid.css', type='text/css', media='screen')
 
         // This is needed because Facebook login redirects add #_=_ at the end of the URL
         script(type="text/javascript")
@@ -53,7 +54,14 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
         script(src='/thirdparty/jquery/jquery.serialize-object.compiled.js')
         // For EditableGrid
-        script(src='/thirdparty/editablegrid/editablegrid-2.0.1.js')
+        //script(src='/thirdparty/editablegrid/editablegrid-2.0.1.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid_charts.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid_editors.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid_renderers.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid_utils.js')
+        script(src='/thirdparty/editablegrid.git/editablegrid_validators.js')
+
         script(src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.js")
         script(src='/js/routingConfig.js')
         script(src='/js/app.js')
