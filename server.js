@@ -1,5 +1,5 @@
 var express =       require('express')
-    , http =        require('http')
+    , app =         require('express.io')()
     , passport =    require('passport')
     , path =        require('path')
     , mongoose =    require('mongoose')
@@ -8,7 +8,8 @@ var express =       require('express')
     , constants =   require('./shared/constants')
     , logger =      require('log4js').getDefaultLogger()
     ;
-var app = express();
+app.http().io();
+
 
 app.set('views', __dirname + '/client/views');
 app.set('view engine', 'jade');
@@ -37,6 +38,7 @@ mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 require('./server/routes.js')(app);
 
 app.set('port', process.env.PORT || 8000);
-http.createServer(app).listen(app.get('port'), function(){
-    console.log("Express server listening on port " + app.get('port'));
+
+app.listen(app.get('port'), function(){
+  logger.debug('Start listening on ' + app.get('port'));
 });

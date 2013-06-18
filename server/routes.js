@@ -149,7 +149,35 @@ routes = []
             res.render('index');
         }],
         accessLevel: accessLevels.public
-    }
+    },
+
+    // socket routes
+    {
+      path: 'connection',
+      ioRoute: true,
+      middleware: [function(req) {
+        logger.debug('on connection');
+        // req.io.emit('edit', {en:'a'});
+      }],
+      accessLevel: accessLevels.public
+    },
+    {
+      path: 'edit',
+      ioRoute: true,
+      middleware: [function(req) {
+        req.io.emit('edit', {en:'a'});
+      }],
+      accessLevel: accessLevels.public
+    },
+    {
+      path: 'disconnect',
+      ioRoute: true,
+      middleware: [function(req) {
+        logger.debug('on disconnection');
+      }],
+      accessLevel: accessLevels.public
+    },
+
 ]);
 
 module.exports = function(app) {
@@ -158,24 +186,31 @@ module.exports = function(app) {
 
         var args = _.flatten([route.path, route.middleware]);
 
-        switch(route.httpMethod.toUpperCase()) {
-            case 'GET':
-                app.get.apply(app, args);
-                break;
-            case 'POST':
-                app.post.apply(app, args);
-                break;
-            case 'PUT':
-                app.put.apply(app, args);
-                break;
-            case 'DELETE':
-                app.delete.apply(app, args);
-                break;
-            default:
-                throw new Error('Invalid HTTP method specified for route ' + route.path);
-                break;
+        if (route.ioRoute){
+          app.io.route.apply(app.io, args);
+        } else {
+          switch(route.httpMethod.toUpperCase()) {
+              case 'GET':
+                  app.get.apply(app, args);
+                  break;
+              case 'POST':
+                  app.post.apply(app, args);
+                  break;
+              case 'PUT':
+                  app.put.apply(app, args);
+                  break;
+              case 'DELETE':
+                  app.delete.apply(app, args);
+                  break;
+              default:
+                  throw new Error('Invalid HTTP method specified for route ' + route.path);
+                  break;
+          }
         }
     });
+
+
+
 }
 
 function ensureAuthenticated(req, res, next) {

@@ -96,6 +96,15 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
+
+  var socket = io.connect('http://localhost:5000/');
+  console.log('xxxx edit emit!');
+  socket.emit('edit', {data: 'interesting'});
+  socket.on('edit', function(data) {
+    console.log(data);
+    alert('system:' + data);
+  });
+
   peopletable.load();
 
 }]);

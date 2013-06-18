@@ -13,6 +13,8 @@
 
     "connect-roles": "2.0.3",
     "connect-flash": "0.1.1",
+    "socket.io": "0.9.16",
+    "express.io": "1.1.11",
 
     "underscore": "*",
     "validator": "~1.1.1",
