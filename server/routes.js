@@ -9,6 +9,7 @@ var _ =           require('underscore')
     , constants = require('../shared/constants')
       logger = require('log4js').getDefaultLogger();
     ;
+var otherUsers = {};
 
 var getProviderRoutes = function(providers){
   var pRoutes = [];
@@ -162,18 +163,33 @@ routes = []
       accessLevel: accessLevels.public
     },
     {
-      path: 'edit',
+      path: 'enter',
       ioRoute: true,
       middleware: [function(req) {
-        req.io.emit('edit', {en:'a'});
+        try{
+          var enterUser = req.handshake.session.passport.user;
+          otherUsers[enterUser] = enterUser;
+          logger.debug('Enter: ' + enterUser);
+          req.io.emit('enter', { otherUsers: otherUsers });
+          req.io.broadcast('someoneEnter', {enterUser: enterUser});
+        } catch(Exception) {
+          logger.warn('Someone enter, but we can\'t retrieve usernmae.');
+        }
       }],
-      accessLevel: accessLevels.public
+      accessLevel: accessLevels.admin
     },
     {
       path: 'disconnect',
       ioRoute: true,
       middleware: [function(req) {
-        logger.debug('on disconnection');
+          try{
+            var leaveUser = req.handshake.session.passport.user;
+            logger.debug('Leave: ' + leaveUser);
+            delete otherUsers[leaveUser];
+            req.io.broadcast('leave', { leaveUser: leaveUser });
+          } catch(Exception){
+            logger.warn('Someone leave, but we can\'t retrieve usernmae.');
+          }
       }],
       accessLevel: accessLevels.public
     },

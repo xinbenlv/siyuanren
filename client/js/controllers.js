@@ -96,13 +96,29 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-
+  if($scope.otherUsers == undefined) $scope.otherUsers = {};
   var socket = io.connect('http://localhost:5000/');
-  console.log('xxxx edit emit!');
-  socket.emit('edit', {data: 'interesting'});
-  socket.on('edit', function(data) {
+  $rootScope.socket = socket;
+  socket.emit('enter', {data: 'interesting'});
+  socket.on('enter', function(data) {
     console.log(data);
-    alert('system:' + data);
+    $scope.otherUsers = data.otherUsers;
+  });
+
+  socket.on('enter', function(data) {
+    console.log('Enter:' + data);
+    $scope.otherUsers = data.otherUsers;
+    console.log('OtherUsers:' +JSON.stringify($scope.otherUsers));
+  });
+
+  socket.on('someoneEnter', function(data) {
+    console.log('BoardCast:' + data);
+    $scope.otherUsers[data.enterUser] = data.enterUser;
+  });
+
+  socket.on('leave', function(data) {
+    console.log('Leave' + data.leaveUser);
+    delete $scope.otherUsers[data.leaveUser];
   });
 
   peopletable.load();

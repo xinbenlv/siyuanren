@@ -37,7 +37,7 @@ mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 
 require('./server/routes.js')(app);
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 5000);
 
 app.listen(app.get('port'), function(){
   logger.debug('Start listening on ' + app.get('port'));
