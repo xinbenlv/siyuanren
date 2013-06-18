@@ -19,7 +19,7 @@ var getDeauthCallbackUrl = function(provider) {
   return HOST_ROOL_URL + '/deauth/' + provider + '/callback';
 };
 
-var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'renren'];
+var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'weibo', 'renren'];
 
 var STRATEGIES = {};
 for (var i in ENABED_PROVIDERS) {
