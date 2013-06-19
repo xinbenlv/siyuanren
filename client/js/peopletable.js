@@ -7,15 +7,15 @@
   var currentFilter;
 
   var metadata = [
-    { name: '姓名', label: '姓名', datatype: 'string', editable: true},
+    { name: '姓名', label: '姓名', datatype: 'string', editable: true, extrastyle:'width:10%;'},
     { name: '思源学员期数', label: '思源学员期数',
-      datatype: 'string', editable: true},
-    { name: '常用邮箱', label: '常用邮箱', datatype: 'string', editable: true},
+      datatype: 'string', editable: true, extrastyle:'width:10%;'},
+    { name: '常用邮箱', label: '常用邮箱', datatype: 'string', editable: true, extrastyle:'width:25%;'},
     { name: '手机', label: '手机',
-      datatype: 'string', editable: true},
-    { name: '所在院系-要删', label: '所在院系-要删', datatype: 'string', editable: true},
-    { name: '目前职位', label: '目前职位', datatype: 'string', editable: true},
-    { name: 'action', datatype: 'html', editable: false }];
+      datatype: 'string', editable: true, extrastyle:'width:20%;'},
+    { name: '所在院系-要删', label: '所在院系-要删', datatype: 'string', editable: true, extrastyle:'width:20%;'},
+    { name: '目前职位', label: '目前职位', datatype: 'string', editable: true, extrastyle:'width:10%;'},
+    { name: 'action', datatype: 'html', editable: false, extrastyle:'width:5%;'}];
 
 // declaring editableGrid
   var editableGrid;
