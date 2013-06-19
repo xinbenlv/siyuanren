@@ -121,6 +121,7 @@ angular.module('angular-client-side-auth')
     delete $scope.otherUsers[data.leaveUser];
   });
 
-  peopletable.load();
+  $scope.loadTable = peopletable.load;
+  $scope.loadTable();
 
 }]);

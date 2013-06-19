@@ -71,8 +71,11 @@
 
   var loadEntireTable = function(tableData) {
     editableGrid.load(tableData);
+
     editableGrid.setCellRenderer('action', actionCellRenderer);
     editableGrid.renderGrid('tablecontent', 'testgrid');
+    editableGrid.updatePaginator();
+    //editableGrid.setPageSize(50);
   };
 
   var updateCellValue = function(rowIndex, columnIndex, oldValue, newValue, row) {
@@ -98,12 +101,33 @@
     });
   };
 
+  EditableGrid.prototype.updatePaginator = function()
+  {
+    var paginator = $("#paginator").empty();
+
+    var link;
+
+    // "prev" link
+    link = $("<a>").html("<i class='icon-arrow-left' />");
+    if (!this.canGoBack()) link.css({ opacity : 0.4, filter: "alpha(opacity=40)" });
+    else link.css("cursor", "pointer").click(function() { editableGrid.prevPage(); });
+    paginator.append(link);
+
+    // "next" link
+    link = $("<a>").html("<i class='icon-arrow-right' />");
+    if (!this.canGoForward()) link.css({ opacity : 0.4, filter: "alpha(opacity=40)" });
+    else link.css("cursor", "pointer").click(function() { editableGrid.nextPage(); });
+    paginator.append(link);
+
+  };
+
   exports.load = function () {
     editableGrid = new EditableGrid('PeopleTable', {
       enableSort: true,
       doubleclick: true,
       editmode: 'static',
-      modelChanged: updateCellValue
+      modelChanged: updateCellValue,
+      pageSize: 20
     });
 
     console.log('set up filter!');
@@ -123,7 +147,10 @@
           data.push({id: rawData[i]._id, values: rawData[i]});
         }
         tableData.data = data;
+
         loadEntireTable(tableData);
+
+
       }
     });
 

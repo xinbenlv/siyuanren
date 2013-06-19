@@ -1,10 +1,14 @@
 .row
     .container.span10
-        label(for='filter') Filter:
-        input#filter(type='text', data-cip-id='filter')
-        br
-        button.btn(onclick='peopletable.onClickCreate(1)') Create
-        #tablecontent.table.table-striped.table-bordered
+        .row
+            label(for='filter') Filter:
+            input#filter(type='text', data-cip-id='filter')
+        .row
+            button.btn(onclick='peopletable.onClickCreate(1)') Create
+        .row
+            div#paginator  Hello
+        .row
+            #tablecontent.table.table-striped.table-bordered
     .container.span2
         h3 'Current Online User:'
         ul
