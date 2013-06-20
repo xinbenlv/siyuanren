@@ -73,9 +73,9 @@
     editableGrid.load(tableData);
 
     editableGrid.setCellRenderer('action', actionCellRenderer);
-    editableGrid.renderGrid('tablecontent', 'testgrid');
+    editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover','testgrid');
     editableGrid.updatePaginator();
-    //editableGrid.setPageSize(50);
+
   };
 
   var updateCellValue = function(rowIndex, columnIndex, oldValue, newValue, row) {
@@ -101,9 +101,21 @@
     });
   };
 
+  EditableGrid.prototype.tableRendered = function() { this.updatePaginator(); };
+
   EditableGrid.prototype.updatePaginator = function()
   {
     var paginator = $("#paginator").empty();
+
+    // get interval
+    var interval = this.getSlidingPageInterval(20);
+    if (interval == null) return;
+
+    // get pages in interval (with links except for the current page)
+    var pages = this.getPagesInInterval(interval, function(pageIndex, isCurrent) {
+      if (isCurrent) return "" + (pageIndex + 1);
+      return $("<a>").css("cursor", "pointer").html(pageIndex + 1).click(function(event) { editableGrid.setPageIndex(parseInt($(this).html()) - 1); });
+    });
 
     var link;
 
@@ -112,6 +124,9 @@
     if (!this.canGoBack()) link.css({ opacity : 0.4, filter: "alpha(opacity=40)" });
     else link.css("cursor", "pointer").click(function() { editableGrid.prevPage(); });
     paginator.append(link);
+
+    // pages
+    for (p = 0; p < pages.length; p++) paginator.append(pages[p]).append(" | ");
 
     // "next" link
     link = $("<a>").html("<i class='icon-arrow-right' />");
@@ -127,7 +142,7 @@
       doubleclick: true,
       editmode: 'static',
       modelChanged: updateCellValue,
-      pageSize: 20
+      pageSize: 16
     });
 
     console.log('set up filter!');
@@ -149,8 +164,6 @@
         tableData.data = data;
 
         loadEntireTable(tableData);
-
-
       }
     });
 

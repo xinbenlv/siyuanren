@@ -14,7 +14,8 @@ body {
 }
 
 #userInfo {
-    float:right;padding:8px;
+    float:right;
+    padding:8px;
 }
 
 .icon-twitter {
@@ -48,4 +49,26 @@ body {
 }
 .fade-show-setup.fade-show-start {
     opacity:1;
+}
+
+table {
+    table-layout: fixed;
+}
+
+#tablecontent td, #tablecontent th {
+    padding: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#tablecontent input {
+    margin: -4px;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+#paginator {
+    float: left;
+    text-align: center;
 }

@@ -1,17 +1,17 @@
-.row
-    .container.span10
-        .row
-            label(for='filter') Filter:
-            input#filter(type='text', data-cip-id='filter')
-        .row
-            button.btn(onclick='peopletable.onClickCreate(1)') Create
-        .row
-            div#paginator  Hello
-        .row
-            #tablecontent.table.table-striped.table-bordered
-    .container.span2
-        h3 'Current Online User:'
-        ul
-            li(ng-repeat='otherUser in otherUsers')
-                a(href='/user/username/{{otherUser}}')
-                    '{{otherUser}}'
+.container
+    .row
+        label.span1(for='filter') Filter:
+        input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
+        button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
+
+
+        div.span4
+            p Current Online User:
+            ul
+                li(ng-repeat='otherUser in otherUsers')
+                    a(href='/user/username/{{otherUser}}') {{otherUser}}
+    .row
+        div#paginator.span12
+    .row
+        .span12
+            div#tablecontent

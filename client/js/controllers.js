@@ -50,7 +50,7 @@ angular.module('angular-client-side-auth')
   $scope.slides = [
     {image: 'http://fmn.rrimg.com/fmn056/xiaozhan/20121217/1535/xlarge_MWBM_4570000080291191.jpg', title: '年会', text: '思源年会.'},
     {image: 'http://fmn.rrimg.com/fmn065/xiaozhan/20121217/1535/xlarge_pNP8_33e4000099ef118e.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
-    {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'},
+    {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
 }]);
 
@@ -96,23 +96,18 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-  if($scope.otherUsers == undefined) $scope.otherUsers = {};
   var socket = io.connect('http://localhost:5000/');
   $rootScope.socket = socket;
   socket.emit('enter', {data: 'interesting'});
-  socket.on('enter', function(data) {
-    console.log(data);
-    $scope.otherUsers = data.otherUsers;
-  });
 
   socket.on('enter', function(data) {
-    console.log('Enter:' + data);
-    $scope.otherUsers = data.otherUsers;
-    console.log('OtherUsers:' +JSON.stringify($scope.otherUsers));
+    console.log('allOtherCurrentUsers:' + JSON.stringify(data));
+    $scope.otherUsers = data.otherUsers;  //= data.otherUsers;
+    peopletable.load(); // TODO(zzn): use async to load page
   });
 
   socket.on('someoneEnter', function(data) {
-    console.log('BoardCast:' + data);
+    console.log('Boardcast:' + data);
     $scope.otherUsers[data.enterUser] = data.enterUser;
   });
 
@@ -120,8 +115,4 @@ angular.module('angular-client-side-auth')
     console.log('Leave' + data.leaveUser);
     delete $scope.otherUsers[data.leaveUser];
   });
-
-  $scope.loadTable = peopletable.load;
-  $scope.loadTable();
-
 }]);
