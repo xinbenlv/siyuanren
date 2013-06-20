@@ -110,6 +110,7 @@ module.exports = {
           callbackURL: constants.PROVIDER_CREDENTIALS[provider].app_auth_callback_url
         },
         function(accessToken, refreshToken, profile, done) {
+          console.log('profile:' + JSON.stringify(profile));
           module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
         });
     }

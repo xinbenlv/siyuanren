@@ -96,7 +96,10 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-  var socket = io.connect('http://localhost:5000/');
+  var URL = window.location.protocol + "//" + window.location.host;
+  console.log("Connecting to " + URL);
+
+  var socket = io.connect(URL);
   $rootScope.socket = socket;
   socket.emit('enter', {data: 'interesting'});
 
