@@ -25,22 +25,22 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                 .container-fluid
                     ul.nav
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/login') Log in
+                            a(href='/login') 登录
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/register') Register
+                            a(href='/register') 注册
                         li(data-access-level='{{ accessLevels.user }}', active-nav)
-                            a(href='/') Home
+                            a(href='/') 首页
                         li(data-access-level='{{ accessLevels.user }}', active-nav)
-                            a(href='/private') Private
+                            a(href='/private') 空白
                         li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                            a(href='/peopletable') People Table
+                            a(href='/peopletable') 搜索思源人
                         li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                            a(href='/admin') Admin
+                            a(href='/admin') 管理
                         li(data-access-level='{{ accessLevels.user }}')
                             a(href="", data-ng-click="logout()")
-                                | Log out
+                                | 登出
                     div#userInfo.pull-right(data-access-level='{{ accessLevels.user }}')
-                        | Welcome&nbsp;
+                        | 欢迎你：&nbsp;
                         strong {{ user.username }}&nbsp;
                         span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
 

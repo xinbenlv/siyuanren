@@ -1,27 +1,27 @@
 .hero-unit
     h1 请登录
     br
-    p 非常简易的版本
+    p 思源欢迎你
 
     form.form-horizontal(ng-submit="login()", name="loginForm")
         .control-group
-            label.control-label(for="username") Username
+            label.control-label(for="username") 用户名
             .controls
                 input(type="text", data-ng-model="username", placeholder="Username", name="username", required)
         .control-group
-            label.control-label(for="password") Password
+            label.control-label(for="password") 密码
             .controls
                 input(type="password", data-ng-model="password", placeholder="Password", name="password", required)
         .control-group
             .controls
                 label(for="rememberme").checkbox
                     input(type="checkbox", data-ng-model="rememberme", name="rememberme", value="0")
-                    | Remember me
+                    | 下次自动登录
         .control-group
             .controls
                 button.btn(type="submit") Log in
     hr
-    p ... or use one of them fancy social logins:
+    p ... 或者可以使用如下方式登录:
     .btn-group
         a.btn(href="", data-ng-click="loginOauth('facebook')")
             i.icon-facebook-sign
