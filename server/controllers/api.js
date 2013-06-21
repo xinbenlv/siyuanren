@@ -47,7 +47,6 @@ exports.get = function(req, res) {
 * @param {object} res Response for a query.
 */
 exports.put = function(req, res) {
-  logger.info('put: ' + JSON.stringify(req.query));
   var theid = req.params.theid;
   SiyuanUserProfile.findByIdAndUpdate(theid, { $set: req.query},
     function(err, doc) {

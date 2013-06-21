@@ -33,8 +33,6 @@ var getProviderCredentials = function() {
   var c = {};
   for (var i in ENABED_PROVIDERS) {
     var provider = ENABED_PROVIDERS[i];
-
-    logger.debug('registering Oauth provider: ' + provider);
     c[provider] = {
       app_id: process.env[provider.toUpperCase() + '_APP_ID'],
       app_secret : process.env[provider.toUpperCase() + '_APP_SECRET'],

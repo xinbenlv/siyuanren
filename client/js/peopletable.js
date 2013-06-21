@@ -21,7 +21,6 @@
   var editableGrid;
 
   exports.onClickDelete = function(rowIndex) {
-    console.log('onDelete!');
     if (confirm('Are you sure you want to delete this person ? ')) {
 
       // Send request
@@ -44,8 +43,6 @@
    */
   exports.onClickCreate = function(rowIndex, values) {
     var values = {'姓名': '无名氏'};
-
-    console.log('onCreate!');
     // Send request
     $.ajax({
       url: '/api/siyuan/post',
@@ -144,8 +141,6 @@
       modelChanged: updateCellValue,
       pageSize: 16
     });
-
-    console.log('set up filter!');
 
     // Send request
     $.ajax({

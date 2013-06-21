@@ -130,20 +130,18 @@ angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
   var URL = window.location.protocol + "//" + window.location.host;
-  console.log("Connecting to " + URL);
+  console.log("MSG: Connecting to " + URL);
 
   var socket = io.connect(URL);
   $rootScope.socket = socket;
   socket.emit('enter', {data: 'interesting'});
 
   socket.on('enter', function(data) {
-    console.log('allOtherCurrentUsers:' + JSON.stringify(data));
     $scope.otherUsers = data.otherUsers;  //= data.otherUsers;
     peopletable.load(); // TODO(zzn): use async to load page
   });
 
   socket.on('someoneEnter', function(data) {
-    console.log('Boardcast:' + data);
     $scope.otherUsers[data.enterUser] = data.enterUser;
   });
 

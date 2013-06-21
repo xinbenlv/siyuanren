@@ -22,7 +22,6 @@ module.exports = {
         User.register(
           {username:req.body.username}, req.body.password,
           function(err, user) {
-          console.log( JSON.stringify(err));
             if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
             else if(err)                    return res.send(400, err.message);
             user.setRole(req.body.role);
@@ -36,25 +35,17 @@ module.exports = {
     },
 
     login: function(req, res, next) {
-        logger.debug('Serverside, try to login');
         passport.authenticate('local', function(err, user) {
-          logger.debug('111');
             if(err)     { return next(err); }
             if(!user)   { return res.send(400); }
 
-          logger.debug('222xx');
-          logger.debug(req.logIn.toString());
-
           req.logIn(user, {}, function(err) {
-            logger.debug('333,1');
               if(err) {
                   return next(err);
               }
-            logger.debug('333,2');
               if(req.body.rememberme && req.session.cookie) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
               res.json(200, { "role": user.role, "username": user.username });
           });
-          logger.debug('444');
         })(req, res, next);
     },
 
@@ -85,13 +76,11 @@ module.exports = {
           //TODO(zzn) make sure it is that we find a user
 
         } else {
-          console.log( 'found user:' + JSON.stringify(user));
           if (user !=null){
             callback(null, user);
           } else {
 
             User.register({username:provider + '_user'}, provider + '_password', function(err, user) {
-              console.log( 'registerred in');
               if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
               else if(err)                    return res.send(400, err.message);
               user.setRole(userRoles.user);
