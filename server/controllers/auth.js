@@ -9,8 +9,9 @@ var passport =  require('passport')
 
 module.exports = {
     register: function(req, res, next) {
-
-        return res.send(400, '注册尚未开放，请联系管理员');
+        if (!constants.OPEN_REGISTRATION)
+          return res.send(400, '注册尚未开放，请联系管理员');
+        req.body.password = req.body.password || require("randomstring").generate(20);
         try {
           User.validate(req.body);
         }
@@ -18,7 +19,9 @@ module.exports = {
             return res.send(400, err.message);
         }
 
-        User.register({username:req.body.username}, req.body.password, function(err, user) {
+        User.register(
+          {username:req.body.username}, req.body.password,
+          function(err, user) {
           console.log( JSON.stringify(err));
             if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
             else if(err)                    return res.send(400, err.message);

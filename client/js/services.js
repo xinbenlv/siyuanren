@@ -23,8 +23,8 @@ angular.module('angular-client-side-auth')
                 user = $rootScope.user;
             return user.role === userRoles.user || user.role === userRoles.admin;
         },
-        register: function(user, success, error) {
-            $http.post('/register', user).success(success).error(error);
+        register: function(data, success, error) {
+            $http.post('/register', data).success(success).error(error);
         },
         login: function(user, success, error) {
             console.log('try to login!');//TODO(zzn): remove debug
