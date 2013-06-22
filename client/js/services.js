@@ -24,6 +24,7 @@ angular.module('angular-client-side-auth')
             return user.role === userRoles.user || user.role === userRoles.admin;
         },
         register: function(data, success, error) {
+            console.log('Registering:' + JSON.stringify(data));
             $http.post('/register', data).success(success).error(error);
         },
         login: function(user, success, error) {

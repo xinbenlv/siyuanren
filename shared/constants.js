@@ -32,6 +32,7 @@ var GOOGLE_AUTH_RETURN = HOST_ROOL_URL + '/auth/google/return';
 var getProviderCredentials = function() {
   var c = {};
   for (var i in ENABED_PROVIDERS) {
+    logger.info("Enabling provider: " + ENABED_PROVIDERS[i]);
     var provider = ENABED_PROVIDERS[i];
     c[provider] = {
       app_id: process.env[provider.toUpperCase() + '_APP_ID'],
@@ -42,12 +43,12 @@ var getProviderCredentials = function() {
   }
   return c;
 }
-
+logger.info("Open Registration: " + process.env.OPEN_REGISTRATION);
 module.exports = {
   HOST_ROOL_URL : HOST_ROOL_URL,
   ENABED_PROVIDERS: ENABED_PROVIDERS,
   GOOGLE_AUTH_RETURN: GOOGLE_AUTH_RETURN,
   PROVIDER_CREDENTIALS: getProviderCredentials(),
   STRATEGIES: STRATEGIES,
-  OPEN_REGISTRATION: process.env.OPEN_REGISTRATION !== undefined
+  OPEN_REGISTRATION: (process.env.OPEN_REGISTRATION === "True")
 };

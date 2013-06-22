@@ -9,9 +9,11 @@ var passport =  require('passport')
 
 module.exports = {
     register: function(req, res, next) {
+        logger.debug('receiving register request:');
         if (!constants.OPEN_REGISTRATION)
           return res.send(400, '注册尚未开放，请联系管理员');
         req.body.password = req.body.password || require("randomstring").generate(20);
+        req.body.role = userRoles.user;
         try {
           User.validate(req.body);
         }
