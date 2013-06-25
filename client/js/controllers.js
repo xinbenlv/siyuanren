@@ -53,7 +53,6 @@ angular.module('angular-client-side-auth')
     {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
 
-
   $scope.opts = {
     backdrop: true,
     keyboard: true,
@@ -64,6 +63,7 @@ angular.module('angular-client-side-auth')
   };
 
   $scope.d = $dialog.dialog($scope.opts);
+
   $scope.d.open().then(function(data){
     Auth.register(data,
       function(res) {
@@ -79,13 +79,14 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-    $scope.role = routingConfig.userRoles.user;
+    alert('User here!:' + JSON.stringify($scope.user));
 
     $scope.register = function() {
         Auth.register({
                 username: $scope.username,
                 password: $scope.password,
-                role: $scope.role
+                siyuanid: $scope.siyuanid,
+                email: $scope.email
             },
             function(res) {
                 $rootScope.user = res;

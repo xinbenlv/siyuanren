@@ -9,7 +9,20 @@ var User
 
 var userSchema = new Schema({
   role: { type: userRoles } ,
-  auth: { String: {} }
+
+  /**
+   * Authentication method, a string as a provider, and the authentication related information inside.
+   * Example:
+   * {
+   *   'facebook':{
+   *      id: 'somefacebookid',
+   *      token: 'somefacebooktoken'
+   *   }
+   * }
+   */
+  auth: { String: {} },
+
+  siyuanid: { type:String }
 });
 userSchema.methods.setRole = function(role) {
   this.role = role;
@@ -18,8 +31,6 @@ userSchema.methods.setRole = function(role) {
 userSchema.methods.resetVerificationRandomToken = function(){
   this.verificationRandomToken = require("randomstring").generate(32);
 };
-
-
 
 userSchema.statics.findByProviderId = function(provider, id, callback) {
   var query = {};

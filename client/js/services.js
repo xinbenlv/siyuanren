@@ -6,6 +6,8 @@ angular.module('angular-client-side-auth')
     var accessLevels = routingConfig.accessLevels
         , userRoles = routingConfig.userRoles;
 
+    console.log('CookieStore: user = ' + JSON.stringify($cookieStore.get('user')));       //DBG
+
     $rootScope.user = $cookieStore.get('user') || { username: '', role: userRoles.public };
     $cookieStore.remove('user');
 

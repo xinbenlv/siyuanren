@@ -9,12 +9,13 @@ form.form-horizontal(ng-submit="register()", name="registerForm")
         .controls
             input(type="password", data-ng-model="password", placeholder="Password", name="password", required, data-ng-minlength="5", data-ng-maxlength="60")
     .control-group
-        label.radio.inline
-            input(type="radio", name="role", data-ng-model="role", id="adminRole", data-ng-value="{{ userRoles.admin }}")
-            | Administrator
-        label.radio.inline
-            input(type="radio", name="role", data-ng-model="role", id="adminRole", data-ng-value="{{ userRoles.user }}")
-            | Normal user
+        label.control-label(for="siyuanid") SiyuanId
+        .controls
+            input(type="siyuanid", data-ng-model="siyuanid", placeholder="SiyuanId", name="siyuanid", required)
+    .control-group
+        label.control-label(for="email") Email
+        .controls
+            input(type="email", data-ng-model="email", placeholder="Email", name="email", required)
     .control-group
         .controls
             button.btn(type="submit", data-ng-disabled="registerForm.$invalid") Submit

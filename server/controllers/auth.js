@@ -27,6 +27,13 @@ module.exports = {
             if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
             else if(err)                    return res.send(400, err.message);
             user.setRole(req.body.role);
+            if (req.body.provider) {
+              user.auth[req.body.provider] = {
+                id: req.body.oauth.profile.id,
+                token: req.body.oauth.token
+              };
+            }
+
             user.save(function(err) {
               req.logIn(user, function(err) {
                   if(err)     { next(err); }
@@ -71,26 +78,25 @@ module.exports = {
 
     findOrCreateOauthUser : function(provider, providerId, callback) {
       var query = {};
-      query['auth.' + provider + '.providerId'] = providerId;
-      User.findByUsername(provider + '_user', function(err, user) {
-        // TODO(zzn): migrate to Q promises and handle err accordingly
-        if (err) {
-          //TODO(zzn) make sure it is that we find a user
-
+      query['auth.' + provider + '.id'] = providerId;
+      User.find(query, function(err, users) {
+        if (users.length == 1) {
+          logger.info('Found a current user');
+          var client_user = {};
+          client_user['siyuanid'] = user.siyuanid;
+          client_user['username'] = user.username;
+          client_user['role'] = user.role;
+          callback(null, client_user);
+        } else if (users.length == 0) {
+          logger.info('Start Registration');
+          var client_user = {};
+          client_user['username'] = 'anonymous ' + provider + ' user';
+          client_user['role'] = userRoles.anon;
+          callback(null, client_user);
         } else {
-          if (user !=null){
-            callback(null, user);
-          } else {
-
-            User.register({username:provider + '_user'}, provider + '_password', function(err, user) {
-              if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
-              else if(err)                    return res.send(400, err.message);
-              user.setRole(userRoles.user);
-              user.save(function(err) {
-                callback(null, user);
-              });
-            });
-          }
+          var msg = 'Gosh, we found more user with same Id';
+          logger.error(msg);
+          callback(msg, null);
         }
       });
     },
