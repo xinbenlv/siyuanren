@@ -30,8 +30,8 @@ for(var i in constants.ENABED_PROVIDERS) {
 }
 passport.use(auth.googleStrategy());   // Comment out this line if you don't want to enable login via Google
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(auth.serializeUser);
+passport.deserializeUser(auth.deserializeUser);
 
 mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 

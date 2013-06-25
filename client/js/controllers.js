@@ -52,28 +52,29 @@ angular.module('angular-client-side-auth')
     {image: 'http://fmn.rrimg.com/fmn065/xiaozhan/20121217/1535/xlarge_pNP8_33e4000099ef118e.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
     {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
+  if($rootScope.user && $rootScope.user.username.startsWith('anonymous_')) {
+    $scope.opts = {
+      backdrop: true,
+      keyboard: true,
+      backdropClick: true,
+      dialogFade: true,
+      templateUrl: 'partials/internalRegistration',
+      controller: 'DialogController'
+    };
 
-  $scope.opts = {
-    backdrop: true,
-    keyboard: true,
-    backdropClick: true,
-    dialogFade: true,
-    templateUrl: 'partials/internalRegistration',
-    controller: 'DialogController'
-  };
+    $scope.d = $dialog.dialog($scope.opts);
 
-  $scope.d = $dialog.dialog($scope.opts);
-
-  $scope.d.open().then(function(data){
-    Auth.register(data,
-      function(res) {
-        $rootScope.user = res;
-        $location.path('/');
-      },
-      function(err) {
-        $rootScope.error = err;
-      });
-  });
+    $scope.d.open().then(function(data){
+      Auth.register(data,
+        function(res) {
+          $rootScope.user = res;
+          $location.path('/');
+        },
+        function(err) {
+          $rootScope.error = err;
+        });
+    });
+  }
 }]);
 
 angular.module('angular-client-side-auth')
@@ -86,6 +87,7 @@ angular.module('angular-client-side-auth')
                 username: $scope.username,
                 password: $scope.password,
                 siyuanid: $scope.siyuanid,
+                oauthUser: $rootScope.user,
                 email: $scope.email
             },
             function(res) {

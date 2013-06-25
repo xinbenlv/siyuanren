@@ -83,6 +83,7 @@ module.exports = {
         if (users.length == 1) {
           logger.info('Found a current user');
           var client_user = {};
+          client_user['id'] = 0;
           client_user['siyuanid'] = user.siyuanid;
           client_user['username'] = user.username;
           client_user['role'] = user.role;
@@ -90,8 +91,11 @@ module.exports = {
         } else if (users.length == 0) {
           logger.info('Start Registration');
           var client_user = {};
-          client_user['username'] = 'anonymous ' + provider + ' user';
-          client_user['role'] = userRoles.anon;
+          client_user['id'] = 0;
+          client_user['username'] = 'anonymous_' + provider + '_user';
+          client_user['provider'] = provider;
+          client_user['providerId'] = providerId;
+          client_user['role'] = userRoles.public;
           callback(null, client_user);
         } else {
           var msg = 'Gosh, we found more user with same Id';
@@ -113,5 +117,21 @@ module.exports = {
           console.log('profile:' + JSON.stringify(profile));
           module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
         });
+    },
+
+    serializeUser: function(user, done) {
+      done(null, user); // TODO(zzn): use some smarter way to serialize not registered account
+    },
+
+    deserializeUser: function(oauthUser, done) {
+      var id = oauthUser.id;
+      if (id == 0) {
+        done(null, oauthUser);
+      } else {
+        User.findById(id, function(err, user) {
+          if(user)    { done(null, user); }
+          else        { done(null, false); }
+        });
+      }
     }
 };
