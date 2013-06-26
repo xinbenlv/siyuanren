@@ -138,14 +138,16 @@ routes = []
         path: '/*',
         httpMethod: 'GET',
         middleware: [function(req, res) {
-            var role = userRoles.public, username = '';
+            var role = userRoles.public, username = '', meta;
             if(req.user) {
                 role = req.user.role;
                 username = req.user.username;
+                meta = req.user.meta;
             }
             res.cookie('user', JSON.stringify({
                 'username': username,
-                'role': role
+                'role': role,
+                'meta': meta
             }));
             res.render('index');
         }],

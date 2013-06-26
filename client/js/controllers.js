@@ -52,7 +52,8 @@ angular.module('angular-client-side-auth')
     {image: 'http://fmn.rrimg.com/fmn065/xiaozhan/20121217/1535/xlarge_pNP8_33e4000099ef118e.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
     {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
-  if($rootScope.user && $rootScope.user.username.startsWith('anonymous_')) {
+
+  if($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
     $scope.opts = {
       backdrop: true,
       keyboard: true,
@@ -87,7 +88,7 @@ angular.module('angular-client-side-auth')
                 username: $scope.username,
                 password: $scope.password,
                 siyuanid: $scope.siyuanid,
-                oauthUser: $rootScope.user,
+                user: $rootScope.user,
                 email: $scope.email
             },
             function(res) {

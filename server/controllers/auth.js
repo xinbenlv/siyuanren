@@ -10,8 +10,8 @@ var passport =  require('passport')
 module.exports = {
     register: function(req, res, next) {
         logger.debug('receiving register request:');
-        if (!constants.OPEN_REGISTRATION)
-          return res.send(400, '注册尚未开放，请联系管理员');
+        //if (!constants.OPEN_REGISTRATION)
+        //  return res.send(400, '注册尚未开放，请联系管理员');
         req.body.password = req.body.password || require("randomstring").generate(20);
         req.body.role = userRoles.user;
         try {
@@ -20,7 +20,6 @@ module.exports = {
         catch(err) {
             return res.send(400, err.message);
         }
-
         User.register(
           {username:req.body.username}, req.body.password,
           function(err, user) {
@@ -47,11 +46,11 @@ module.exports = {
         passport.authenticate('local', function(err, user) {
             if(err)     { return next(err); }
             if(!user)   { return res.send(400); }
-
           req.logIn(user, {}, function(err) {
               if(err) {
                   return next(err);
               }
+
               if(req.body.rememberme && req.session.cookie) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
               res.json(200, { "role": user.role, "username": user.username });
           });
@@ -91,11 +90,16 @@ module.exports = {
         } else if (users.length == 0) {
           logger.info('Start Registration');
           var client_user = {};
-          client_user['id'] = 0;
-          client_user['username'] = 'anonymous_' + provider + '_user';
-          client_user['provider'] = provider;
-          client_user['providerId'] = providerId;
-          client_user['role'] = userRoles.public;
+          client_user.id = 0;
+          client_user.username = provider + '_user_' + providerId;
+          client_user.role = userRoles.public;
+          client_user.meta = {};
+          client_user.meta.need_to_register = true;
+          client_user.meta.oauth = {};
+          client_user.meta.oauth[provider] = {
+            id: providerId,
+            token: ''
+          }
           callback(null, client_user);
         } else {
           var msg = 'Gosh, we found more user with same Id';
@@ -114,7 +118,6 @@ module.exports = {
           callbackURL: constants.PROVIDER_CREDENTIALS[provider].app_auth_callback_url
         },
         function(accessToken, refreshToken, profile, done) {
-          console.log('profile:' + JSON.stringify(profile));
           module.exports.findOrCreateOauthUser(profile.provider, profile.id, done);
         });
     },
@@ -123,13 +126,18 @@ module.exports = {
       done(null, user); // TODO(zzn): use some smarter way to serialize not registered account
     },
 
-    deserializeUser: function(oauthUser, done) {
-      var id = oauthUser.id;
+    deserializeUser: function(serializedUser, done) {
+      var id = serializedUser.id;
       if (id == 0) {
-        done(null, oauthUser);
+        logger.debug('DBG:' + JSON.stringify(serializedUser));
+        done(null, serializedUser);
+
       } else {
         User.findById(id, function(err, user) {
-          if(user)    { done(null, user); }
+          if(user)    {
+            user.meta = serializedUser.meta;
+            done(null, user);
+          }
           else        { done(null, false); }
         });
       }
