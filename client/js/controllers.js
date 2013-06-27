@@ -66,6 +66,7 @@ angular.module('angular-client-side-auth')
     $scope.d = $dialog.dialog($scope.opts);
 
     $scope.d.open().then(function(data){
+      data.meta = $rootScope.user.meta;
       Auth.register(data,
         function(res) {
           $rootScope.user = res;

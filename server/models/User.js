@@ -20,7 +20,12 @@ var userSchema = new Schema({
    *   }
    * }
    */
-  auth: { String: {} },
+  auth: [{
+    provider: String,
+    id: String,
+    accessToken: String,
+    refreshToken: String
+   }],
 
   siyuanid: { type:String }
 });

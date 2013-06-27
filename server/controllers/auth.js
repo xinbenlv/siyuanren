@@ -26,11 +26,15 @@ module.exports = {
             if(err === 'UserAlreadyExists') return res.send(403, "User already exists");
             else if(err)                    return res.send(400, err.message);
             user.setRole(req.body.role);
-            if (req.body.provider) {
-              user.auth[req.body.provider] = {
-                id: req.body.oauth.profile.id,
-                token: req.body.oauth.token
-              };
+            if (req.body.meta.need_to_register) {
+              for(var provider in req.body.meta.oauth){
+                user.auth.push({
+                  provider: provider,
+                  id: req.body.meta.oauth[provider].id,
+                  accessToken: req.body.meta.oauth[provider].accessToken,
+                  refreshToken: req.body.meta.oauth[provider].refreshToken
+                });
+              }
             }
 
             user.save(function(err) {
@@ -76,10 +80,14 @@ module.exports = {
     },
 
     findOrCreateOauthUser : function(provider, providerId, callback) {
+      //reference: http://stackoverflow.com/questions/13460765/findone-subdocument-in-mongoose
       var query = {};
-      query['auth.' + provider + '.id'] = providerId;
+      query['auth.provider'] = provider;
+      query['auth.id'] = providerId;
+
       User.find(query, function(err, users) {
         if (users.length == 1) {
+          var user = users[0];
           logger.info('Found a current user');
           var client_user = {};
           client_user['id'] = 0;
