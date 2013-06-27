@@ -132,6 +132,12 @@ routes = []
       middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.query],
       accessLevel: accessLevels.admin
     },
+    {
+      path: '/api/publicquery',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.publicquery],
+      accessLevel: accessLevels.anon
+    },
 
     // All other get requests should be handled by AngularJS's client-side routing system
     {

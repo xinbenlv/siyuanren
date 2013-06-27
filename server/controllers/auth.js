@@ -1,5 +1,6 @@
 var passport =  require('passport')
     , User = require('../models/User.js')
+    , SiyuanUserProfile = require('../models/SiyuanUserProfile.js')
     , LocalStrategy =   require('passport-local').Strategy
     , GoogleStrategy = require('passport-google').Strategy
     , constants =       require('../../shared/constants')
@@ -108,7 +109,10 @@ module.exports = {
             id: providerId,
             token: ''
           }
-          callback(null, client_user);
+
+          SiyuanUserProfile.find({}, '_id 姓名', function(err, docs){
+            callback(null, client_user);
+          });
         } else {
           var msg = 'Gosh, we found more user with same Id';
           logger.error(msg);
@@ -137,7 +141,6 @@ module.exports = {
     deserializeUser: function(serializedUser, done) {
       var id = serializedUser.id;
       if (id == 0) {
-        logger.debug('DBG:' + JSON.stringify(serializedUser));
         done(null, serializedUser);
 
       } else {

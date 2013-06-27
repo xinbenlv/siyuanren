@@ -1,11 +1,12 @@
 
 .modal-header
-    h1 请注册
+    h1 请填写注册信息
 .modal-body.text-center
     div
         input(ng-model="username", placeholder="username")
     div.margin-top-20
-        input(ng-model="siyuanid", placeholder="siyuanid")
+        //    input(ng-model="siyuanid", uiAutocomplete="myOption",  placeholder="搜索您的姓名")
+        input(auto-complete, ui-items="names", ng-model="selected") selected = {{selected}}
     div.margin-top-20
         input(ng-model="email", placeholder="email")
 .modal-footer

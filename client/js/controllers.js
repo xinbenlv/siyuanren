@@ -53,6 +53,24 @@ angular.module('angular-client-side-auth')
     {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
 
+  // Send request
+  $.ajax({
+    url: '/api/query?collection=SiyuanUserProfile&fields="_id 姓名"',
+    type: 'GET',
+    data: null,
+    dataType: 'json',
+    async: false,
+    success: function(docs) {
+      var namelist = [];
+      for(var i in docs) {
+        nameList.push(docs[i]);
+      }
+
+    }
+  });
+  $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
+
+
   if($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
     $scope.opts = {
       backdrop: true,
@@ -82,7 +100,7 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('RegisterCtrl',
 ['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-    alert('User here!:' + JSON.stringify($scope.user));
+    $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
 
     $scope.register = function() {
         Auth.register({
@@ -123,11 +141,14 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-  var URL = window.location.protocol + "//" + window.location.host;
-  console.log("MSG: Connecting to " + URL);
+  if ($rootScope.socket){
+    var URL = window.location.protocol + "//" + window.location.host;
+    console.log("MSG: Connecting to " + URL);
 
-  var socket = io.connect(URL);
-  $rootScope.socket = socket;
+    var socket = io.connect(URL);
+    $rootScope.socket = socket;
+  }
+
   socket.emit('enter', {data: 'interesting'});
 
   socket.on('enter', function(data) {

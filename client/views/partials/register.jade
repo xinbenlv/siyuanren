@@ -11,7 +11,8 @@ form.form-horizontal(ng-submit="register()", name="registerForm")
     .control-group
         label.control-label(for="siyuanid") SiyuanId
         .controls
-            input(type="siyuanid", data-ng-model="siyuanid", placeholder="SiyuanId", name="siyuanid", required)
+            //input(type="siyuanid", data-ng-model="siyuanid", placeholder="SiyuanId", name="siyuanid", required)
+            input(auto-complete, ui-items="names", ng-model="selected") selected = {{selected}}
     .control-group
         label.control-label(for="email") Email
         .controls

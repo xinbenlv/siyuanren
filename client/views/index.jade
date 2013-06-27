@@ -3,7 +3,8 @@ html(lang='en', data-ng-app='angular-client-side-auth')
     head
         meta(charset='utf-8')
         title 思源人
-
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js')
         link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         link(href="/thirdparty/lexrus-fontdiao-830f6e7/css/fontdiao.css", rel="stylesheet")
@@ -47,13 +48,14 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         .container
             div(data-ng-view='ng-view')
             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
-        //script(src='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js')
+
         script(src='//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.10/socket.io.min.js')
         script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js')
         script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js')
         script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-cookies.js')
-        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+
         script(src='/thirdparty/jquery/jquery.serialize-object.compiled.js')
+        //script(src='/thirdparty/angular-ui-autocomplete/autocomplete.js')
         // For EditableGrid
         //script(src='/thirdparty/editablegrid/editablegrid-2.0.1.js')
         script(src='/thirdparty/editablegrid.git/editablegrid.js')
