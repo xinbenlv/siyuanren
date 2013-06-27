@@ -24,7 +24,7 @@ var getProviderRoutes = function(providers){
       path: '/auth/' + provider +'/callback',
       httpMethod: 'GET',
       middleware: [passport.authenticate(provider, {
-        successRedirect: '/',
+        successRedirect: '/register',
         failureRedirect: '/login'
       })],
       accessLevel: accessLevels.public
@@ -135,8 +135,8 @@ routes = []
     {
       path: '/api/publicquery',
       httpMethod: 'GET',
-      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.publicquery],
-      accessLevel: accessLevels.anon
+      middleware: [ApiCtrl.publicquery],
+      accessLevel: accessLevels.public
     },
 
     // All other get requests should be handled by AngularJS's client-side routing system

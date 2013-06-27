@@ -53,62 +53,52 @@ angular.module('angular-client-side-auth')
     {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
   ];
 
-  // Send request
-  $.ajax({
-    url: '/api/query?collection=SiyuanUserProfile&fields="_id 姓名"',
-    type: 'GET',
-    data: null,
-    dataType: 'json',
-    async: false,
-    success: function(docs) {
-      var namelist = [];
-      for(var i in docs) {
-        nameList.push(docs[i]);
-      }
+  $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
+  console.log('xxxxbbbb');
+  getName($scope, function(){
+    console.log('xxxxaaaa');
+    if($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
+      $scope.opts = {
+        backdrop: true,
+        keyboard: true,
+        backdropClick: true,
+        dialogFade: true,
+        templateUrl: 'partials/internalRegistration',
+        controller: 'DialogController'
+      };
 
+      $scope.d = $dialog.dialog($scope.opts);
+
+      $scope.d.open().then(function(data){
+        data.meta = $rootScope.user.meta;
+        Auth.register(data,
+          function(res) {
+            $rootScope.user = res;
+            $location.path('/');
+          },
+          function(err) {
+            $rootScope.error = err;
+          });
+      });
     }
   });
-  $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
 
-
-  if($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
-    $scope.opts = {
-      backdrop: true,
-      keyboard: true,
-      backdropClick: true,
-      dialogFade: true,
-      templateUrl: 'partials/internalRegistration',
-      controller: 'DialogController'
-    };
-
-    $scope.d = $dialog.dialog($scope.opts);
-
-    $scope.d.open().then(function(data){
-      data.meta = $rootScope.user.meta;
-      Auth.register(data,
-        function(res) {
-          $rootScope.user = res;
-          $location.path('/');
-        },
-        function(err) {
-          $rootScope.error = err;
-        });
-    });
-  }
 }]);
 
 angular.module('angular-client-side-auth')
 .controller('RegisterCtrl',
-['$rootScope', '$scope', '$location', 'Auth', function($rootScope, $scope, $location, Auth) {
-    $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
+['$rootScope', '$scope', '$location', 'Auth', '$compile', function($rootScope, $scope, $location, Auth, $compile) {
+    getName($scope,function(){
 
+    });
     $scope.register = function() {
         Auth.register({
                 username: $scope.username,
                 password: $scope.password,
                 siyuanid: $scope.siyuanid,
                 user: $rootScope.user,
-                email: $scope.email
+                email: $scope.email,
+                meta: $rootScope.user.meta
             },
             function(res) {
                 $rootScope.user = res;
@@ -141,13 +131,11 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
 .controller('PeopleTableCtrl',
 ['$rootScope', '$scope', 'Users', function($rootScope, $scope, Users) {
-  if ($rootScope.socket){
-    var URL = window.location.protocol + "//" + window.location.host;
-    console.log("MSG: Connecting to " + URL);
+  var URL = window.location.protocol + "//" + window.location.host;
+  console.log("MSG: Connecting to " + URL);
 
-    var socket = io.connect(URL);
-    $rootScope.socket = socket;
-  }
+  var socket = io.connect(URL);
+  $rootScope.socket = socket;
 
   socket.emit('enter', {data: 'interesting'});
 
@@ -172,3 +160,50 @@ var DialogController = function($scope, dialog) {
     dialog.close({username: username, siyuanid: siyuanid, email: email});
   };
 };
+
+var getName = function($scope, callback) {
+
+  // Send request
+  $.ajax({
+    url: '/api/publicquery?collection=SiyuanUserProfile',
+    type: 'GET',
+    data: null,
+    dataType: 'json',
+    async: false,
+    success: function(docs) {
+
+      var nameList = [];
+      for(var i in docs) {
+        nameList.push({label: docs[i]['姓名'], value: docs[i]._id});
+      }
+      console.log('DBG: aaaa ');
+
+      $scope.myOption = {
+        options: {
+          html: true,
+          focusOpen: false,
+          onlySelect: true,
+          source: function (request, response) {
+
+            var data = nameList;
+            console.log('DBG bbbb:');
+
+            data = $scope.myOption.methods.filter(data, request.term);
+
+            if (!data.length) {
+              data.push({
+                label: 'not found',
+                value: ''
+              });
+            }
+            response(data);
+          }
+        },
+        methods: {}
+
+      };
+      callback();
+    }
+  });
+
+}

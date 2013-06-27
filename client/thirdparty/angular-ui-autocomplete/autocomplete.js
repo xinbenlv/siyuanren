@@ -1,5 +1,5 @@
 'use strict';
-/*
+/*  //From: https://github.com/zensh/ui-autocomplete
  *  AngularJS Autocomplete, version 0.4.0
  *  Wrapper for the jQuery UI Autocomplete Widget - v1.10.3
  *  API @ http://api.jqueryui.com/autocomplete/
