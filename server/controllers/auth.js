@@ -103,10 +103,7 @@ module.exports = {
         var user = users[0];
         logger.info('Found a current user');
         var client_user = {};
-        client_user['id'] = 0;
-        client_user['siyuanid'] = user.siyuanid;
-        client_user['username'] = user.username;
-        client_user['role'] = user.role;
+        client_user._id = user._id;
         callback(null, client_user);
       } else if (users.length == 0) {
         logger.info('Start Registration');
@@ -150,15 +147,14 @@ module.exports = {
     done(null, user); // TODO(zzn): use some smarter way to serialize not registered account
   },
 
-  deserializeUser: function (serializedUser, done) {
-    var id = serializedUser.id;
-    if (id == 0) {
-      done(null, serializedUser);
+  deserializeUser: function (data, done) {
+    if (data.meta && data.meta.need_to_register) {
+      done(null, data);
 
     } else {
-      User.findById(id, function (err, user) {
+      User.findById(data._id, function (err, user) {
         if (user) {
-          user.meta = serializedUser.meta;
+          if (data.meta) user.meta = data.meta;
           done(null, user);
         }
         else {
