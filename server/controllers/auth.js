@@ -25,31 +25,34 @@ module.exports = {
     User.register(
       {username: req.body.username}, req.body.password,
       function (err, user) {
-        if (err === 'UserAlreadyExists') return res.send(403, "User already exists");
-        else if (err)                    return res.send(400, err.message);
-        user.setRole(req.body.role);
-        if (req.body.meta.need_to_register) {
-          for (var provider in req.body.meta.oauth) {
-            user.auth.push({
-              provider: provider,
-              id: req.body.meta.oauth[provider].id,
-              accessToken: req.body.meta.oauth[provider].accessToken,
-              refreshToken: req.body.meta.oauth[provider].refreshToken
-            });
+        if (err === 'UserAlreadyExists') res.send(403, "User already exists");
+        else if (err) res.send(400, err.message);
+        else {
+          user.setRole(req.body.role);
+          if (req.body.meta.need_to_register) {
+            for (var provider in req.body.meta.oauth) {
+              user.auth.push({
+                provider: provider,
+                id: req.body.meta.oauth[provider].id,
+                accessToken: req.body.meta.oauth[provider].accessToken,
+                refreshToken: req.body.meta.oauth[provider].refreshToken
+              });
+            }
           }
-        }
 
-        user.save(function (err) {
-          req.logIn(user, function (err) {
-            if (err) {
-              next(err);
-            }
-            else {
-              res.json(200, { "role": user.role, "username": user.username });
-            }
+          user.save(function (err) {
+            req.logIn(user, function (err) {
+              if (err) {
+                next(err);
+              }
+              else {
+                res.json(200, { "role": user.role, "username": user.username });
+              }
+            });
           });
-        });
+        }
       });
+
   },
 
   login: function (req, res, next) {
