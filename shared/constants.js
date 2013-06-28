@@ -1,25 +1,17 @@
-/**
- * Created with JetBrains WebStorm.
- * User: zzn
- * Date: 6/12/13
- * Time: 9:04 PM
- * To change this template use File | Settings | File Templates.
- */
+'use strict';
 
-var
-  logger = require('log4js').getDefaultLogger()
-  ;
+var logger = require('log4js').getDefaultLogger();
+var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'weibo', 'renren'];
 
 var HOST_ROOL_URL = process.env.HOST_ROOT_URL || 'http://localhost:5000';
 
 var getAuthCallbackUrl = function(provider) {
   return HOST_ROOL_URL + '/auth/' + provider + '/callback';
 };
+
 var getDeauthCallbackUrl = function(provider) {
   return HOST_ROOL_URL + '/deauth/' + provider + '/callback';
 };
-
-var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'weibo', 'renren'];
 
 var STRATEGIES = {};
 for (var i in ENABED_PROVIDERS) {
@@ -43,7 +35,7 @@ var getProviderCredentials = function() {
   }
   return c;
 }
-logger.info("Open Registration: " + process.env.OPEN_REGISTRATION);
+
 module.exports = {
   HOST_ROOL_URL : HOST_ROOL_URL,
   ENABED_PROVIDERS: ENABED_PROVIDERS,
@@ -52,3 +44,5 @@ module.exports = {
   STRATEGIES: STRATEGIES,
   OPEN_REGISTRATION: (process.env.OPEN_REGISTRATION === "True")
 };
+
+logger.info("Open Registration: " + process.env.OPEN_REGISTRATION);

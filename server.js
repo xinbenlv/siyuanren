@@ -1,15 +1,16 @@
-var express =       require('express')
-    , app =         require('express.io')()
-    , passport =    require('passport')
-    , path =        require('path')
-    , mongoose =    require('mongoose')
-    , User =        require('./server/models/User.js')
-    , auth =        require('./server/controllers/auth.js')
-    , constants =   require('./shared/constants')
-    , logger =      require('log4js').getDefaultLogger()
-    ;
-app.http().io();
+'use strict';
 
+var express = require('express');
+var app = require('express.io')();
+var passport = require('passport');
+var path = require('path');
+var mongoose = require('mongoose');
+var User = require('./server/models/User.js');
+var auth = require('./server/controllers/auth.js');
+var constants = require('./shared/constants');
+var logger = require('log4js').getDefaultLogger();
+
+app.http().io();
 
 app.set('views', __dirname + '/client/views');
 app.set('view engine', 'jade');
@@ -28,13 +29,15 @@ for(var i in constants.ENABED_PROVIDERS) {
   var provider = constants.ENABED_PROVIDERS[i];
   passport.use(auth.getStrategy(provider));
 }
-passport.use(auth.googleStrategy());   // Comment out this line if you don't want to enable login via Google
+passport.use(auth.googleStrategy());
 
 passport.serializeUser(auth.serializeUser);
 passport.deserializeUser(auth.deserializeUser);
 
+// Connect to MongoDB
 mongoose.connect(process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
 
+// Set up routes
 require('./server/routes.js')(app);
 
 app.set('port', process.env.PORT || 5000);

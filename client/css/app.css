@@ -7,50 +7,50 @@ body {
 }
 
 #cover {
-    position:absolute;
-    height:100%;
-    width:100%;
-    background:white;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: white;
 }
 
 #userInfo {
-    float:right;
-    padding:8px;
+    float: right;
+    padding: 8px;
 }
 
 .icon-twitter {
-    color:#00A7E7;
+    color: #00A7E7;
 }
 
 .icon-facebook-sign {
-    color:#3662A0;
+    color: #3662A0;
 }
-
-
 
 .icon-google-plus-sign {
     color: #D74634;
 }
 
 .fade-hide-setup, .fade-show-setup {
-    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
-    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
 }
 
 .fade-hide-setup {
-    opacity:1;
+    opacity: 1;
 }
+
 .fade-hide-setup.fade-hide-start {
-    opacity:0;
+    opacity: 0;
 }
 
 .fade-show-setup {
-    opacity:0;
+    opacity: 0;
 }
+
 .fade-show-setup.fade-show-start {
-    opacity:1;
+    opacity: 1;
 }
 
 table {
@@ -62,6 +62,7 @@ table {
     overflow: hidden;
     white-space: nowrap;
 }
+
 #tablecontent input {
     margin: -4px;
 }
@@ -110,6 +111,7 @@ table {
     *border-right-width: 2px;
     *border-bottom-width: 2px;
 }
+
 .ui-menu-item > a.ui-corner-all {
     display: block;
     padding: 3px 15px;
@@ -119,6 +121,7 @@ table {
     color: #555555;
     white-space: nowrap;
 }
+
 &.ui-state-hover, &.ui-state-active {
     color: #ffffff;
     text-decoration: none;
@@ -128,6 +131,7 @@ table {
     -moz-border-radius: 0px;
     background-image: none;
 }
+
 .ui-helper-hidden-accessible {
-  display: none;
+    display: none;
 }

@@ -1,14 +1,8 @@
-/**
- * Created with JetBrains WebStorm.
- * User: zzn
- * Date: 6/9/13
- * Time: 9:27 PM
- * To change this template use File | Settings | File Templates.
- */
+'use strict';
+
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
-// TODO(zzn) extends a data
 var SiyuanUserProfile = new Schema({
   email: String,
   siyuan_year: String, //思源学员期数

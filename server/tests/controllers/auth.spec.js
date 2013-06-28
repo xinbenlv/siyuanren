@@ -1,3 +1,5 @@
+'use strict';
+
 var expect = require('chai').expect
     , sinon = require('sinon')
     , AuthCtrl = require('../../controllers/auth')
