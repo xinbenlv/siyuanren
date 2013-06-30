@@ -30,6 +30,14 @@ body {
     color: #D74634;
 }
 
+.icon-linkedin {
+    color: #007bb6;
+}
+
+.icon-renren {
+    color: #0072b1;
+}
+
 .fade-hide-setup, .fade-show-setup {
     -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
     -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
