@@ -18,33 +18,40 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                 window.location = window.location.href.replace(/#.*/, '');
             }
     body(data-ng-controller="AppCtrl", data-ng-cloak)
-
         #cover(data-ng-hide="appInitialized", data-ng-animate="{ hide: 'fade-hide' }")
+        .navbar-wrapper
+        .container
+            .navbar._navbar-inverse
+                .navbar-inner
+                    button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.brand(href='#') 思源人
+                    .nav-collapse.collapse
+                        ul.nav
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/login') 登录
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/register') 注册
+                            li(data-access-level='{{ accessLevels.user }}', active-nav)
+                                a(href='/') 首页
+                            li(data-access-level='{{ accessLevels.user }}', active-nav)
+                                a(href='/private') 空白
+                            li(data-access-level='{{ accessLevels.admin }}', active-nav)
+                                a(href='/peopletable') 搜索思源人
+                            li(data-access-level='{{ accessLevels.admin }}', active-nav)
+                                a(href='/admin') 管理
 
-        .navbar
-            .navbar-inner
-                .container-fluid
-                    ul.nav
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/login') 登录
-                        li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                            a(href='/register') 注册
-                        li(data-access-level='{{ accessLevels.user }}', active-nav)
-                            a(href='/') 首页
-                        li(data-access-level='{{ accessLevels.user }}', active-nav)
-                            a(href='/private') 空白
-                        li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                            a(href='/peopletable') 搜索思源人
-                        li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                            a(href='/admin') 管理
-                        li(data-access-level='{{ accessLevels.user }}')
-                            a(href="", data-ng-click="logout()")
-                                | 登出
-                    div#userInfo.pull-right(data-access-level='{{ accessLevels.user }}')
-                        | 欢迎你：&nbsp;
-                        strong {{ user.username }}&nbsp;
-                        span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
 
+                         ul.nav.pull-right.nav
+                            li(data-access-level='{{ accessLevels.user }}')
+                                a(href="", data-ng-click="logout()")
+                                    strong {{ user.username }}&nbsp;
+                                    span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
+                            li(data-access-level='{{ accessLevels.user }}')
+                                a(href="", data-ng-click="logout()")
+                                    | 登出
         .container
             div(data-ng-view='ng-view')
             .alert.alert-error(data-ng-bind="error", data-ng-show="error")
@@ -70,6 +77,5 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/js/app.js')
         script(src='/js/services.js')
         script(src='/js/controllers.js')
-        script(src='/js/filters.js')
         script(src='/js/directives.js')
         script(src='/js/peopletable.js')

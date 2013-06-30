@@ -4,12 +4,11 @@
         input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
         button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
 
-
         div.span4
             p Current Online User:
             ul
                 li(ng-repeat='otherUser in otherUsers')
-                    a(href='/user/username/{{otherUser}}') {{otherUser}}
+                    a(href='/user/username/{{otherUser}}') {{otherUser.username}}
     .row
         div#paginator.span12
     .row

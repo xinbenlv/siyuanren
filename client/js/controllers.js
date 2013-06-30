@@ -48,9 +48,9 @@ angular.module('angular-client-side-auth')
     ['$rootScope', '$scope', '$dialog', '$location', 'Auth', function ($rootScope, $scope, $dialog, $location, Auth) {
       $scope.myInterval = 3000;
       $scope.slides = [
-        {image: 'http://fmn.rrimg.com/fmn056/xiaozhan/20121217/1535/xlarge_MWBM_4570000080291191.jpg', title: '年会', text: '思源年会.'},
-        {image: 'http://fmn.rrimg.com/fmn065/xiaozhan/20121217/1535/xlarge_pNP8_33e4000099ef118e.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
-        {image: 'http://fmn.rrimg.com/fmn064/xiaozhan/20120910/2050/x_large_VnZ0_2cea00002aa71262.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
+        {image: '/img/1.jpg', title: '年会', text: '思源年会.'},
+        {image: '/img/2.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
+        {image: '/img/3.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
       ];
 
       $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
