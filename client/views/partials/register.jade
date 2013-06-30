@@ -1,25 +1,25 @@
-h1 Register
+h1 注册
 form.form-horizontal(ng-submit="register()", name="registerForm")
     .control-group
-        label.control-label(for="username") Username
+        label.control-label(for="username") 用户名
         .controls
             input(type="text", data-ng-model="username", placeholder="Username", name="username", required, data-ng-minlength="1", data-ng-maxlength="20")
     .control-group
-        label.control-label(for="password") Password
+        label.control-label(for="password") 密码
         .controls
             input(type="password", data-ng-model="password", placeholder="Password", name="password", required, data-ng-minlength="0", data-ng-maxlength="60")
     .control-group
-        label.control-label(for="siyuanid") SiyuanId
+        label.control-label(for="siyuanid") 姓名
         .controls
             //input(type="siyuanid", data-ng-model="siyuanid", placeholder="SiyuanId", name="siyuanid", required)
             input(type="text", data-ng-model="siyuanid", required, ui-autocomplete="myOption")
     .control-group
-        label.control-label(for="email") Email
+        label.control-label(for="email") E-mail
         .controls
             input(type="email", data-ng-model="email", placeholder="Email", name="email", required)
     .control-group
         .controls
-            button.btn(type="submit", data-ng-disabled="registerForm.$invalid") Submit
+            button.btn(type="submit", data-ng-disabled="registerForm.$invalid") 提交
 
     .alert.alert-error(ng-show="registerForm.$invalid")
         strong Please correct the following errors:
