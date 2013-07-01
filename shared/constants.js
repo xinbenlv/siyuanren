@@ -1,6 +1,9 @@
 'use strict';
 
 var logger = require('log4js').getDefaultLogger();
+var path = require('path');
+var ROOT_DIR = path.normalize(__dirname + '/..');
+logger.debug('ROOT_DIR=' + ROOT_DIR);
 var ENABED_PROVIDERS = ['facebook', 'twitter', 'linkedin', 'weibo', 'renren'];
 
 var HOST_ROOL_URL = process.env.HOST_ROOT_URL || 'http://localhost:5000';

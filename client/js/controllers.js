@@ -54,9 +54,9 @@ angular.module('angular-client-side-auth')
       ];
 
       $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
-      console.log('xxxxbbbb');
+
       getName($scope, function () {
-        console.log('xxxxaaaa');
+
         if ($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
           $scope.opts = {
             backdrop: true,
@@ -176,7 +176,6 @@ var getName = function ($scope, callback) {
       for (var i in docs) {
         nameList.push({label: docs[i]['姓名'], value: docs[i]._id});
       }
-      console.log('DBG: aaaa ');
 
       $scope.myOption = {
         options: {
@@ -186,7 +185,6 @@ var getName = function ($scope, callback) {
           source: function (request, response) {
 
             var data = nameList;
-            console.log('DBG bbbb:');
 
             data = $scope.myOption.methods.filter(data, request.term);
 

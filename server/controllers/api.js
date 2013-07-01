@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var SiyuanUserProfile =
   require('../models/SiyuanUserProfile');
 var logger = require('log4js').getDefaultLogger();
-var $ = require('jquery');
 
 exports.post = function(req, res) {
   SiyuanUserProfile.create(req.query.newDoc,
@@ -50,7 +49,7 @@ exports.query = function(req, res) {
 
   if (collection == 'SiyuanUserProfile') {
     logger.info('Query criteria: ' + req.query.criteria);
-    var criteria = $.parseJSON(req.query.criteria);
+    var criteria = JSON.parse(req.query.criteria);
     var fields = req.query.fields;
     SiyuanUserProfile.find(criteria, fields, function(err, docs) {
       logger.info('Query criteria: ' + JSON.stringify(criteria));
@@ -71,7 +70,7 @@ exports.publicquery = function(req, res) {
   if (collection == 'SiyuanUserProfile') {
     logger.info('Query criteria: ' + req.query.criteria);
     var fields = '_id 姓名'; // public query only serves as public.
-    var criteria = $.parseJSON(req.query.criteria);
+    var criteria = JSON.parse(req.query.criteria);
     SiyuanUserProfile.find(criteria, fields, function(err, docs) {
       logger.info('Query criteria: ' + JSON.stringify(criteria));
       res.send(docs);

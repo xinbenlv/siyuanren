@@ -23,10 +23,9 @@
     "q": "0.9.4",
     "log4js": "0.6.6",
     "mongoose": "3.6.11",
-    "jquery": "1.8.3",
     "randomstring": "1.0.2",
     "charlatan": "0.1.4",
-
+    "tracer": "0.5.1",
     "emailjs": "0.3.4",
     "mandrill-api": ">=1.0.2",
 
@@ -46,7 +45,7 @@
     "mocha": "~1.10.0"
   },
   "engines": {
-    "node": "0.8.x",
+    "node": "0.10.x",
     "npm": "1.1.x"
   }
 }
