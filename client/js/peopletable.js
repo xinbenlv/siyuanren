@@ -15,6 +15,7 @@
       datatype: 'string', editable: true},
     { name: '所在院系-要删', label: '所在院系-要删', datatype: 'string', editable: true},
     { name: '目前职位', label: '目前职位', datatype: 'string', editable: true},
+    { name: 'auth', label:'社交网站', datatype: 'html', editable: false },
     { name: 'action', datatype: 'html', editable: false }
   ];
 
@@ -67,10 +68,23 @@
     cell.innerHTML = deleteButton;
   }});
 
+var snsCellRenderer = new CellRenderer({render: function (cell, value) {
+  var html = '';
+  for(var authMethod in value) {
+
+    var provider = authMethod.provider;
+    var url = authMethod.url;
+    html += '<i class="icon-' + provider + '">' + '<a href="'+ url + '"></a>' + '</i>'
+  }
+  cell.innerHTML = html;
+}});
+
   var loadEntireTable = function (tableData) {
     editableGrid.load(tableData);
 
     editableGrid.setCellRenderer('action', actionCellRenderer);
+    editableGrid.setCellRenderer('auth', snsCellRenderer);
+
     editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover', 'testgrid');
     editableGrid.updatePaginator();
 
