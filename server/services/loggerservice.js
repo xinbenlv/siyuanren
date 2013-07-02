@@ -1,5 +1,8 @@
+var colorLogger = require('tracer').colorConsole();
+var log4jsLogger = require('log4js').getDefaultLogger();
+
 module.exports = {
-  colorLogger: require('tracer').colorConsole(),
-  log4js: require('log4js').getDefaultLogger(),
-  default: require('log4js').getDefaultLogger()
+  colorLogger: colorLogger,
+  log4jsLogger: log4jsLogger,
+  default: log4jsLogger
 };
