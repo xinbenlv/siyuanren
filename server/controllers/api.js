@@ -3,7 +3,8 @@
 var mongoose = require('mongoose');
 var SiyuanUserProfile =
   require('../models/SiyuanUserProfile');
-var logger = require('log4js').getDefaultLogger();
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
+
 
 exports.post = function(req, res) {
   SiyuanUserProfile.create(req.query.newDoc,

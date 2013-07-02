@@ -6,7 +6,8 @@ var SiyuanUserProfile = require('../models/SiyuanUserProfile.js');
 var LocalStrategy =   require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google').Strategy;
 var constants =       require('../../shared/constants');
-var logger    =       require('log4js').getDefaultLogger();
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
+
 var userRoles = require('../../client/js/routingConfig').userRoles;
 
 module.exports = {

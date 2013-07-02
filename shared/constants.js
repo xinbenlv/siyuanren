@@ -1,6 +1,9 @@
 'use strict';
 
-var logger = require('log4js').getDefaultLogger();
+path = require('path')
+process.env.ROOT_DIR = path.normalize(__dirname + '/..');
+
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 var path = require('path');
 var ROOT_DIR = path.normalize(__dirname + '/..');
 logger.debug('ROOT_DIR=' + ROOT_DIR);

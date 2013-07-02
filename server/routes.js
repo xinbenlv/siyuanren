@@ -7,7 +7,7 @@ var _ =           require('underscore')
     , userRoles = require('../client/js/routingConfig').userRoles
     , accessLevels = require('../client/js/routingConfig').accessLevels
     , constants = require('../shared/constants')
-      logger = require('log4js').getDefaultLogger();
+    , logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
     ;
 var otherUsers = {};
 

@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 var User = require('./server/models/User.js');
 var auth = require('./server/controllers/auth.js');
 var constants = require('./shared/constants');
-var logger = require('./server/services/loggerservice.js').default;//require('./server/services/loggerservice.js');
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 
 var Q = require('q');
 

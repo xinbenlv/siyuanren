@@ -4,6 +4,7 @@ var _ = require('underscore');
 var User = require('../models/User.js');
 var userRoles = require('../../client/js/routingConfig').userRoles;
 var constants = require('../../shared/constants');
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 
 module.exports = {
   index: function (req, res) {

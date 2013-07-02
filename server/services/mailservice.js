@@ -1,6 +1,7 @@
 'use strict';
 
-var logger = require('log4js').getDefaultLogger();
+var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
+
 var emailjs = require('emailjs');
 var MailService = emailjs.server.connect({
   user: process.env.MANDRILL_USERNAME,
