@@ -131,27 +131,8 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
     ['$rootScope', '$scope', 'Users', function ($rootScope, $scope, Users) {
-      var URL = window.location.protocol + "//" + window.location.host;
-      console.log("MSG: Connecting to " + URL);
+      peopletable.load(); // TODO(zzn): use async to load page
 
-      var socket = io.connect(URL);
-      $rootScope.socket = socket;
-
-      socket.emit('enter', {data: 'interesting'});
-
-      socket.on('enter', function (data) {
-        $scope.otherUsers = data.otherUsers;  //= data.otherUsers;
-        peopletable.load(); // TODO(zzn): use async to load page
-      });
-
-      socket.on('someoneEnter', function (data) {
-        $scope.otherUsers[data.enterUser] = data.enterUser;
-      });
-
-      socket.on('leave', function (data) {
-        console.log('Leave' + data.leaveUser);
-        delete $scope.otherUsers[data.leaveUser];
-      });
     }]);
 
 // the dialog is injected in the specified controller

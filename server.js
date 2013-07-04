@@ -1,5 +1,13 @@
 'use strict';
 
+require('nodefly').profile(
+  'dd16d9ed-652b-45b2-bf63-caa67981773a',
+  ['siyuanren','Heroku'], {
+    // time in ms when the event loop is considered blocked
+    blockThreshold: 10
+  }
+);
+
 var express = require('express');
 var app = require('express.io')();
 var passport = require('passport');

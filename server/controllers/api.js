@@ -49,16 +49,67 @@ exports.query = function(req, res) {
   var collection = req.query.collection;
 
   if (collection == 'SiyuanUserProfile') {
+
     logger.info('Query criteria: ' + req.query.criteria);
-    req.query.criteria = req.query.criteria  || '{}';
+    if(req.query.criteria === undefined) {
+      req.query.criteria = '{}';
+    }
+    var fields = '_id 姓名'; // public query only serves as public.
     var criteria = JSON.parse(req.query.criteria);
 
-    var fields = req.query.fields;
+    Q.fcall(function() {
+      var d = Q.defer();
+      SiyuanUserProfile.find(criteria, function(err, siyuanUserProfiles) {
+        if(err)d.reject(new Error(err));
+        else {
+          var map = {};
+          for(var i in siyuanUserProfiles) {
+            var s = siyuanUserProfiles[i];
+            map[s._id] = s;
+          }
+          d.resolve({'siyuanUserProfiles': map});
+        }
+      });
+      return d.promise;
+    })
+      .then(function(docs){
+        var d = Q.defer();
 
-    SiyuanUserProfile.find(criteria, fields, function(err, docs) {
-      logger.info('Query criteria: ' + JSON.stringify(criteria));
-      res.send(docs);
-    });
+        User.find({siyuanid: { $exists: true }}, function(err, users) {
+          if (err)d.reject(new Error(err));
+          else{
+            docs['users'] = users;
+            d.resolve(docs);
+          }
+        });
+        return d.promise;
+      }).then(function(docs) {
+        for(var i in docs.users) {
+          var user = docs.users[i];
+          var auth = user.auth;
+          for(var i = 0; i < auth.length; i++) {
+            var authMethod = auth[i];
+            if (!docs.siyuanUserProfiles[user.siyuanid]._doc.auth){
+              docs.siyuanUserProfiles[user.siyuanid]._doc.auth = [];
+            }
+
+            docs.siyuanUserProfiles[user.siyuanid]._doc.auth.push({
+              'provider': authMethod.provider,
+              'url': '#' // TODO(zzn): add url here;
+            });
+          }
+        }
+
+        var arraySiyuanUserProfiles = [];
+        for (i in docs.siyuanUserProfiles) {
+          arraySiyuanUserProfiles.push(docs.siyuanUserProfiles[i]._doc);
+        }
+
+        res.send(arraySiyuanUserProfiles);
+      }).then(function(){}, function(err) {
+        logger.error(err);
+      }).done();
+
   }
   else {
     res.send('failed, collection not specified or collection ' + collection +
@@ -74,56 +125,15 @@ exports.publicquery = function(req, res) {
   if (collection == 'SiyuanUserProfile') {
 
     logger.info('Query criteria: ' + req.query.criteria);
-    if(req.query.criteria === undefined) {
-      req.query.criteria = '{}';
-    }
-    var fields = '_id 姓名'; // public query only serves as public.
+    req.query.criteria = req.query.criteria  || '{}';
     var criteria = JSON.parse(req.query.criteria);
 
-    Q.fcall(function() {
-      var d = Q.defer();
-      SiyuanUserProfile.find(criteria, fields, function(err, siyuanUserProfiles) {
-        if(err)d.reject(new Error(err));
-        else {
-          var map = {};
-          for(var i in siyuanUserProfiles) {
-            var s = siyuanUserProfiles[i];
-            map[s._id] = s;
-          }
-          d.resolve({'siyuanUserProfile': map});
-        }
-      });
-    })
-    .then(function(docs){
-      var d = Q.defer();
-      User.find({'siyuanid':  {"$exists" : true, "$ne" : ""} },'_id siyuanid auth', function(err, users){
-        if (err)d.reject(new Error(err));
-        else{
-          docs['users'] = users;
-          d.resolve(docs);
-        }
-      });
-    }).then(function(docs){
-      for(var i in docs.users) {
-        var user = docs.users[i];
-        for(var authMethod in user.auth){
-          docs.siyuanUserProfiles[user.siyuanid] = docs.siyuanUserProfiles[user.siyuanid]|| [];
-          docs.siyuanUserProfiles[user.siyuanid].push({
-            'provider': user.auth.provider,
-            'url': '#' // TODO(zzn): add url here;
-          });
-        }
-      }
-      var arraySiyuanUserProfiles = [];
-      for (i in docs.siyuanUserProfiles) {
-        arraySiyuanUserProfiles.push(docs.siyuanUserProfiles[i]);
-      }
+    var fields = req.query.fields;
 
-      res.send(arraySiyuanUserProfiles);
-      }, function(err){
-        logger.error(err);
-      });
-
+    SiyuanUserProfile.find(criteria, fields, function(err, docs) {
+      logger.info('Query criteria: ' + JSON.stringify(criteria));
+      res.send(docs);
+    });
   }
   else {
     res.send('failed, collection not specified or collection ' + collection +

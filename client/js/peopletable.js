@@ -68,16 +68,20 @@
     cell.innerHTML = deleteButton;
   }});
 
-var snsCellRenderer = new CellRenderer({render: function (cell, value) {
-  var html = '';
-  for(var authMethod in value) {
-
-    var provider = authMethod.provider;
-    var url = authMethod.url;
-    html += '<i class="icon-' + provider + '">' + '<a href="'+ url + '"></a>' + '</i>'
-  }
-  cell.innerHTML = html;
-}});
+  var flipXXXX = true;
+  var snsCellRenderer = new CellRenderer({render: function (cell, value) {
+    var html = '';
+    if(flipXXXX){
+      console.log('RRRRR' + JSON.stringify(value));
+      flipXXXX = false;
+    }
+    for(var authMethod in value) {
+      var provider = authMethod.provider;
+      var url = authMethod.url;
+      html += '<i class="icon-' + provider + '">' + '<a href="'+ url + '"></a>' + '</i>'
+    }
+    cell.innerHTML = html;
+  }});
 
   var loadEntireTable = function (tableData) {
     editableGrid.load(tableData);

@@ -37,7 +37,8 @@
     "passport-google": "~0.3.0",
     "passport-linkedin": "~0.1.3",
     "passport-renren": "git://github.com/xinbenlv/passport-renren.git",
-    "passport-weibo": "git://github.com/xinbenlv/passport-weibo.git"
+    "passport-weibo": "git://github.com/xinbenlv/passport-weibo.git",
+    "nodefly": "stable"
   },
   "devDependencies": {
     "sinon": "~1.7.2",
