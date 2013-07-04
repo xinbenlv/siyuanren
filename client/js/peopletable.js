@@ -75,10 +75,14 @@
       console.log('RRRRR' + JSON.stringify(value));
       flipXXXX = false;
     }
-    for(var authMethod in value) {
-      var provider = authMethod.provider;
-      var url = authMethod.url;
-      html += '<i class="icon-' + provider + '">' + '<a href="'+ url + '"></a>' + '</i>'
+
+    if(value instanceof Array) {
+      for(var i in value) {
+        var authMethod = value[i];
+        var provider = authMethod.provider;
+        var url = authMethod.url;
+        html += '<a href="#"><i class="icon-' + provider + '">' + '</i></a>';
+      }
     }
     cell.innerHTML = html;
   }});
