@@ -11,11 +11,11 @@
     { name: '思源学员期数', label: '思源学员期数',
       datatype: 'string', editable: true},
     { name: '常用邮箱', label: '常用邮箱', datatype: 'string', editable: true},
-    { name: '手机', label: '手机',
+    { name: '国内手机', label: '国内手机',
       datatype: 'string', editable: true},
-    { name: '所在院系-要删', label: '所在院系-要删', datatype: 'string', editable: true},
+    { name: '所在院系', label: '所在院系', datatype: 'string', editable: true},
     { name: '目前职位', label: '目前职位', datatype: 'string', editable: true},
-    { name: 'auth', label:'社交网站', datatype: 'html', editable: false },
+    { name: 'auth', label:'社交网站账户', datatype: 'html', editable: false },
     { name: 'action', datatype: 'html', editable: false }
   ];
 
@@ -68,13 +68,8 @@
     cell.innerHTML = deleteButton;
   }});
 
-  var flipXXXX = true;
   var snsCellRenderer = new CellRenderer({render: function (cell, value) {
     var html = '';
-    if(flipXXXX){
-      console.log('RRRRR' + JSON.stringify(value));
-      flipXXXX = false;
-    }
 
     if(value instanceof Array) {
       for(var i in value) {
