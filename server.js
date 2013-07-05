@@ -1,7 +1,7 @@
 'use strict';
 
 require('nodefly').profile(
-  'dd16d9ed-652b-45b2-bf63-caa67981773a',
+  process.env.NODE_FLY_ID,
   ['siyuanren','Heroku'], {
     // time in ms when the event loop is considered blocked
     blockThreshold: 10
