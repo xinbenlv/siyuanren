@@ -8,30 +8,18 @@ var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 var check = require('validator').check;
 var userRoles = require('../../client/js/routingConfig').userRoles;
+var ObjectId = Schema.ObjectId;
+var OauthType = require('./OauthType');
+
 
 var userSchema = new Schema({
-  role: { type: userRoles },
-
-  /**
-   * Authentication method, a string as a provider, and the authentication related information inside.
-   * Example:
-   * {
-   *   'facebook':{
-   *      id: 'somefacebookid',
-   *      token: 'somefacebooktoken'
-   *   }
-   * }
-   */
-  auth: [
-    {
-      provider: String,
-      id: String,
-      accessToken: String,
-      refreshToken: String
-    }
-  ],
-
-  siyuanid: { type: String }
+  role: { type: userRoles, required: true },
+  auth: [OauthType],
+  siyuanid: { type: ObjectId },
+  registerToken: String,
+  loginLog: [Date],
+  registerDate: Date,
+  enabled: { type: Boolean, default: false}
 });
 userSchema.methods.setRole = function (role) {
   this.role = role;
