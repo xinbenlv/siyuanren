@@ -31,6 +31,9 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                     .nav-collapse.collapse
                         ul.nav
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/checkSiyuanRen') 查询
+
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
                                 a(href='/login') 登录
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
                                 a(href='/register') 注册

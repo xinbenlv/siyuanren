@@ -45,44 +45,13 @@ angular.module('angular-client-side-auth')
 
 angular.module('angular-client-side-auth')
   .controller('HomeCtrl',
-    ['$rootScope', '$scope', '$dialog', '$location', 'Auth', function ($rootScope, $scope, $dialog, $location, Auth) {
+    ['$rootScope', '$scope', function ($rootScope, $scope) {
       $scope.myInterval = 3000;
       $scope.slides = [
         {image: '/img/1.jpg', title: '年会', text: '思源年会.'},
         {image: '/img/2.jpg', title: '朱先生', text: '思源计划发起人朱先生.!'},
         {image: '/img/3.jpg', title: '北美思源小聚', text: '从景芳姐那儿不告而借的~~ 曲媛@6，韩赟儒@5，孔令昭@3，郝景芳@2，方铭@2~'}
       ];
-
-      $scope.names = ["john", "bill", "charlie", "robert", "alban", "oscar", "marie", "celine", "brad", "drew", "rebecca", "michel", "francis", "jean", "paul", "pierre", "nicolas", "alfred", "gerard", "louis", "albert", "edouard", "benoit", "guillaume", "nicolas", "joseph"];
-
-      getName($scope, function () {
-
-        if ($rootScope.user && $rootScope.user.meta && $rootScope.user.meta.need_to_register) {
-          $scope.opts = {
-            backdrop: true,
-            keyboard: true,
-            backdropClick: true,
-            dialogFade: true,
-            templateUrl: 'partials/internalRegistration',
-            controller: 'DialogController'
-          };
-
-          $scope.d = $dialog.dialog($scope.opts);
-
-          $scope.d.open().then(function (data) {
-            data.meta = $rootScope.user.meta;
-            Auth.register(data,
-              function (res) {
-                $rootScope.user = res;
-                $location.path('/');
-              },
-              function (err) {
-                $rootScope.error = err;
-              });
-          });
-        }
-      });
-
     }]);
 
 angular.module('angular-client-side-auth')
@@ -125,6 +94,11 @@ angular.module('angular-client-side-auth')
         $rootScope.error = "Failed to fetch users.";
         $scope.loading = false;
       });
+
+    }])
+  .controller('CheckSiyuanRenCtrl',
+    ['$rootScope', '$scope', function ($rootScope, $scopes) {
+
 
     }]);
 

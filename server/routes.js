@@ -86,7 +86,6 @@ routes = []
         middleware: [AuthCtrl.logout],
         accessLevel: accessLevels.public
     },
-
     // User resource
     {
         path: '/users',

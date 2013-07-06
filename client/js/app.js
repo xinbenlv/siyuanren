@@ -42,6 +42,12 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'AdminCtrl',
         access: access.admin
       });
+    $routeProvider.when('/checkSiyuanRen',
+        {
+            templateUrl: '/partials/checkSiyuanRen',
+            controller: 'CheckSiyuanRenCtrl',
+            access: access.anon
+        });
     $routeProvider.when('/peopletable',
       {
         templateUrl: '/partials/peopletable',
