@@ -1,16 +1,15 @@
 .container
-    .row
-        label.span1(for='filter') Filter:
-        input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
-        button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
+  .row
+    label.span1(for='filter') Filter:
+    input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
+    button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
+  .row
+    button.btn.span2(ng-click="displayAll()") 全体
+    button.btn.span2(ng-click="displaySameYearOfClass()") 本期思源同学
+    button.btn.span2(ng-click="displaySameDept()") 本院系思源同学
 
-        div.span4
-            p Current Online User:
-            ul
-                li(ng-repeat='otherUser in otherUsers')
-                    a(href='/user/username/{{otherUser}}') {{otherUser.username}}
-    .row
-        div#paginator.span12
-    .row
-        .span12
-            div#tablecontent
+  .row
+    div#paginator.span12
+  .row
+    .span12
+      div#tablecontent

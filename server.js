@@ -47,6 +47,7 @@ passport.use(auth.googleStrategy());
 passport.serializeUser(auth.serializeUser);
 passport.deserializeUser(auth.deserializeUser);
 
+
 // Connect to MongoDB
 
 

@@ -13,11 +13,13 @@ Go to git commit history for details of development
 | /api/siyuan/put/:uid      | PUT           | obj for mongodb $set  | update a siyuan contact |
 | /api/siyuan/delete/:uid   | DELETE        | N/A                   | delete a siyuan contact |
 | /api/siyuan/post          | POST          | a Mongoose  doc       | create a siyuan contact |
-| /api/query/               | POST          | query object          | query  a siyuan contact |
+| /api/query/               | GET           | query object          | query  a siyuan contact |
 | /api/publicquery/         | GET           | query object          | query  a siyuan contact for public information  |
 
 Sample Query Obj:
-http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
+    http://localhost:3000/api/query?collection=SiyuanUserProfile&criteria={"dept":"auto"}
+
+    http://localhost:3000/api/publicquery?collection=SiyuanUserProfile&criteria={"dept":"auto"}&field=["姓名","思源期数"]
 
 ## How-Tos
 

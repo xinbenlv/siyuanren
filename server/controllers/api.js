@@ -6,6 +6,48 @@ var User = require('../models/User');
 var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 var Q = require('q');
 
+
+var parseQueryOptions = function(query) {
+  logger.info('Query: ' + JSON.stringify(query));
+  var collection = JSON.parse(query.collection);
+  logger.debug('collection: ' + collection);
+  var ret = {};
+
+  if (!collection) {
+    ret['error'] = new Error('Empty collection: query = ' + query);
+    return ret;
+  } else if(['SiyuanUserProfile'].indexOf(collection) == -1) {
+    ret['error'] = new Error('Incorrect collection:' + query.collection);
+    return ret;
+  } else {
+    ret['collection'] = collection;
+  }
+
+  if (!query.criteria) {
+    ret['criteria'] = {};
+  } else {
+    try {
+      ret['criteria'] = JSON.parse(query.criteria);
+    } catch(err) {
+      ret['error'] = err;
+      return ret;
+    }
+  }
+
+  if (!query.fields) {
+    ret['error'] = new Error('Empty fields: query = ' + query);
+    return ret;
+  } else {
+    try {
+      ret['fields'] = JSON.parse(query.fields);
+    } catch(err) {
+      ret['error'] = err;
+      return ret;
+    }
+  }
+  return ret;
+}
+
 exports.post = function(req, res) {
   SiyuanUserProfile.create(req.query.newDoc,
     function(err, doc) {
@@ -46,24 +88,18 @@ exports.index = function(req, res) {
 };
 
 exports.query = function(req, res) {
-  var collection = req.query.collection;
-
-  if (collection == 'SiyuanUserProfile') {
-
-    logger.info('Query criteria: ' + req.query.criteria);
-    if(req.query.criteria === undefined) {
-      req.query.criteria = '{}';
-    }
-    var fields = '_id 姓名'; // public query only serves as public.
-    var criteria = JSON.parse(req.query.criteria);
-
-    Q.fcall(function() {
+  var options = parseQueryOptions(req.query);
+  logger.info('options:' + JSON.stringify(options));
+  if(options.error) {
+    res.send(400, options.error);
+  } else {
+    Q.fcall(function () {
       var d = Q.defer();
-      SiyuanUserProfile.find(criteria, function(err, siyuanUserProfiles) {
-        if(err)d.reject(new Error(err));
+      SiyuanUserProfile.find(options.criteria, options.fields, function (err, siyuanUserProfiles) {
+        if (err)d.reject(new Error(err));
         else {
           var map = {};
-          for(var i in siyuanUserProfiles) {
+          for (var i in siyuanUserProfiles) {
             var s = siyuanUserProfiles[i];
             map[s._id] = s;
           }
@@ -72,24 +108,24 @@ exports.query = function(req, res) {
       });
       return d.promise;
     })
-      .then(function(docs){
+      .then(function (docs) {
         var d = Q.defer();
 
-        User.find({siyuanid: { $exists: true }}, function(err, users) {
+        User.find({siyuanid: { $exists: true }}, function (err, users) {
           if (err)d.reject(new Error(err));
-          else{
+          else {
             docs['users'] = users;
             d.resolve(docs);
           }
         });
         return d.promise;
-      }).then(function(docs) {
-        for(var i in docs.users) {
+      }).then(function (docs) {
+        for (var i in docs.users) {
           var user = docs.users[i];
           var auth = user.auth;
-          for(var i = 0; i < auth.length; i++) {
+          for (var i = 0; i < auth.length; i++) {
             var authMethod = auth[i];
-            if (!docs.siyuanUserProfiles[user.siyuanid]._doc.auth){
+            if (!docs.siyuanUserProfiles[user.siyuanid]._doc.auth) {
               docs.siyuanUserProfiles[user.siyuanid]._doc.auth = [];
             }
 
@@ -106,39 +142,28 @@ exports.query = function(req, res) {
         }
 
         res.send(arraySiyuanUserProfiles);
-      }).then(function(){}, function(err) {
+      }).then(function () {
+      },function (err) {
         logger.error(err);
       }).done();
+  }
 
-  }
-  else {
-    res.send('failed, collection not specified or collection ' + collection +
-      ' is not supported for query');
-    // TODO(zzn): handle error
-    // TODO(zzn): support more type of collections
-  }
 };
 
 exports.publicquery = function(req, res) {
-  var collection = req.query.collection;
+  logger.info('Public Query: ' + JSON.stringify(req.query));
+  var options = parseQueryOptions(req.query);
+  logger.info(options);
 
-  if (collection == 'SiyuanUserProfile') {
+  if(!options.error && options.fields == '姓名 思源学员期数') {
+    logger.info('Query options: ' + options);
 
-    logger.info('Query criteria: ' + req.query.criteria);
-    req.query.criteria = req.query.criteria  || '{}';
-    var criteria = JSON.parse(req.query.criteria);
-
-    var fields = req.query.fields;
-
-    SiyuanUserProfile.find(criteria, fields, function(err, docs) {
-      logger.info('Query criteria: ' + JSON.stringify(criteria));
+    SiyuanUserProfile.find(options.criteria, options.fields, function(err, docs) {
       res.send(docs);
     });
-  }
-  else {
-    res.send('failed, collection not specified or collection ' + collection +
-      ' is not supported for query');
-    // TODO(zzn): handle error
-    // TODO(zzn): support more type of collections
+  } else if(options.fields !== ['姓名', '思源学员期数']) {
+    res.send(400, 'Sorry, the fields you provided are illegal for public query.');
+  } else {
+    res.send(400, options.error);
   }
 };

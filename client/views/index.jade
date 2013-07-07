@@ -37,10 +37,13 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                                 a(href='/login') 登录
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
                                 a(href='/register') 注册
+
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
                                 a(href='/') 首页
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
                                 a(href='/private') 空白
+
+
                             li(data-access-level='{{ accessLevels.admin }}', active-nav)
                                 a(href='/peopletable') 搜索思源人
                             li(data-access-level='{{ accessLevels.admin }}', active-nav)

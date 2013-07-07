@@ -1,25 +1,13 @@
 (function (exports) {
 
-// helper function to get path of a demo image
   var getImagePath = function (relativePath) {
     return '/thirdparty/editablegrid/images/' + relativePath;
   };
-  var currentFilter;
 
-  var metadata = [
-    { name: '姓名', label: '姓名', datatype: 'string', editable: true},
-    { name: '思源学员期数', label: '思源学员期数',
-      datatype: 'string', editable: true},
-    { name: '常用邮箱', label: '常用邮箱', datatype: 'string', editable: true},
-    { name: '国内手机', label: '国内手机',
-      datatype: 'string', editable: true},
-    { name: '所在院系', label: '所在院系', datatype: 'string', editable: true},
-    { name: '目前职位', label: '目前职位', datatype: 'string', editable: true},
-    { name: 'auth', label:'社交网站账户', datatype: 'html', editable: false },
-    { name: 'action', datatype: 'html', editable: false }
-  ];
+  var fields = ['姓名', '思源学员期数','本科院系', '常用邮箱', '手机', 'auth'];
 
-// declaring editableGrid
+  var metadata;
+
   var editableGrid;
 
   exports.onClickDelete = function (rowIndex) {
@@ -85,8 +73,9 @@
   var loadEntireTable = function (tableData) {
     editableGrid.load(tableData);
 
-    editableGrid.setCellRenderer('action', actionCellRenderer);
-    editableGrid.setCellRenderer('auth', snsCellRenderer);
+    if(fields.indexOf('action') >= 0) editableGrid.setCellRenderer('action', actionCellRenderer);
+    if(fields.indexOf('auth') >= 0) editableGrid.setCellRenderer('auth', snsCellRenderer);
+
 
     editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover', 'testgrid');
     editableGrid.updatePaginator();
@@ -158,7 +147,7 @@
 
   };
 
-  exports.load = function () {
+  exports.load = function (criteria) {
     editableGrid = new EditableGrid('PeopleTable', {
       enableSort: true,
       doubleclick: true,
@@ -167,9 +156,29 @@
       pageSize: 16
     });
 
+    metadata = [];
+    for(var i in fields) {
+      metadata.push({
+        name: fields[i],
+        label: fields[i],
+        datatype: fields[i] == 'auth' ? 'html' : 'string',
+        editable: true
+      });
+    }
+    var baseUrl =  '/api/query?';
+    var collectionUrl = 'collection="SiyuanUserProfile"';
+    var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
+    var fieldsUrl = 'fields="';
+    for(var i in fields){
+      fieldsUrl += fields[i] +' ';
+    }
+    fieldsUrl += '"';
+
+    var url = baseUrl + '&' + collectionUrl + '&' + criteriaUrl + '&' + fieldsUrl;
+
     // Send request
     $.ajax({
-      url: '/api/query?collection=SiyuanUserProfile',
+      url: url,
       type: 'GET',
       data: null,
       dataType: 'json',

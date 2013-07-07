@@ -70,7 +70,19 @@ module.exports = {
         }
 
         if (req.body.rememberme && req.session.cookie) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
-        res.json(200, { "role": user.role, "username": user.username });
+        logger.debug('user.siyuanid:' + user.siyuanid);
+        SiyuanUserProfile.findById(user.siyuanid.toString(), function(err, doc){
+          if(doc){
+            user._doc.siyuanUserProfile = doc;
+          }
+          var ret = {
+            'role': user.role,
+            'username': user.username,
+          };
+          if(doc) ret.siyuanUserProfile = doc;
+          res.json(200,ret);
+
+        });
       });
     })(req, res, next);
   },
@@ -156,7 +168,15 @@ module.exports = {
       User.findById(data._id, function (err, user) {
         if (user) {
           if (data.meta) user.meta = data.meta;
-          done(null, user);
+          logger.debug('user.siyuanid:' + user.siyuanid);
+          SiyuanUserProfile.findById(user.siyuanid.toString(), function(err, doc){
+            logger.debug('login-siyuanUserProfile: ' + JSON.stringify(doc));
+            if(doc){
+              user._doc.siyuanUserProfile = doc;
+            }
+            done(null, {'role': user.role, 'username': user.username, 'siyuanUserProfile': doc});
+          });
+
         }
         else {
           done(null, false);
