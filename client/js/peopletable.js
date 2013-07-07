@@ -4,7 +4,7 @@
     return '/thirdparty/editablegrid/images/' + relativePath;
   };
 
-  var fields = ['姓名', '思源学员期数','本科院系', '常用邮箱', '手机', 'auth'];
+  var fields = [];
 
   var metadata;
 
@@ -147,7 +147,7 @@
 
   };
 
-  exports.load = function (criteria) {
+  exports.load = function (criteria, additionalFields, cb) {
     editableGrid = new EditableGrid('PeopleTable', {
       enableSort: true,
       doubleclick: true,
@@ -157,11 +157,12 @@
     });
 
     metadata = [];
-    for(var i in fields) {
+    var allFields = fields.concat(additionalFields);
+    for(var i in allFields) {
       metadata.push({
-        name: fields[i],
-        label: fields[i],
-        datatype: fields[i] == 'auth' ? 'html' : 'string',
+        name: allFields[i],
+        label: allFields[i],
+        datatype: allFields[i] == 'auth' ? 'html' : 'string',
         editable: true
       });
     }
@@ -169,8 +170,8 @@
     var collectionUrl = 'collection="SiyuanUserProfile"';
     var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
     var fieldsUrl = 'fields="';
-    for(var i in fields){
-      fieldsUrl += fields[i] +' ';
+    for(var i in allFields){
+      fieldsUrl += allFields[i] +' ';
     }
     fieldsUrl += '"';
 
@@ -193,6 +194,7 @@
         tableData.data = data;
 
         loadEntireTable(tableData);
+        return cb();
       }
     });
 

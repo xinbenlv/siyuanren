@@ -7,9 +7,15 @@
     button.btn.span2(ng-click="displayAll()") 全体
     button.btn.span2(ng-click="displaySameYearOfClass()") 本期思源同学
     button.btn.span2(ng-click="displaySameDept()") 本院系思源同学
+  .row
+  div
+  label(ng-repeat="field in fields")
+    input(type="checkbox", value="{{field.name}}", ng-checked="field.checked", ng-model="field.checked")
+    span {{field.name}}
 
   .row
     div#paginator.span12
   .row
     .span12
       div#tablecontent
+      div#loadingIndicator

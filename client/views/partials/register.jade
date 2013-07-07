@@ -11,7 +11,6 @@ form.form-horizontal(ng-submit="register()", name="registerForm")
     .control-group
         label.control-label(for="siyuanid") 姓名
         .controls
-            //input(type="siyuanid", data-ng-model="siyuanid", placeholder="SiyuanId", name="siyuanid", required)
             input(type="text", data-ng-model="siyuanid", required, ui-autocomplete="myOption")
     .control-group
         label.control-label(for="email") E-mail

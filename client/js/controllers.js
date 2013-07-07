@@ -126,15 +126,46 @@ angular.module('angular-client-side-auth')
 
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
-    ['$rootScope', '$scope', 'Users', function ($rootScope, $scope, Users) {
+    ['$rootScope', '$scope', '$filter', function ($rootScope, $scope, $filter) {
+      $scope.fields = [
+        { name: '姓名',    checked: true },
+        { name: '思源学员期数',   checked: true },
+        { name: '本科院系',   checked: true },
+        { name: '本科班级',   checked: false },
+        { name: '常用邮箱',    checked: true },
+        { name: '手机',   checked: true },
+        { name: 'auth',   checked: true },
+      ];
+      $scope.selectedFields = function () {
+        var selectedList = $filter('filter')($scope.fields, {checked: true});
+        var selectedFields = [];
+        for(var i in selectedList) {
+          selectedFields.push(selectedList[i].name);
+        }
+        return selectedFields;
+      };
+
+      var removeLoadingIndicator = function() {
+        $('#loadingInidcator').hide();
+        $('#tablecontent').show();
+      };
+
+      $('#loadingInidcator').show();
+      $('#tablecontent').hide();
+
       $scope.displayAll = function() {
-        peopletable.load({}); // TODO(zzn): use async to load page
+        console.log('Selected fields: ' + JSON.stringify($scope.selectedFields()));
+        peopletable.load({}, $scope.selectedFields(), removeLoadingIndicator); // TODO(zzn): use async to load page
       };
       $scope.displaySameYearOfClass = function() {
-        peopletable.load({'思源学员期数': $rootScope.user.siyuanUserProfile['思源学员期数']});
+        peopletable.load({'思源学员期数': $rootScope.user.siyuanUserProfile['思源学员期数']},
+          $scope.selectedFields(),
+          removeLoadingIndicator);
       };
       $scope.displaySameDept = function() {
-        peopletable.load({'本科院系': $rootScope.user.siyuanUserProfile['本科院系']});
+        peopletable.load({'本科院系': $rootScope.user.siyuanUserProfile['本科院系']},
+          $scope.selectedFields(),
+          removeLoadingIndicator);
       };
     }]);
 
