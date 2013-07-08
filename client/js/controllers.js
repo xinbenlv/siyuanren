@@ -88,6 +88,7 @@ angular.module('angular-client-side-auth')
       $scope.loading = true;
 
       Users.getAll(function (res) {
+
         $scope.users = res;
         $scope.loading = false;
       }, function (err) {
