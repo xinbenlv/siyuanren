@@ -168,9 +168,7 @@ module.exports = {
       User.findById(data._id, function (err, user) {
         if (user) {
           if (data.meta) user.meta = data.meta;
-          logger.debug('user.siyuanid:' + user.siyuanid);
           SiyuanUserProfile.findById(user.siyuanid.toString(), function(err, doc){
-            logger.debug('login-siyuanUserProfile: ' + JSON.stringify(doc));
             if(doc){
               user._doc.siyuanUserProfile = doc;
             }

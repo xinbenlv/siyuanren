@@ -174,10 +174,8 @@ angular.module('angular-client-side-auth')
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
-      console.log('AAAAAAA');//DBG
       $('#loadingIndicator').hide();
       $('#tablecontent').hide();
-      console.log('BBBBBBB');//DBG
     }]);
 
 // the dialog is injected in the specified controller
