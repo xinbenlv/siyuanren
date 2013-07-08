@@ -155,7 +155,6 @@
       modelChanged: updateCellValue,
       pageSize: 16
     });
-
     metadata = [];
     var allFields = fields.concat(additionalFields);
     for(var i in allFields) {
@@ -174,16 +173,14 @@
       fieldsUrl += allFields[i] +' ';
     }
     fieldsUrl += '"';
-
     var url = baseUrl + '&' + collectionUrl + '&' + criteriaUrl + '&' + fieldsUrl;
-
     // Send request
     $.ajax({
       url: url,
       type: 'GET',
       data: null,
       dataType: 'json',
-      async: false,
+      async: true,
       success: function (rawData) {
         var tableData = {};
         tableData.metadata = metadata;
@@ -192,16 +189,13 @@
           data.push({id: rawData[i]._id, values: rawData[i]});
         }
         tableData.data = data;
-
         loadEntireTable(tableData);
         return cb();
       }
     });
-
     // filter when something is typed into filter
     _$('filter').onkeyup = function () {
       editableGrid.filter(_$('filter').value);
     };
-
   };
 })(typeof exports === 'undefined' ? this['peopletable'] = {} : exports);

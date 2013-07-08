@@ -12,10 +12,10 @@
   label(ng-repeat="field in fields")
     input(type="checkbox", value="{{field.name}}", ng-checked="field.checked", ng-model="field.checked")
     span {{field.name}}
-
   .row
     div#paginator.span12
   .row
     .span12
       div#tablecontent
       div#loadingIndicator
+        img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')

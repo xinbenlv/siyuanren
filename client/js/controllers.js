@@ -146,27 +146,38 @@ angular.module('angular-client-side-auth')
       };
 
       var removeLoadingIndicator = function() {
-        $('#loadingInidcator').hide();
+        console.log('remove li');
+        $('#loadingIndicator').hide();
+        $('#paginator').show();
         $('#tablecontent').show();
       };
-
-      $('#loadingInidcator').show();
-      $('#tablecontent').hide();
-
+      var addLoadingIndicator = function() {
+        console.log('add li');
+        $('#loadingIndicator').show();
+        $('#paginator').hide();
+        $('#tablecontent').hide();
+      };
       $scope.displayAll = function() {
         console.log('Selected fields: ' + JSON.stringify($scope.selectedFields()));
+        addLoadingIndicator();
         peopletable.load({}, $scope.selectedFields(), removeLoadingIndicator); // TODO(zzn): use async to load page
       };
       $scope.displaySameYearOfClass = function() {
+        addLoadingIndicator();
         peopletable.load({'思源学员期数': $rootScope.user.siyuanUserProfile['思源学员期数']},
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
       $scope.displaySameDept = function() {
+        addLoadingIndicator();
         peopletable.load({'本科院系': $rootScope.user.siyuanUserProfile['本科院系']},
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
+      console.log('AAAAAAA');//DBG
+      $('#loadingIndicator').hide();
+      $('#tablecontent').hide();
+      console.log('BBBBBBB');//DBG
     }]);
 
 // the dialog is injected in the specified controller
