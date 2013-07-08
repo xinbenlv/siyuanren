@@ -143,17 +143,22 @@ routes = []
         path: '/*',
         httpMethod: 'GET',
         middleware: [function(req, res) {
-            var role = userRoles.public, username = '', meta;
+            var role = userRoles.public, username = '', meta, siyuanUserProfile = {};
             if(req.user) {
                 role = req.user.role;
                 username = req.user.username;
                 meta = req.user.meta;
+                siyuanUserProfile['本科院系'] = req.user.siyuanUserProfile['本科院系'];
+                siyuanUserProfile['思源学员期数'] = req.user.siyuanUserProfile['思源学院期数'];
             }
-            res.cookie('user', JSON.stringify({
-                'username': username,
-                'role': role,
-                'meta': meta
-            }));
+            var cookieUser = JSON.stringify({
+              'username': username,
+              'role': role,
+              'meta': meta,
+              'siyuanUserProfile' : siyuanUserProfile
+            });
+            logger.debug('cookieUser: ' + cookieUser);
+            res.cookie('user', cookieUser);
             res.render('index');
         }],
         accessLevel: accessLevels.public
