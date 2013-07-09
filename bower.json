@@ -4,7 +4,8 @@
   "main": "server.js",
   "dependencies": {
     "jquery": "~2.0.3",
-    "select2": "~3.4.1"
+    "select2": "~3.4.1",
+    "underscore": "1.5.1"
   },
   "ignore": [
     "**/.*",
