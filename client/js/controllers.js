@@ -141,13 +141,35 @@ angular.module('angular-client-side-auth')
         { id:3, text: '本科班级' },
         { id:4, text: '常用邮箱' },
         { id:5, text: '手机' },
-        { id:6, text: 'auth' }
+        { id:6, text: 'auth' },
+        { id:7, text: "担任辅导员"},
+        { id:8, text: "性别"},
+        { id:9, text: "研究生阶段学校院系"},
+        { id:10, text: "常驻国家"},
+        { id:11, text: "省份"},
+        { id:12, text: "常驻城市"},
+        { id:13, text: "邮政编码"},
+        { id:14, text: "目前职位"},
+        { id:15, text: "MSN"},
+        { id:16, text: "出生日期"},
+        { id:17, text: "Tshirt尺码"},
+        { id:18, text: "目前职位"},
+        { id:19, text: "新浪微博"},
+        { id:20, text: "通讯地址"},
+        { id:21, text: "微信"},
+        { id:22, text: "QQ"},
+        { id:23, text: "LinkedIn"},
+        { id:24, text: "Facebook"},
+        { id:25, text: "Dropbox"},
+        { id:26, text: "Skype"},
+        { id:27, text: "Gtalk"},
+        { id:28, text: "备注"},
       ];
       $scope.selectedFields = function () {
         var selectedList = $('#fieldsSelector').select2('val');
         var selectedFields = [];
         for(var i in selectedList) {
-          selectedFields.push(fields[i]);
+          selectedFields.push(fields[selectedList[i]]);
         }
         return selectedFields;
       };
