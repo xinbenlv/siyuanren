@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app",
-    "test": "mocha server/tests --recursive"
+    "test": "mocha server/tests --recursive",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
 
   "dependencies": {
