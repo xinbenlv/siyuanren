@@ -2,6 +2,7 @@ data/
 node_modules/
 .idea/
 .credentials
+credentials.js
 *.swp
 dump
 client/thirdparty/bower_components/

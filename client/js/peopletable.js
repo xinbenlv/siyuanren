@@ -159,8 +159,8 @@
     var allFields = fields.concat(additionalFields);
     for(var i in allFields) {
       metadata.push({
-        name: allFields[i],
-        label: allFields[i],
+        name: allFields[i].text,
+        label: allFields[i].text,
         datatype: allFields[i] == 'auth' ? 'html' : 'string',
         editable: true
       });
@@ -170,7 +170,7 @@
     var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
     var fieldsUrl = 'fields="';
     for(var i in allFields){
-      fieldsUrl += allFields[i] +' ';
+      fieldsUrl += allFields[i].text +' ';
     }
     fieldsUrl += '"';
     var url = baseUrl + '&' + collectionUrl + '&' + criteriaUrl + '&' + fieldsUrl;

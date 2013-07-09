@@ -1,4 +1,5 @@
 'use strict';
+var credentials = require('../credentials');
 
 path = require('path')
 process.env.ROOT_DIR = path.normalize(__dirname + '/..');
@@ -33,8 +34,8 @@ var getProviderCredentials = function() {
     logger.info("Enabling provider: " + ENABED_PROVIDERS[i]);
     var provider = ENABED_PROVIDERS[i];
     c[provider] = {
-      app_id: process.env[provider.toUpperCase() + '_APP_ID'],
-      app_secret : process.env[provider.toUpperCase() + '_APP_SECRET'],
+      app_id: credentials[provider.toUpperCase() + '_APP_ID'],
+      app_secret : credentials[provider.toUpperCase() + '_APP_SECRET'],
       app_auth_callback_url : getAuthCallbackUrl(provider),
       app_deauth_callback_url : getDeauthCallbackUrl(provider)
     }
@@ -47,8 +48,6 @@ module.exports = {
   ENABED_PROVIDERS: ENABED_PROVIDERS,
   GOOGLE_AUTH_RETURN: GOOGLE_AUTH_RETURN,
   PROVIDER_CREDENTIALS: getProviderCredentials(),
-  STRATEGIES: STRATEGIES,
-  OPEN_REGISTRATION: (process.env.OPEN_REGISTRATION === "True")
+  STRATEGIES: STRATEGIES
 };
 
-logger.info("Open Registration: " + process.env.OPEN_REGISTRATION);

@@ -134,36 +134,45 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
     ['$rootScope', '$scope', '$filter', function ($rootScope, $scope, $filter) {
-      $scope.fields = [
-        { name: '姓名',    checked: true },
-        { name: '思源学员期数',   checked: true },
-        { name: '本科院系',   checked: true },
-        { name: '本科班级',   checked: false },
-        { name: '常用邮箱',    checked: true },
-        { name: '手机',   checked: true },
-        { name: 'auth',   checked: true },
+      var fields = [
+        { id:0, text: '姓名' },
+        { id:1, text: '思源学员期数' },
+        { id:3, text: '本科院系' },
+        { id:4, text: '本科班级' },
+        { id:5, text: '常用邮箱' },
+        { id:6, text: '手机' },
+        { id:7, text: 'auth' }
       ];
       $scope.selectedFields = function () {
-        var selectedList = $filter('filter')($scope.fields, {checked: true});
+        var selectedList = $('#fieldsSelector').select2('val');
         var selectedFields = [];
         for(var i in selectedList) {
-          selectedFields.push(selectedList[i].name);
+          selectedFields.push(fields[i]);
         }
         return selectedFields;
       };
 
       var removeLoadingIndicator = function() {
         console.log('remove li');
-        $('#loadingIndicator').hide();
-        $('#paginator').show();
-        $('#tablecontent').show();
+        $('#loadingIndicatorPanel').hide();
+        $('#tablePanel').show();
       };
       var addLoadingIndicator = function() {
         console.log('add li');
-        $('#loadingIndicator').show();
-        $('#paginator').hide();
-        $('#tablecontent').hide();
+        $('#loadingIndicatorPanel').show();
+        $('#tablePanel').hide();
       };
+
+      var initFieldsSelector = function() {
+        $('#fieldsSelector').select2({
+          multiple: true,
+          data: fields
+        });
+
+        $('#fieldsSelector').select2('data', fields);
+
+      }
+
       $scope.displayAll = function() {
         console.log('Selected fields: ' + JSON.stringify($scope.selectedFields()));
         addLoadingIndicator();
@@ -181,8 +190,9 @@ angular.module('angular-client-side-auth')
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
-      $('#loadingIndicator').hide();
-      $('#tablecontent').hide();
+      $('#loadingIndicatorPanel').hide();
+      $('#tablePanel').hide();
+      initFieldsSelector();
     }]);
 
 // the dialog is injected in the specified controller

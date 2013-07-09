@@ -3,19 +3,25 @@
     label.span1(for='filter') Filter:
     input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
     button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
+
   .row
-    button.btn.span2(ng-click="displayAll()") 全体
-    button.btn.span2(ng-click="displaySameYearOfClass()") 本期思源同学
-    button.btn.span2(ng-click="displaySameDept()") 本院系思源同学
+    label.span1 Fields
+    input.span6#fieldsSelector
   .row
-  div
     label(ng-repeat="field in fields")
       input(type="checkbox", value="{{field.name}}", ng-checked="field.checked", ng-model="field.checked")
       span {{field.name}}
   .row
-    div#paginator.span12
-  .row
-    .span12
-      div#tablecontent
-      div#loadingIndicator
+    button.btn.span2(ng-click="displayAll()") 全体
+    button.btn.span2(ng-click="displaySameYearOfClass()") 本期思源同学
+    button.btn.span2(ng-click="displaySameDept()") 本院系思源同学
+  #loadingIndicatorPanel
+    .row
+      .span12#loadingIndicator
         img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+  #tablePanel
+    .row
+      .span12#paginator
+    .row
+      .span12
+        #tablecontent

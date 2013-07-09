@@ -8,10 +8,12 @@ html(lang='en', data-ng-app='angular-client-side-auth')
         link(href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css", rel="stylesheet")
         link(href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css", rel="stylesheet")
         link(href="/thirdparty/lexrus-fontdiao-830f6e7/css/fontdiao.css", rel="stylesheet")
+        link(href="/thirdparty/bower_components/select2/select2.css", rel="stylesheet")
 
         // Editable.git
         link(rel='stylesheet', href='/thirdparty/editablegrid.git/editablegrid.css', type='text/css', media='screen')
         link(rel='stylesheet', href='css/app.css')
+
         // This is needed because Facebook login redirects add #_=_ at the end of the URL
         script(type="text/javascript")
             if (window.location.href.indexOf('#_=_') > 0) {
@@ -62,6 +64,7 @@ html(lang='en', data-ng-app='angular-client-side-auth')
 
         script(src='/thirdparty/jquery/jquery.serialize-object.compiled.js')
         script(src='/thirdparty/angular-ui-autocomplete/autocomplete.js')
+        script(src='/thirdparty/bower_components/select2/select2.js')
         // For EditableGrid
         //script(src='/thirdparty/editablegrid/editablegrid-2.0.1.js')
         script(src='/thirdparty/editablegrid.git/editablegrid.js')

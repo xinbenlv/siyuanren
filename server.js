@@ -1,4 +1,5 @@
 'use strict';
+var credentials = require('./credentials');
 
 require('nodefly').profile(
   process.env.NODE_FLY_ID,
@@ -25,7 +26,7 @@ app.http().io();
 app.set('views', __dirname + '/client/views');
 app.set('view engine', 'jade');
 app.set('port', process.env.PORT || 5000);
-app.set('mongooseUrl', process.env.MONGOHQ_DEV_URL || process.env.MONGOHQ_DEV_URL);
+app.set('mongooseUrl', credentials.MONGOHQ_DEV_URL || credentials.MONGOHQ_DEV_URL);
 
 app.use(express.logger('dev'))
 app.use(express.cookieParser());
