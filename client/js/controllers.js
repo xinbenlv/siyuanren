@@ -137,11 +137,11 @@ angular.module('angular-client-side-auth')
       var fields = [
         { id:0, text: '姓名' },
         { id:1, text: '思源学员期数' },
-        { id:3, text: '本科院系' },
-        { id:4, text: '本科班级' },
-        { id:5, text: '常用邮箱' },
-        { id:6, text: '手机' },
-        { id:7, text: 'auth' }
+        { id:2, text: '本科院系' },
+        { id:3, text: '本科班级' },
+        { id:4, text: '常用邮箱' },
+        { id:5, text: '手机' },
+        { id:6, text: 'auth' }
       ];
       $scope.selectedFields = function () {
         var selectedList = $('#fieldsSelector').select2('val');
@@ -169,7 +169,7 @@ angular.module('angular-client-side-auth')
           data: fields
         });
 
-        $('#fieldsSelector').select2('data', fields);
+        $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3]]);
 
       }
 
