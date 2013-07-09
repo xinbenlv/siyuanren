@@ -123,7 +123,13 @@ angular.module('angular-client-side-auth')
         });
       };
 
-    }]);
+    }])
+  .controller('MeCtrl',['$scope', function($scope) {
+    $scope.name = '某个姓名';
+    $scope.yearofclass = '思源某期';
+
+  }])
+;
 
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',

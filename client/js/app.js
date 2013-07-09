@@ -54,6 +54,12 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'PeopleTableCtrl',
         access: access.admin
       });
+    $routeProvider.when('/me',
+      {
+        templateUrl: '/partials/me',
+        controller: 'MeCtrl',
+        access: access.user
+      });
     $routeProvider.when('/404',
       {
         templateUrl: '/partials/404',

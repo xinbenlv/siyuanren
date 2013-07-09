@@ -33,24 +33,17 @@ html(lang='en', data-ng-app='angular-client-side-auth')
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
                                 a(href='/checkSiyuanRen') 查询
 
-                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/login') 登录
-                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/register') 注册
-
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/') 首页
-                            li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/private') 空白
-
+                                a(href='/me') 首页
 
                             li(data-access-level='{{ accessLevels.admin }}', active-nav)
                                 a(href='/peopletable') 搜索思源人
                             li(data-access-level='{{ accessLevels.admin }}', active-nav)
                                 a(href='/admin') 管理
 
-
                          ul.nav.pull-right.nav
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/login') 登录
                             li(data-access-level='{{ accessLevels.user }}')
                                 a(href="", data-ng-click="logout()")
                                     strong {{ user.username }}&nbsp;
