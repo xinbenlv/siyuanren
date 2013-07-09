@@ -6,3 +6,5 @@ credentials.js
 *.swp
 dump
 client/thirdparty/bower_components/
+.env
+.dev_env
