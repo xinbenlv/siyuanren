@@ -93,7 +93,6 @@ routes = []
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
         accessLevel: accessLevels.admin
     },
-
     // API resource
     {
       path: '/api/siyuan/get/:theid',
@@ -129,7 +128,7 @@ routes = []
       path: '/api/query',
       httpMethod: 'GET',
       middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.query],
-      accessLevel: accessLevels.admin
+      accessLevel: accessLevels.user
     },
     {
       path: '/api/publicquery',
@@ -148,6 +147,12 @@ routes = []
       httpMethod: 'POST',
       middleware: [ApiCtrl.onboard.post],
       accessLevel: accessLevels.public
+    },
+    {
+      path: '/api/emailreset',
+      httpMethod: 'POST',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.emailReset],
+      accessLevel: accessLevels.admin
     },
 
     // All other get requests should be handled by AngularJS's client-side routing system

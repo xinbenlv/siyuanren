@@ -5,7 +5,7 @@ var SiyuanUserProfile = require('../models/SiyuanUserProfile');
 var User = require('../models/User');
 var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 var Q = require('q');
-
+var MailService = require('../services/mailservice').MailService;
 
 var parseQueryOptions = function(query) {
   logger.info('Query: ' + JSON.stringify(query));
@@ -205,3 +205,32 @@ exports.onboard = {
 
   }
 };
+
+
+exports.emailReset = function(req, res) {
+  logger.debug('userId:' + req.body.id);
+  var userId = req.body.id;
+  User.findById(userId, function(err, user){
+    if(err || !user) {
+      res.send(403, err);
+    } else {
+      var url = process.env.HOST_ROOT_URL + '/onBoard?token=' + user.registerToken;
+
+      MailService.send({
+        subject: 'From siyuanren!!',
+        from: 'admin@siyuanren.org',
+        to: user.username,
+        text: 'Please set your username and password at: ' + url}, function (err, msg) {
+        logger.debug(msg);
+        if(err) {
+          logger.warn('Err of sending: ' + JSON.stringify(err));
+          res.send(400, err);
+        }
+        else {
+          return res.send(200, user.username);
+        }
+
+      });
+    }
+  });
+}

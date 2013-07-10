@@ -52,7 +52,7 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
       {
         templateUrl: '/partials/peopletable',
         controller: 'PeopleTableCtrl',
-        access: access.admin
+        access: access.user
       });
     $routeProvider.when('/me',
       {

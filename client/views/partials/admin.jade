@@ -1,22 +1,27 @@
-h1 全体注册用户
-div#loadingIndicator(data-ng-show="loading")
-  img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
-table.table.table-striped(data-ng-hide="loading")
-    thead
-        tr
-            th #
-            th Username
-            th Role
-            th Enabled
-    tbody
-        tr(data-ng-repeat="user in users")
-            td {{ user._id }}
-            td
-               i.icon-twitter(data-ng-show="user.provider === 'twitter'")
-               i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
-               i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
-               i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
-               |  {{ user.username }}
-            td
-                span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
-            td {{ user.enabled}}
+h2(data-ng-show="showSuccess") 邮件发送成功@~
+div
+  h1 全体注册用户
+
+  div#loadingIndicator(data-ng-show="loading")
+    img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+  table.table.table-striped(data-ng-hide="loading")
+      thead
+          tr
+              th #
+              th Username
+              th Role
+              th Enabled
+      tbody
+          tr(data-ng-repeat="user in users")
+              td {{ user._id }}
+              td
+                 i.icon-twitter(data-ng-show="user.provider === 'twitter'")
+                 i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
+                 i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
+                 i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
+                 |  {{ user.username }}
+              td
+                  span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
+              td {{ user.enabled}}
+              td
+                .btn(data-ng-click="emailReset(\"{{ user._id}}\")") reset

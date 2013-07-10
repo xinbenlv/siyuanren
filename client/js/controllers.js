@@ -84,7 +84,7 @@ angular.module('angular-client-side-auth')
     ['$rootScope', function ($rootScope) {
     }])
   .controller('AdminCtrl',
-    ['$rootScope', '$scope', 'Users', function ($rootScope, $scope, Users) {
+    ['$rootScope', '$scope', '$http', 'Users', function ($rootScope, $scope, $http, Users) {
       $scope.loading = true;
 
       Users.getAll(function (res) {
@@ -96,6 +96,17 @@ angular.module('angular-client-side-auth')
         $scope.loading = false;
       });
 
+      $scope.emailReset = function(id) {
+        var url = '/api/emailreset';
+        var user = {};
+        user.id = id;
+        $http.post(url, user)
+          .success(function(data) {
+            $scope.showSuccess = true;
+          }).error(function(err) {
+            console.log(err);
+          });
+      }
     }])
   .controller('CheckSiyuanRenCtrl',
     ['$http','$rootScope', '$scope', function ($http, $rootScope, $scope) {
@@ -167,9 +178,9 @@ angular.module('angular-client-side-auth')
         $scope.showSuccess = true;
         $scope.showFailure = false;
 
-          window.setTimeout(function(){
-            $location.path('/login');
-          },2000);
+        window.setTimeout(function(){
+          $location.path('/login');
+        }, 2000);
       }).error(function(error){
         $scope.showLoading = false;
         $scope.showForm = false;

@@ -8,7 +8,7 @@ var MailService = emailjs.server.connect({
   password: process.env.MANDRILL_APIKEY,
   host: 'smtp.mandrillapp.com',
   ssl: true
-});
+}, function(err, message) { console.log(err || message); });
 
 var printMandrillInfo = function () {
   var Mandrill = require('mandrill-api').Mandrill;
@@ -23,10 +23,11 @@ var printMandrillInfo = function () {
 var sendDevInstanceStartEmail = function () {
   MailService.send({
     text: 'local instance started!',
-    from: 'admin@' + process.env.PROJECT_DOMAIN,
-    to: 'zzn@zzn.im',
-    subject: 'local instance started!'}, function (err) {
-    logger.warn('Err of sending: ' + JSON.stringify(err));
+    from: 'admin@siyuanren.org',
+    to: 'xinbenlv@gmail.com',
+    subject: 'local instance started!'}, function (err, msg) {
+    logger.warn(err);
+    logger.debug(msg);
   });
 };
 
@@ -39,3 +40,5 @@ module.exports = {
   printMandrillInfo: printMandrillInfo,
   sendDevInstanceStartEmail: sendDevInstanceStartEmail
 };
+
+sendDevInstanceStartEmail();
