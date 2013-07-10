@@ -1,0 +1,35 @@
+
+.hero-unit
+  #loadingIndicatorPanel(data-ng-show="showLoading")
+    .row
+      .span12#loadingIndicator
+        img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+
+  #onBoardForm(data-ng-show="showForm")
+    h1 欢迎来到思源人网站
+    br
+
+    form.form-horizontal(ng-submit="submit()", name="submitForm")
+      .control-group
+        label.control-label(for="username") 用户名
+        .controls
+          input(type="text", data-ng-model="username", placeholder="用户名", name="username", required)
+      .control-group
+        label.control-label(for="password") 密码
+        .controls
+          input(type="password", data-ng-model="password", placeholder="密码", name="password", required)
+      .control-group
+        label.control-label(for="retype") 再次输入
+        .controls
+          input(type="password", data-ng-model="retype", placeholder="再次输入", name="retype", required)
+
+      span.error(data-ng-show="password!=retype") 密码两次输入不匹配
+
+      .control-group
+        .controls
+          button.btn.btn-primary(type="submit", data-ng-disabled="retype!=password || !password") 确定
+  #failure(data-ng-show="showFailure")
+    h1 注册码错误
+  #success(data-ng-show="showSuccess")
+    h1 成功！请
+      a(href="login") 登录

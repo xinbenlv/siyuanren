@@ -60,11 +60,18 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'MeCtrl',
         access: access.user
       });
+    $routeProvider.when('/onBoard',
+      {
+        templateUrl: '/partials/onBoard',
+        controller: 'OnBoardCtrl',
+        access: access.anon
+      });
     $routeProvider.when('/404',
       {
         templateUrl: '/partials/404',
         access: access.public
       });
+
     $routeProvider.otherwise({redirectTo: '/404'});
 
     $locationProvider.html5Mode(true);

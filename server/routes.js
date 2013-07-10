@@ -137,6 +137,18 @@ routes = []
       middleware: [ApiCtrl.publicquery],
       accessLevel: accessLevels.public
     },
+    {
+      path: '/api/onboard',
+      httpMethod: 'GET',
+      middleware: [ApiCtrl.onboard.get],
+      accessLevel: accessLevels.public
+    },
+    {
+      path: '/api/onboard',
+      httpMethod: 'POST',
+      middleware: [ApiCtrl.onboard.post],
+      accessLevel: accessLevels.public
+    },
 
     // All other get requests should be handled by AngularJS's client-side routing system
     {

@@ -129,6 +129,62 @@ angular.module('angular-client-side-auth')
     $scope.yearofclass = '思源某期';
 
   }])
+  .controller('OnBoardCtrl',['$scope', '$location', '$http', function($scope, $location, $http) {
+    $scope.showLoading = true;
+    $scope.showForm = false;
+    $scope.showFailure = false;
+    $scope.showSuccess = false;
+
+    var token = $location.search()['token'];
+    $scope.loadOnBoardForm= function(){
+      var url = '/api/onboard?token=' + token;
+      $http.get(url)
+        .success(function(username) {
+          console.log('username: ' + username);
+          $scope.username = username;
+          $scope.showLoading = false;
+          $scope.showForm = true;
+
+        }).error(function(err) {
+          $scope.showLoading = false;
+          $scope.showForm = false;
+          $scope.showFailure = true;
+          $scope.showSucess = false;
+          console.log(err);
+        });
+    };
+
+    $scope.submit = function() {
+      var user = {};
+      user.token = $location.search()['token'];
+      user.username = $scope.username;
+      user.password = $scope.password;
+      $scope.showLoading = true;
+      $http.post('/api/onboard', user)
+        .success(function (user) {
+        $scope.showLoading = false;
+        $scope.showForm = false;
+        $scope.showSuccess = true;
+        $scope.showFailure = false;
+
+          window.setTimeout(function(){
+            $location.path('/login');
+          },2000);
+      }).error(function(error){
+        $scope.showLoading = false;
+        $scope.showForm = false;
+        $scope.showSuccess = false;
+        $scope.showFailure = true;
+      });
+    };
+
+    if(!token) {
+      $location.path('/login');
+    } else {
+      $scope.loadOnBoardForm();
+    }
+
+  }])
 ;
 
 angular.module('angular-client-side-auth')

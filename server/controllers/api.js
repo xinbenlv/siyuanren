@@ -167,3 +167,41 @@ exports.publicquery = function(req, res) {
     res.send(400, options.error);
   }
 };
+
+exports.onboard = {
+  post: function(req, res) {
+    logger.debug('post query: ' + JSON.stringify(req.query));
+    logger.debug('post body: ' + JSON.stringify(req.body));
+
+
+    var token = req.body.token;
+    User.findOne({registerToken: token}, function(err, user){
+      if(err || !user) {
+        res.send(403, err);
+      } else {
+        user.setPassword(req.body.password, function(err, user){
+          if(err || !user) return res.send(403, err);
+          user.username = req.body.username;
+          user.registerToken = require("randomstring").generate(32); // Reset a new random registerToken to invalidate old one.
+          user.save();
+          res.send(200, 'ok');
+        });
+
+      }
+    });
+  },
+  get: function(req, res) {
+    var token = req.query.token;
+    logger.debug('Token:' + token);
+    User.findOne({registerToken: token}, function(err, user){
+      logger.debug('User:' + JSON.stringify(user));
+      logger.debug('Err:' + JSON.stringify(err));
+      if(err || !user) {
+        res.send(403, err);
+      } else {
+        return res.send(200, user.username);
+      }
+    });
+
+  }
+};
