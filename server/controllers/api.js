@@ -3,6 +3,8 @@
 var mongoose = require('mongoose');
 var SiyuanUserProfile = require('../models/SiyuanUserProfile');
 var User = require('../models/User');
+var ChangeHistory = require('../models/ChangeHistory');
+
 var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 var Q = require('q');
 var MailService = require('../services/mailservice').MailService;
@@ -67,12 +69,23 @@ exports.get = function(req, res) {
 
 exports.put = function(req, res) {
   var theid = req.params.theid;
+  logger.debug('Save to id' + theid);
+  logger.debug('Query: ' + req.query);
+  var changeHistory = new ChangeHistory({
+    timestamp: new Date(),
+    user: theid,
+    fieldPath: String,
+    fieldValue: JSON.stringify(req.query)
+  });
+  changeHistory.save();
   SiyuanUserProfile.findByIdAndUpdate(theid, { $set: req.query},
     function(err, doc) {
       if (err) {
-        logger.debug('err!');
+        logger.error('err!' + JSON.stringify(err));
+        res.send(500,'There is something wrong in the server');
+      } else{
+        res.send(400, 'ok');
       }
-      res.send('ok');
   });
 };
 

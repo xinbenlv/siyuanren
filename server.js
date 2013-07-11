@@ -32,7 +32,14 @@ app.use(express.cookieParser());
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'client')));
-app.use(express.session({ key: 'express.sid', secret: 'keyboard cat'}));
+app.use(express.session({
+  secret: process.env.SESSION_SECRET,
+  cookie: { maxAge: 2628000000 },
+  store: new (require('express-sessions'))({
+    storage: 'mongodb',
+    instance: mongoose,
+  })
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -63,6 +70,10 @@ Q.fcall(function() {
       }
     });
     return d.promise;
+})
+.then(function(){
+
+
 })
 .then(function(){
   logger.info('Connected to database');

@@ -7,7 +7,7 @@ var User = require('./User');
 
 var BaseLog = new Schema({
   timestamp: Date,
-  msg: Object
+  msg: Object  // Tracer log message
 });
 
 module.exports = mongoose.model('BaseLog', BaseLog, 'logs');;
