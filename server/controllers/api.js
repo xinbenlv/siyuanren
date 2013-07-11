@@ -215,22 +215,29 @@ exports.emailReset = function(req, res) {
       res.send(403, err);
     } else {
       var url = process.env.HOST_ROOT_URL + '/onBoard?token=' + user.registerToken;
+      var check = require('validator').check;
+      try {
+        check(user.username).isEmail();
+        MailService.send({
+          subject: 'From siyuanren!!',
+          from: 'admin@siyuanren.org',
+          to: user.username,
+          text: 'Please set your username and password at: ' + url}, function (err, msg) {
+          logger.debug(msg);
+          if(err) {
+            logger.warn('Err of sending: ' + JSON.stringify(err));
+            res.send(400, err);
+          }
+          else {
+            return res.send(200, user.username);
+          }
+        });
+      }
+      catch (e) {
+        res.send(400, "Invalid email");
+      }
 
-      MailService.send({
-        subject: 'From siyuanren!!',
-        from: 'admin@siyuanren.org',
-        to: user.username,
-        text: 'Please set your username and password at: ' + url}, function (err, msg) {
-        logger.debug(msg);
-        if(err) {
-          logger.warn('Err of sending: ' + JSON.stringify(err));
-          res.send(400, err);
-        }
-        else {
-          return res.send(200, user.username);
-        }
 
-      });
     }
   });
 }

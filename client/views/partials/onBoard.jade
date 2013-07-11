@@ -11,9 +11,9 @@
 
     form.form-horizontal(ng-submit="submit()", name="submitForm")
       .control-group
-        label.control-label(for="username") 用户名
+        label.control-label(for="username") 登录邮箱
         .controls
-          input(type="text", data-ng-model="username", placeholder="用户名", name="username", required)
+          input(type="email", data-ng-model="username", placeholder="登录邮箱", name="username", required, )
       .control-group
         label.control-label(for="password") 密码
         .controls

@@ -5,9 +5,9 @@
 
     form.form-horizontal(ng-submit="login()", name="loginForm")
         .control-group
-            label.control-label(for="username") 用户名
+            label.control-label(for="username") 登录邮箱
             .controls
-                input(type="text", data-ng-model="username", placeholder="用户名", name="username", required)
+                input(type="text", data-ng-model="username", placeholder="登录邮箱", name="username", required)
         .control-group
             label.control-label(for="password") 密码
             .controls
@@ -21,7 +21,7 @@
             .controls
                 button.btn(type="submit") 登录
     hr
-    p ... 或者可以使用如下方式登录:
+    p ... 如果你已经关联社交网站账户，可以使用如下方式登录:
     .btn-group
         a.btn(href="", data-ng-click="loginOauth('facebook')")
             i.icon-facebook-sign

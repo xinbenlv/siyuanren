@@ -153,7 +153,7 @@
       doubleclick: true,
       editmode: 'static',
       modelChanged: updateCellValue,
-      pageSize: 16
+      pageSize: 40
     });
     metadata = [];
     var allFields = fields.concat(additionalFields);
