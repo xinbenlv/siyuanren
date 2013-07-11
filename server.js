@@ -1,12 +1,22 @@
 'use strict';
-
-require('nodefly').profile(
-  process.env.NODE_FLY_ID,
-  ['siyuanren ' + process.env.NODE_ENV, 'Heroku'], {
-    // time in ms when the event loop is considered blocked
-    blockThreshold: 10
-  }
-);
+switch(process.env.PROFILING) {
+  case 'nodetime':
+    require('nodetime').profile({
+        accountKey: process.env.NODETIME_ACCOUNT_KEY
+    });
+    console.log('Start profiling: nodetime');
+    break;
+  case 'nodefly':
+    require('nodefly').profile(
+      process.env.NODE_FLY_ID,
+      ['siyuanren ' + process.env.NODE_ENV, 'Heroku'], {
+        // time in ms when the event loop is considered blocked
+        blockThreshold: 10
+      }
+    );
+    console.log('Start profiling: nodefly');
+  break;
+}
 
 var express = require('express');
 var app = require('express.io')();
