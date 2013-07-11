@@ -6,7 +6,7 @@ var EmailType = require('./EmailType');
 var PhoneNumberType = require('./PhoneNumberType');
 
 var SiyuanUserProfile = new Schema({
-  "思源学员期数": String,
+  "思源学员期数": {type: String, 'Chinese Label': '思源学员期数'},
   "担任辅导员": [String],
   "姓名": String,
   "常用邮箱": String,

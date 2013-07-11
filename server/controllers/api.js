@@ -113,7 +113,11 @@ exports.query = function(req, res) {
   } else {
     Q.fcall(function () {
       var d = Q.defer();
-      SiyuanUserProfile.find(options.criteria, options.fields, function (err, siyuanUserProfiles) {
+      var query = SiyuanUserProfile.find(options.criteria);
+      for(var i in options.fields) {
+        query.populate(options.fields[i])
+      }
+      query.exec(function (err, siyuanUserProfiles) {
         if (err)d.reject(new Error(err));
         else {
           var map = {};

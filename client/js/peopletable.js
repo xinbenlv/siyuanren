@@ -168,11 +168,15 @@
     var baseUrl =  '/api/query?';
     var collectionUrl = 'collection="SiyuanUserProfile"';
     var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
-    var fieldsUrl = 'fields="';
+
+    var fieldsUrl = 'fields=' + JSON.stringify(fields);
+    /*var fieldsUrl = 'fields="';
     for(var i in allFields){
       fieldsUrl += allFields[i].text +' ';
     }
-    fieldsUrl += '"';
+    fieldsUrl += '"';*/
+
+
     var url = baseUrl + '&' + collectionUrl + '&' + criteriaUrl + '&' + fieldsUrl;
     // Send request
     $.ajax({

@@ -213,7 +213,7 @@ angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
     ['$rootScope', '$scope', '$filter', function ($rootScope, $scope, $filter) {
       var fields = [
-        { id:0, text: '姓名' },
+        { id:0, text: '姓名',},
         { id:1, text: '思源学员期数' },
         { id:2, text: '本科院系' },
         { id:3, text: '本科班级' },
@@ -242,6 +242,8 @@ angular.module('angular-client-side-auth')
         { id:26, text: "Skype"},
         { id:27, text: "Gtalk"},
         { id:28, text: "备注"},
+        { id:29, text: 'Phone Numbers'},
+        { id:30, text: 'Emails'}
       ];
       $scope.selectedFields = function () {
         var selectedList = $('#fieldsSelector').select2('val');
