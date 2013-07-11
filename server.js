@@ -2,7 +2,7 @@
 
 require('nodefly').profile(
   process.env.NODE_FLY_ID,
-  ['siyuanren','Heroku'], {
+  ['siyuanren ' + process.env.NODE_ENV, 'Heroku'], {
     // time in ms when the event loop is considered blocked
     blockThreshold: 10
   }

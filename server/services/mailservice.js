@@ -26,8 +26,7 @@ var sendDevInstanceStartEmail = function () {
     from: 'admin@siyuanren.org',
     to: 'xinbenlv@gmail.com',
     subject: 'Local instance started!'}, function (err, msg) {
-    logger.warn(err);
-    logger.debug(msg);
+      if(err) logger.warn(err);
   });
 };
 
