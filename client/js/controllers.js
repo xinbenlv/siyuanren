@@ -195,6 +195,17 @@ angular.module('angular-client-side-auth')
       $scope.loadOnBoardForm();
     }
 
+  }]).controller('ChangeHistoryCtrl',['$scope', '$location', '$http', function($scope, $location, $http) {
+    $scope.showLoading = true;
+    $scope.showForm = false;
+    $scope.showFailure = false;
+    $scope.showSuccess = false;
+    var url = '/api/changeHistory';
+    $http.get(url)
+      .success(function(histories) {
+        $scope.histories = histories;
+      }).error(function(err) {
+      });
   }])
 ;
 

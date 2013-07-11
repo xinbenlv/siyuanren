@@ -6,9 +6,9 @@ var BaseLog = require('./BaseLog');
 
 var ChangeHistory = new Schema({
   timestamp: Date,
-  user: ObjectId,
-  fieldPath: String,
-  fieldValue: String
+  user: {type: ObjectId, ref: 'User'},
+  siyuanUserProfile: {type: ObjectId, ref: 'SiyuanUserProfile'},
+  fieldSet: Object
 });
 
 module.exports = mongoose.model('ChangeHistory', ChangeHistory, 'changeHistory');

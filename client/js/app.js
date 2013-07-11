@@ -66,6 +66,12 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'OnBoardCtrl',
         access: access.anon
       });
+    $routeProvider.when('/changeHistory',
+      {
+        templateUrl: '/partials/changeHistory',
+        controller: 'ChangeHistoryCtrl',
+        access: access.user
+      });
     $routeProvider.when('/404',
       {
         templateUrl: '/partials/404',

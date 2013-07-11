@@ -149,6 +149,12 @@ routes = []
       accessLevel: accessLevels.public
     },
     {
+      path: '/api/changeHistory',
+      httpMethod: 'GET',
+      middleware: [ApiCtrl.changeHistory],
+      accessLevel: accessLevels.user
+    },
+    {
       path: '/api/emailreset',
       httpMethod: 'POST',
       middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.emailReset],

@@ -71,20 +71,25 @@ exports.put = function(req, res) {
   var theid = req.params.theid;
   logger.debug('Save to id' + theid);
   logger.debug('Query: ' + req.query);
-  var changeHistory = new ChangeHistory({
-    timestamp: new Date(),
-    user: theid,
-    fieldPath: String,
-    fieldValue: JSON.stringify(req.query)
+  logger.debug('User: ' + JSON.stringify(req.user));
+  User.findOne({username: req.user.username}, function(err, user){
+    var changeHistory = new ChangeHistory({
+      timestamp: new Date(),
+      user: user._id,
+      siyuanUserProfile: theid,
+      fieldSet: req.query
+    });
+    changeHistory.save();
   });
-  changeHistory.save();
+
+
   SiyuanUserProfile.findByIdAndUpdate(theid, { $set: req.query},
     function(err, doc) {
       if (err) {
         logger.error('err!' + JSON.stringify(err));
         res.send(500,'There is something wrong in the server');
       } else{
-        res.send(400, 'ok');
+        res.send(200, 'ok');
       }
   });
 };
@@ -253,4 +258,36 @@ exports.emailReset = function(req, res) {
 
     }
   });
-}
+};
+
+
+exports.changeHistory = function(req, res) {
+  ChangeHistory
+    .find({
+
+    })
+    .sort({timestamp: -1})
+    .limit(20)
+    .populate('user')
+    .populate('siyuanUserProfile')
+    .exec(function(err, docs){
+      if(err){
+        logger.error(err);
+        res.send(400, err);
+      } else{
+        var histories = [];
+        for(var i in docs) {
+
+          var doc = docs[i];
+          histories.push({
+            timestamp: doc.timestamp.toString(),
+            Modifiee: doc.siyuanUserProfile['姓名'],
+            Modifier: doc.user.username,
+            Change: doc.fieldSet
+          });
+
+        }
+        res.send(200, histories);
+      }
+    });
+};
