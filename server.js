@@ -2,7 +2,8 @@
 switch(process.env.PROFILING) {
   case 'nodetime':
     require('nodetime').profile({
-        accountKey: process.env.NODETIME_ACCOUNT_KEY
+        accountKey: process.env.NODETIME_ACCOUNT_KEY,
+        appName: 'siyuanren ' + process.env.NODE_ENV
     });
     console.log('Start profiling: nodetime');
     break;
