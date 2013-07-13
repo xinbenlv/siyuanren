@@ -141,7 +141,28 @@ table {
 }
 
 .ui-helper-hidden-accessible {
-    display: none;
+  display: none;
 }
 
+.icon-remove:hover {
+  opacity:.55;
+}
 
+.country-code, .phone-number {
+  display: inline-block;
+  padding: 2.5px;
+}
+
+.phone-number-item {
+  display: block;
+  margin: 2.5px;
+  padding: 2.5px;
+  border: 1px solid #aaaaaa;
+  background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  text-align: center;
+  border-radius: 5px;
+}
+.phone-number-remove {
+  padding: 2.5px;
+  color: #e74c3c;
+}

@@ -271,7 +271,7 @@ angular.module('angular-client-side-auth')
           data: fields
         });
 
-        $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3]]);
+        $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3], fields[29]]);
 
       }
 

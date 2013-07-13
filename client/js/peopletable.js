@@ -70,12 +70,47 @@
     cell.innerHTML = html;
   }});
 
-  var loadEntireTable = function (tableData) {
+  var phoneNumberCellRenderer = new CellRenderer({render: function (cell, phones) {
+    var html = '';
+    var countryAbbr = {
+      '1': 'us',
+      '44': 'gb',
+      '81': 'jp',
+      '852': 'hk',
+      '853': 'mo',
+      '886': 'tw',
+      '86': 'cn'
+    }
+    if(phones instanceof Array) {
+      for(var i in phones) {
+
+        var phone = phones[i];
+        if(phone.length == 0) continue;
+        var countryCodeDiv =
+          '<div class="country-code">'
+          + '<img src="/thirdparty/nationalflags/gosquared/flags-iso/shiny/16/'
+          + countryAbbr[phone.countryCode.toString()].toUpperCase() + '.png" alt="'
+            + '+(' + phone.countryCode + ')' + '">'
+          + '</img>'
+          + '</div>';
+        var phoneNumberDiv = '<div class="phone-number">' + phone.phoneNumber + '</div>';
+        var removeIcon = '<i class="phone-number-remove icon-remove"></i>'
+        html += '<div class="phone-number-item">' + countryCodeDiv  + phoneNumberDiv + removeIcon + '</div>';
+      }
+    }
+    cell.innerHTML = html;
+  }});
+
+  var loadEntireTable = function (tableData, fields) {
     editableGrid.load(tableData);
 
     if(fields.indexOf('action') >= 0) editableGrid.setCellRenderer('action', actionCellRenderer);
     if(fields.indexOf('auth') >= 0) editableGrid.setCellRenderer('auth', snsCellRenderer);
-
+    _(fields).each(function(field){
+      if(field.text == 'Phone Numbers'){
+        editableGrid.setCellRenderer('Phone Numbers', phoneNumberCellRenderer);
+      }
+    });
 
     editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover', 'testgrid');
     editableGrid.updatePaginator();
@@ -161,10 +196,11 @@
       metadata.push({
         name: allFields[i].text,
         label: allFields[i].text,
-        datatype: allFields[i] == 'auth' ? 'html' : 'string',
-        editable: true
+        datatype: ['auth', 'Phone Numbers'].indexOf(allFields[i].text) >= 0 ? 'html' : 'string',
+        editable: !(['auth', 'Phone Numbers'].indexOf(allFields[i].text) >= 0)
       });
     }
+    console.log(metadata);
     var baseUrl =  '/api/query?';
     var collectionUrl = 'collection="SiyuanUserProfile"';
     var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
@@ -193,7 +229,7 @@
           data.push({id: rawData[i]._id, values: rawData[i]});
         }
         tableData.data = data;
-        loadEntireTable(tableData);
+        loadEntireTable(tableData, allFields);
         return cb();
       }
     });
