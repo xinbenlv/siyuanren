@@ -1,6 +1,6 @@
 {
   "name": "siyuanren",
-  "version": "0.0.0",
+  "version": "0.0.2-beta-1",
   "main": "server.js",
   "dependencies": {
     "jquery": "~2.0.3",
