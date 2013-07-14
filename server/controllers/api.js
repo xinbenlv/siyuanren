@@ -70,7 +70,7 @@ exports.get = function(req, res) {
 exports.put = function(req, res) {
   var theid = req.params.theid;
   logger.debug('Save to id' + theid);
-  logger.debug('Query: ' + req.query);
+  logger.debug('Query: ' + JSON.stringify(req.query));
   logger.debug('User: ' + JSON.stringify(req.user));
   User.findOne({username: req.user.username}, function(err, user){
     var changeHistory = new ChangeHistory({
@@ -87,9 +87,10 @@ exports.put = function(req, res) {
     function(err, doc) {
       if (err) {
         logger.error('err!' + JSON.stringify(err));
-        res.send(500,'There is something wrong in the server');
+        res.send(500,{result: 'There is something wrong in the server'});
       } else{
-        res.send(200, 'ok');
+        logger.debug('ok updated!');
+        res.send(200, { result: 'ok'});
       }
   });
 };

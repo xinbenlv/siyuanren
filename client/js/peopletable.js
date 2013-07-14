@@ -70,8 +70,10 @@
     cell.innerHTML = html;
   }});
 
-  var phoneNumberCellRenderer = new CellRenderer({render: function (cell, phones) {
-    var html = '';
+  var renderPhoneNumberCell = function(element, value) {
+    var phones = value;
+
+    var html = document.createElement('div');
     var countryAbbr = {
       '1': 'us',
       '44': 'gb',
@@ -80,25 +82,60 @@
       '853': 'mo',
       '886': 'tw',
       '86': 'cn'
-    }
+    };
+
     if(phones instanceof Array) {
+
       for(var i in phones) {
 
         var phone = phones[i];
         if(phone.length == 0) continue;
-        var countryCodeDiv =
-          '<div class="country-code">'
-          + '<img src="/thirdparty/nationalflags/gosquared/flags-iso/shiny/16/'
-          + countryAbbr[phone.countryCode.toString()].toUpperCase() + '.png" alt="'
-            + '+(' + phone.countryCode + ')' + '">'
-          + '</img>'
-          + '</div>';
-        var phoneNumberDiv = '<div class="phone-number">' + phone.phoneNumber + '</div>';
-        var removeIcon = '<i class="phone-number-remove icon-remove"></i>'
-        html += '<div class="phone-number-item">' + countryCodeDiv  + phoneNumberDiv + removeIcon + '</div>';
+
+        var countryCodeDiv = document.createElement('div');
+        countryCodeDiv.classList.add('country-code');
+        var countryCodeDivInnerImg = document.createElement('img');
+        countryCodeDivInnerImg.alt = '+(' + phone.countryCode + ')';
+        countryCodeDivInnerImg.src = '/thirdparty/nationalflags/gosquared/flags-iso/shiny/16/'
+          + countryAbbr[phone.countryCode.toString()].toUpperCase() + '.png';
+        countryCodeDiv.appendChild(countryCodeDivInnerImg);
+
+        var phoneNumberDiv = document.createElement('div');
+        phoneNumberDiv.classList.add('phone-number');
+        phoneNumberDiv.textContent =  phone.phoneNumber;
+
+        var removeIcon = document.createElement('i');
+        removeIcon.classList.add('phone-number-remove');
+        removeIcon.classList.add('icon-remove');
+        removeIcon.dataset.row = element.rowIndex;
+        removeIcon.dataset.col = element.columnIndex;
+        removeIcon.dataset.i = i;
+        removeIcon.addEventListener('click', function() {
+
+          var oldValue = editableGrid.getValueAt(this.dataset.row, this.dataset.col);
+          var newValue = [];
+          for(var t = 0; t < oldValue.length; t++) {
+            if (t != removeIcon.dataset.i){
+              newValue.add(oldValue[t]);
+            }
+          }
+          editableGrid.setValueAt(this.dataset.row, this.dataset.col, newValue);
+          updateCellValue(this.dataset.row, this.dataset.col, oldValue, newValue);
+        });
+
+        var phoneNumberItemDiv = document.createElement('div');
+        phoneNumberItemDiv.classList.add('phone-number-item');
+        phoneNumberItemDiv.appendChild(countryCodeDiv);
+        phoneNumberItemDiv.appendChild(phoneNumberDiv);
+        phoneNumberItemDiv.appendChild(removeIcon);
+        html.appendChild(phoneNumberItemDiv);
       }
     }
-    cell.innerHTML = html;
+    return html;
+  } ;
+
+  var phoneNumberCellRenderer = new CellRenderer({render: function (element, value) {
+    var cellElement = renderPhoneNumberCell(element, value);
+    element.appendChild(cellElement);
   }});
 
   var loadEntireTable = function (tableData, fields) {
@@ -117,9 +154,11 @@
 
   };
 
-  var updateCellValue = function (rowIndex, columnIndex, oldValue, newValue, row) {
+  var updateCellValue = function (rowIndex, columnIndex, oldValue, newValue) {
     var updateValue = {};
+
     updateValue[editableGrid.getColumnName(columnIndex)] = newValue;
+    console.log(updateValue);
     $.ajax({
       url: '/api/siyuan/put/' + editableGrid.getRowId(rowIndex),
       type: 'GET',
@@ -127,14 +166,14 @@
       data: updateValue,
       success: function (response) {
         // reset old value if failed then highlight row
-        var success = (response == 'ok' || !isNaN(parseInt(response)));
+        var success = response['result'];
         // by default, a successful response can be 'ok' or a database id
 
         if (!success) editableGrid.setValueAt(rowIndex, columnIndex, oldValue);
 
       },
       error: function (XMLHttpRequest, textStatus, exception) {
-        alert('Ajax failure\n' + errortext);
+        alert('Ajax failure:' + exception + ', textStatus:' + textStatus);
       },
       async: true
     });
