@@ -242,8 +242,8 @@ angular.module('angular-client-side-auth')
         { id:26, text: "Skype"},
         { id:27, text: "Gtalk"},
         { id:28, text: "备注"},
-        { id:29, text: 'Phone Numbers'},
-        { id:30, text: 'Emails'}
+        { id:29, text: '电话号码'},
+        { id:30, text: 'Email地址'}
       ];
       $scope.selectedFields = function () {
         var selectedList = $('#fieldsSelector').select2('val');

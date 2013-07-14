@@ -81,9 +81,8 @@
     createEmailDiv.classList.add('email-item');
 
     var createText = document.createElement('div');
-    createText.classList.add('email-number');
+    createText.classList.add('email');
     createText.textContent = '添加Email地址';
-    createEmailDiv.appendChild(createText);
     var createIcon = document.createElement('i');
     createIcon.classList.add('email-create');
     createIcon.classList.add('icon-plus');
@@ -112,6 +111,7 @@
       }
     });
     createEmailDiv.appendChild(createIcon);
+    createEmailDiv.appendChild(createText);
 
     html.appendChild(createEmailDiv);
 
@@ -147,8 +147,9 @@
 
         var emailItemDiv = document.createElement('div');
         emailItemDiv.classList.add('email-item');
-        emailItemDiv.appendChild(emailDiv);
+
         emailItemDiv.appendChild(removeIcon);
+        emailItemDiv.appendChild(emailDiv);
         html.appendChild(emailItemDiv);
       }
     }
@@ -167,6 +168,7 @@
     var countryAbbr = {
       '1': 'us',
       '18': 'us',
+      '41': 'ch',
       '44': 'gb',
       '81': 'jp',
       '852': 'hk',
@@ -181,7 +183,6 @@
     var createText = document.createElement('div');
     createText.classList.add('phone-number');
     createText.textContent = '添加电话号码';
-    createPhoneNumberDiv.appendChild(createText);
     var createIcon = document.createElement('i');
     createIcon.classList.add('phone-number-create');
     createIcon.classList.add('icon-plus');
@@ -218,8 +219,9 @@
         updateCellValue(this.dataset.row, this.dataset.col, oldValue, newValue);
       }
     });
-    createPhoneNumberDiv.appendChild(createIcon);
 
+    createPhoneNumberDiv.appendChild(createIcon);
+    createPhoneNumberDiv.appendChild(createText);
     html.appendChild(createPhoneNumberDiv);
 
     if(phones instanceof Array) {
@@ -233,8 +235,9 @@
         countryCodeDiv.classList.add('country-code');
         var countryCodeDivInnerImg = document.createElement('img');
         countryCodeDivInnerImg.alt = '+(' + phone.countryCode + ')';
+        var countryCodeStr = countryAbbr[phone.countryCode.toString()] || phone.countryCode.toString();
         countryCodeDivInnerImg.src = '/thirdparty/nationalflags/gosquared/flags-iso/shiny/16/'
-          + countryAbbr[phone.countryCode.toString()].toUpperCase() + '.png';
+          + countryCodeStr.toUpperCase() + '.png';
         countryCodeDiv.appendChild(countryCodeDivInnerImg);
 
         var phoneNumberDiv = document.createElement('div');
@@ -262,9 +265,10 @@
 
         var phoneNumberItemDiv = document.createElement('div');
         phoneNumberItemDiv.classList.add('phone-number-item');
+
+        phoneNumberItemDiv.appendChild(removeIcon);
         phoneNumberItemDiv.appendChild(countryCodeDiv);
         phoneNumberItemDiv.appendChild(phoneNumberDiv);
-        phoneNumberItemDiv.appendChild(removeIcon);
         html.appendChild(phoneNumberItemDiv);
       }
     }
@@ -282,13 +286,13 @@
     if(fields.indexOf('action') >= 0) editableGrid.setCellRenderer('action', actionCellRenderer);
     if(fields.indexOf('auth') >= 0) editableGrid.setCellRenderer('auth', snsCellRenderer);
     _(fields).each(function(field){
-      if(field.text == 'Phone Numbers'){
-        editableGrid.setCellRenderer('Phone Numbers', phoneNumberCellRenderer);
+      if(field.text == '电话号码'){
+        editableGrid.setCellRenderer('电话号码', phoneNumberCellRenderer);
       }
     });
     _(fields).each(function(field){
-      if(field.text == 'Emails'){
-        editableGrid.setCellRenderer('Emails', emailCellRenderer);
+      if(field.text == 'Email地址'){
+        editableGrid.setCellRenderer('Email地址', emailCellRenderer);
       }
     });
     editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover', 'testgrid');
@@ -377,8 +381,8 @@
       metadata.push({
         name: allFields[i].text,
         label: allFields[i].text,
-        datatype: ['auth', 'Phone Numbers', 'Emails'].indexOf(allFields[i].text) >= 0 ? 'html' : 'string',
-        editable: !(['auth', 'Phone Numbers', 'Emails'].indexOf(allFields[i].text) >= 0)
+        datatype: ['auth', '电话号码', 'Email地址'].indexOf(allFields[i].text) >= 0 ? 'html' : 'string',
+        editable: !(['auth', '电话号码', 'Email地址'].indexOf(allFields[i].text) >= 0)
       });
     }
     console.log(metadata);

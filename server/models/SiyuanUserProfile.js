@@ -11,9 +11,12 @@ var SiyuanUserProfile = new Schema({
   "姓名": String,
   "常用邮箱": String,
   "其他邮箱": String,
+
   "手机": String,
-  "Emails": [EmailType],
-  "Phone Numbers": [PhoneNumberType],
+
+  "Email地址": [EmailType],
+  "电话号码": [PhoneNumberType],
+
   "性别": String,
   "本科班级": String,
   "本科院系": String,
