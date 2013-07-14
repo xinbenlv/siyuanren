@@ -2,9 +2,6 @@
 [![Build Status](https://travis-ci.org/xinbenlv/siyuanren.png?branch=master)](https://travis-ci.org/xinbenlv/siyuanren)
 A web app for a THU Siyuan Alumni community.
 
-## Current version: 0.0.0 (dev)
-Go to git commit history for details of development
-
 ## RESTful API
 
 | URL                       | Action        | Request Object        | Description             |
