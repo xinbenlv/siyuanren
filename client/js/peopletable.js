@@ -70,12 +70,103 @@
     cell.innerHTML = html;
   }});
 
+ //XXXXXXXXXXXXXXXXXXXXX
+
+  var renderEmailCell = function(element, value) {
+    var emails = value;
+
+    var html = document.createElement('div');
+
+    var createEmailDiv = document.createElement('div');
+    createEmailDiv.classList.add('email-item');
+
+    var createText = document.createElement('div');
+    createText.classList.add('email-number');
+    createText.textContent = '添加Email地址';
+    createEmailDiv.appendChild(createText);
+    var createIcon = document.createElement('i');
+    createIcon.classList.add('email-create');
+    createIcon.classList.add('icon-plus');
+    createIcon.dataset.row = element.rowIndex;
+    createIcon.dataset.col = element.columnIndex;
+    createIcon.addEventListener('click', function() {
+
+      var oldValue = editableGrid.getValueAt(this.dataset.row, this.dataset.col);
+      var newValue = [];
+      for(var t = 0; t < oldValue.length; t++) {
+        newValue.push(oldValue[t]);
+      }
+      var rawEmail = 'xxx';
+      while(rawEmail == 'xxx' || rawEmail == '') {
+
+        console.log(rawEmail);
+        rawEmail = prompt('请输入一个新的Email地址' ,'');
+      }
+      if(rawEmail != '' && rawEmail.length > 0) {
+        var t = {};
+        t.address = rawEmail;
+
+        newValue.push(t);
+        editableGrid.setValueAt(this.dataset.row, this.dataset.col, newValue);
+        updateCellValue(this.dataset.row, this.dataset.col, oldValue, newValue);
+      }
+    });
+    createEmailDiv.appendChild(createIcon);
+
+    html.appendChild(createEmailDiv);
+
+    if(emails instanceof Array) {
+
+      for(var i in emails) {
+
+        var email = emails[i];
+        if(!email || email.length == 0) continue;
+
+        var emailDiv = document.createElement('div');
+        emailDiv.classList.add('email');
+        emailDiv.textContent =  email.address;
+
+        var removeIcon = document.createElement('i');
+        removeIcon.classList.add('email-remove');
+        removeIcon.classList.add('icon-remove');
+        removeIcon.dataset.row = element.rowIndex;
+        removeIcon.dataset.col = element.columnIndex;
+        removeIcon.dataset.i = i;
+        removeIcon.addEventListener('click', function() {
+
+          var oldValue = editableGrid.getValueAt(this.dataset.row, this.dataset.col);
+          var newValue = [];
+          for(var t = 0; t < oldValue.length; t++) {
+            if (t != removeIcon.dataset.i){
+              newValue.push(oldValue[t]);
+            }
+          }
+          editableGrid.setValueAt(this.dataset.row, this.dataset.col, newValue);
+          updateCellValue(this.dataset.row, this.dataset.col, oldValue, newValue);
+        });
+
+        var emailItemDiv = document.createElement('div');
+        emailItemDiv.classList.add('email-item');
+        emailItemDiv.appendChild(emailDiv);
+        emailItemDiv.appendChild(removeIcon);
+        html.appendChild(emailItemDiv);
+      }
+    }
+    return html;
+  } ;
+
+  var emailCellRenderer = new CellRenderer({render: function (element, value) {
+    var cellElement = renderEmailCell(element, value);
+    element.appendChild(cellElement);
+  }});
+
   var renderPhoneNumberCell = function(element, value) {
     var phones = value;
 
     var html = document.createElement('div');
     var countryAbbr = {
       '1': 'us',
+      '18': 'us',
       '44': 'gb',
       '81': 'jp',
       '852': 'hk',
@@ -83,13 +174,60 @@
       '886': 'tw',
       '86': 'cn'
     };
+    var createPhoneNumberDiv = document.createElement('div');
+    createPhoneNumberDiv.classList.add('phone-number-item');
+
+
+    var createText = document.createElement('div');
+    createText.classList.add('phone-number');
+    createText.textContent = '添加电话号码';
+    createPhoneNumberDiv.appendChild(createText);
+    var createIcon = document.createElement('i');
+    createIcon.classList.add('phone-number-create');
+    createIcon.classList.add('icon-plus');
+    createIcon.dataset.row = element.rowIndex;
+    createIcon.dataset.col = element.columnIndex;
+    createIcon.addEventListener('click', function() {
+
+      var oldValue = editableGrid.getValueAt(this.dataset.row, this.dataset.col);
+      var newValue = [];
+      for(var t = 0; t < oldValue.length; t++) {
+        newValue.push(oldValue[t]);
+      }
+      var rawPhone = 'xxx';
+      while(rawPhone != "" && !rawPhone.match(/\(\+\d+\)\d+/)) {
+        rawPhone = prompt("请输入一个新的电话号码，格式 \"(+区号)号码\" 例如：(+86)13812345678","");
+      }
+      if(rawPhone != "" && rawPhone.length > 0) {
+        var ph = rawPhone;
+        console.log(ph);
+        var countryCodeMatcher = /(?:\(\+)(\d+)(?:\))/;
+        var phoneNumberMatcher = /([\d\-\s]{7,15})/;
+        var notesMatcher = /(?:\[)(.*)(?:\])/;
+
+        var countryCode = ph.match(countryCodeMatcher) && ph.match(countryCodeMatcher)[1];
+        var phone =  ph.match(phoneNumberMatcher)[1].replace(/\-/g,'').replace(/ /g,'');
+        var notes = ph.match(notesMatcher) && ph.match(notesMatcher)[1];
+        var t = {};
+        t.countryCode = countryCode;
+        t.phoneNumber = phone;
+        t.notes = notes || '';
+
+        newValue.push(t);
+        editableGrid.setValueAt(this.dataset.row, this.dataset.col, newValue);
+        updateCellValue(this.dataset.row, this.dataset.col, oldValue, newValue);
+      }
+    });
+    createPhoneNumberDiv.appendChild(createIcon);
+
+    html.appendChild(createPhoneNumberDiv);
 
     if(phones instanceof Array) {
 
       for(var i in phones) {
 
         var phone = phones[i];
-        if(phone.length == 0) continue;
+        if(!phone || phone.length == 0) continue;
 
         var countryCodeDiv = document.createElement('div');
         countryCodeDiv.classList.add('country-code');
@@ -115,7 +253,7 @@
           var newValue = [];
           for(var t = 0; t < oldValue.length; t++) {
             if (t != removeIcon.dataset.i){
-              newValue.add(oldValue[t]);
+              newValue.push(oldValue[t]);
             }
           }
           editableGrid.setValueAt(this.dataset.row, this.dataset.col, newValue);
@@ -148,7 +286,11 @@
         editableGrid.setCellRenderer('Phone Numbers', phoneNumberCellRenderer);
       }
     });
-
+    _(fields).each(function(field){
+      if(field.text == 'Emails'){
+        editableGrid.setCellRenderer('Emails', emailCellRenderer);
+      }
+    });
     editableGrid.renderGrid('tablecontent', 'table table-bordered table-striped table-hover', 'testgrid');
     editableGrid.updatePaginator();
 
@@ -235,8 +377,8 @@
       metadata.push({
         name: allFields[i].text,
         label: allFields[i].text,
-        datatype: ['auth', 'Phone Numbers'].indexOf(allFields[i].text) >= 0 ? 'html' : 'string',
-        editable: !(['auth', 'Phone Numbers'].indexOf(allFields[i].text) >= 0)
+        datatype: ['auth', 'Phone Numbers', 'Emails'].indexOf(allFields[i].text) >= 0 ? 'html' : 'string',
+        editable: !(['auth', 'Phone Numbers', 'Emails'].indexOf(allFields[i].text) >= 0)
       });
     }
     console.log(metadata);
