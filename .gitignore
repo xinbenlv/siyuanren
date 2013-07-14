@@ -4,7 +4,8 @@ node_modules/
 .credentials
 credentials.js
 *.swp
-dump
+
+*.dump
 client/thirdparty/bower_components/
 .env
 .dev_env
