@@ -1,0 +1,46 @@
+@import "../thirdparty/less-elements/elements.less";
+.siyuanren {
+
+  body {
+    position: relative;
+    padding-top: 40px;
+  }
+
+  .navbar {
+    @bgColor: #000;
+    @bgColorActive: #333;
+    @fgColor: #aaa;
+    @fgColorActive: #fff;
+
+    .navbar-inner {
+      background-image: none;
+      background-color: @bgColor;
+      border: none;
+      .active a {
+        color: @fgColorActive;
+        background-color: @bgColorActive;
+      }
+    }
+
+    .brand,
+    .nav > li > a
+    {
+      text-shadow: none;
+      color: @fgColor;
+      &:hover {
+        color: @fgColorActive;
+        background-color: @bgColorActive;
+      }
+    }
+  }
+
+  header {
+
+  }
+  footer {
+    @fgColor: #aaa;
+    @fgColorActive: #fff;
+    color: @fgColor;
+
+  }
+}
