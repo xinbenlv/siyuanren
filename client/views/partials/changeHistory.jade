@@ -1,17 +1,17 @@
 h1 修订历史
 
 div#loadingIndicator(data-ng-show="loading")
-  img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+    img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
 table.table.table-striped(data-ng-hide="loading")
-  thead
-    tr
-      th 时间
-      th 修改者
-      th 被修改者
-      th 变化
-  tbody
-    tr(data-ng-repeat="h in histories")
-      td {{ h.timestamp }}
-      td {{ h.Modifier }}
-      td {{ h.Modifiee }}
-      td {{ h.Change }}
+    thead
+        tr
+            th 时间
+            th 修改者
+            th 被修改者
+            th 变化
+    tbody
+        tr(data-ng-repeat="h in histories")
+            td {{ h.timestamp }}
+            td {{ h.Modifier }}
+            td {{ h.Modifiee }}
+            td {{ h.Change }}
