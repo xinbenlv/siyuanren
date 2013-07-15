@@ -1,12 +1,14 @@
 .container
+    .large-empty-row
+    h1 通讯录
+    .small-empty-row
     .row
         label.span1(for='filter') Filter:
         input#filter.span5(style='float:left;', type='text', data-cip-id='filter')
-        button.btn.span2(onclick='peopletable.onClickCreate(1)') Create
 
     .row
         label.span1 Fields
-        input.span6#fieldsSelector
+        input(type='text').span6#fieldsSelector
     .row
         label(ng-repeat="field in fields")
             input(type="checkbox", value="{{field.name}}", ng-checked="field.checked", ng-model="field.checked")
@@ -24,4 +26,4 @@
             .span12#paginator
         .row
             .span12
-            #tablecontent
+                #tablecontent

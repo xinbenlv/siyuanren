@@ -77,7 +77,11 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         templateUrl: '/partials/404',
         access: access.public
       });
-
+    $routeProvider.when('/underConstruction',
+      {
+        templateUrl: '/partials/underConstruction',
+        access: access.public
+      });
     $routeProvider.otherwise({redirectTo: '/404'});
 
     $locationProvider.html5Mode(true);

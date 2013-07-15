@@ -23,33 +23,40 @@
     }
 
     .brand,
-    .nav > li > a
-    {
+    .nav > li > a,
+    .search i {
       text-shadow: none;
+      color: @fgColor;
       color: @fgColor;
       &:hover {
         color: @fgColorActive;
-        background-color: @bgColorActive;
       }
     }
 
-    .btn-navbar {
-
+    .search i {
+      margin: 4px;
     }
 
+
+
     .search {
-      display: inline-block;
-      margin: 5px;
+      margin: 5px 15px;
       input {
         margin: 0px;
         background-color: @bgColor;
         border-corlor: @fgColor;
+        color: @fgColor;
         &:hover {
           background-color: @bgColorActive;
+        }
+        &:focus {
+          color: @fgColorActive;
         }
       }
 
     }
+
+
 
   }
 
@@ -62,7 +69,9 @@
     @fgColorActive: #fff;
     color: @fgColor;
   }
-
+  .page {
+    min-height: 400px;
+  }
 
   .small-empty-row {
     height: 20px;
@@ -71,4 +80,192 @@
   .large-empty-row {
     height: 20px;
   }
+
+  @red: #9d261d;
+  @green: #46a546;
+  .icon-lock{
+    color: @red;
+  }
+  .icon-unlock .icon-unlock-alt{
+    color: @green;
+  }
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}
+
+body {
+  font-size: 1em;
+}
+
+#cover {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+
+#userInfo {
+  float: right;
+  padding: 8px;
+}
+
+.icon-twitter {
+  color: #00A7E7;
+}
+
+.icon-facebook-sign {
+  color: #3662A0;
+}
+
+.icon-google-plus-sign {
+  color: #D74634;
+}
+
+.icon-linkedin {
+  color: #007bb6;
+}
+
+.icon-renren {
+  color: #0072b1;
+}
+
+.fade-hide-setup, .fade-show-setup {
+  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.fade-hide-setup {
+  opacity: 1;
+}
+
+.fade-hide-setup.fade-hide-start {
+  opacity: 0;
+}
+
+.fade-show-setup {
+  opacity: 0;
+}
+
+.fade-show-setup.fade-show-start {
+  opacity: 1;
+}
+
+table {
+  table-layout: fixed;
+}
+
+#tablecontent td, #tablecontent th {
+  padding: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#tablecontent input {
+  margin: -4px;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+#paginator {
+  float: left;
+  text-align: center;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.ui-autocomplete {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  max-height: 300px;
+  overflow: scroll;
+  _width: 160px;
+  padding: 4px 0;
+  margin: 2px 0 0 0;
+  list-style: none;
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+}
+
+.ui-menu-item > a.ui-corner-all {
+  display: block;
+  padding: 3px 15px;
+  clear: both;
+  font-weight: normal;
+  line-height: 18px;
+  color: #555555;
+  white-space: nowrap;
+}
+
+&.ui-state-hover, &.ui-state-active {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #0088cc;
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  background-image: none;
+}
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+.icon-remove:hover {
+  opacity:.55;
+}
+
+.country-code, .phone-number, .email {
+  display: inline-block;
+  padding: .5px;
+}
+
+.phone-number-item, .email-item {
+  display: block;
+  margin: 2.5px;
+  padding: .5px;
+  border: 1px solid #aaaaaa;
+  background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%);
+  text-align: left;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.phone-number-remove, .email-remove {
+  padding: .5px;
+  color: #e74c3c;
+  display: inline-block;
+}
+
+.phone-number-create, .email-create {
+  padding: .5px;
+  color: #27ae60;
+  display: inline-block;
 }

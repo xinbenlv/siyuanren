@@ -1,27 +1,40 @@
-h2(data-ng-show="showSuccess") 邮件发送成功@~
-div
-    h1 全体注册用户
+.container
+    .large-empty-row
+    h2(data-ng-show="showSuccess") 邮件发送成功@~
+    div
+        h1 管理
+        .small-empty-row
+        div#loadingIndicator(data-ng-show="loading")
+            img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+        table.table.table-striped.table-bordered(data-ng-hide="loading")
+            thead
+                tr
+                    th 用户ID
+                    th 用户名
+                    th
+                        i.icon-user
+                        span 角色
+                    th
+                        span 是否启用
+                    th 重设
+            tbody
+                tr(data-ng-repeat="user in users")
+                    td {{ user._id }}
+                    td
+                        i.icon-twitter(data-ng-show="user.provider === 'twitter'")
+                        i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
+                        i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
+                        i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
+                        |  {{ user.username }}
+                    td
+                        span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
+                    td
+                        span(data-ng-show="user.enabled")
+                            i.icon-unlock-alt
+                            span 已启用
+                        span(data-ng-show="!user.enabled")
+                            i.icon-lock
+                            span 未启用
 
-    div#loadingIndicator(data-ng-show="loading")
-        img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
-    table.table.table-striped(data-ng-hide="loading")
-        thead
-            tr
-                th #
-                th Username
-                th Role
-                th Enabled
-        tbody
-            tr(data-ng-repeat="user in users")
-                td {{ user._id }}
-                td
-                    i.icon-twitter(data-ng-show="user.provider === 'twitter'")
-                    i.icon-facebook-sign(data-ng-show="user.provider === 'facebook'")
-                    i.icon-google-plus-sign(data-ng-show="user.provider === 'google'")
-                    i.icon-linkedin(data-ng-show="user.provider === 'linkedin'")
-                    |  {{ user.username }}
-                td
-                    span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
-                td {{ user.enabled}}
-                td
-                    .btn(data-ng-click="emailReset(\"{{ user._id}}\")") reset
+                    td
+                        .btn.btn-success(data-ng-click="emailReset(\"{{ user._id}}\")") 启用/重设密码

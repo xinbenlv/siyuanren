@@ -33,38 +33,68 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                         a.brand(href='/') 思源人(beta)
                     .nav-collapse.collapse
                         ul.nav
+                            li(data-access-level='{{ accessLevels.user }}', active-nav)
+                                a(href='/underConstruction')
+                                    i.icon-home
+                                    | 个人首页
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/checkSiyuanRen') 查询
+
+                                a(href='/underConstruction')
+                                    i.icon-rss
+                                    | 新闻
+                            li(data-access-level='{{ accessLevels.anon }}', active-nav)
+                                a(href='/underConstruction')
+                                    i.icon-book
+                                    | 介绍
+
 
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/me') 首页
-
+                                a(href='/changeHistory')
+                                    i.icon-calendar
+                                    | 近期活动
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/peopletable') 搜索思源人
+                                a(href='/peopletable')
+                                    i.icon-table
+                                    | 通讯录
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
                                 a(href='/changeHistory') 修订历史
+
                             li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                                a(href='/admin') 管理
+                                a(href='/admin')
+                                    i.icon-gears
+                                    | 管理
                             li.search
                                 input(name="q", placeholder="查询", type="text")
+                                i.icon-search
 
                         ul.nav.pull-right.nav
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
-                                a(href='/login') 登录
+
+                                a(href='/login')
+                                    i.icon-signin
+                                    | 登录
+
                             li(data-access-level='{{ accessLevels.user }}')
                                 a(href="", data-ng-click="logout()")
+                                    i.icon-user
                                     strong {{ user.username }}&nbsp;
                                     span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
                             li(data-access-level='{{ accessLevels.user }}')
                                 a(href="", data-ng-click="logout()")
+                                    i.icon-signout
                                     | 登出
 
         div(data-ng-view='ng-view')
         .alert.alert-error(data-ng-bind="error", data-ng-show="error")
 
         footer
-            .container
-                .p.pull-right Copyright 2013 Zainan Victor Zhou
+            #navbar.navbar._navbar-inverse.navbar-fixed-bottom
+                .navbar-inner
+                    .container
+                        ul.nav.pull-right.nav
+                            li
+                                a(href='http://www.zzn.im') © 2013 Zainan Victor Zhou
+
         script(src='/thirdparty/twitter-bootstrap/2.3.2/js/bootstrap.js')
         script(src='/thirdparty/socket.io/0.9.10/socket.io.min.js')
         script(src='/thirdparty/bower_components/underscore/underscore.js')

@@ -1,13 +1,14 @@
-.modal-header
-    h1 请填写注册信息
-.modal-body.text-center
-    div
-        input(ng-model="username", placeholder="username")
-    div.margin-top-20
-        input(type="text", ng-model="modelObj", ui-autocomplete="myOption")
-    div.margin-top-20
-        input(ng-model="email", placeholder="email")
-.modal-footer
-    button.btn.btn-primary(ng-click="close(username, siyuanid, email)") 保存
-    button.btn.btn-cancel(ng-click="close(null)") 取消
+.container
+    .modal-header
+        h1 请填写注册信息
+    .modal-body.text-center
+        div
+            input(ng-model="username", placeholder="username")
+        div.margin-top-20
+            input(type="text", ng-model="modelObj", ui-autocomplete="myOption")
+        div.margin-top-20
+            input(ng-model="email", placeholder="email")
+    .modal-footer
+        button.btn.btn-primary(ng-click="close(username, siyuanid, email)") 保存
+        button.btn.btn-cancel(ng-click="close(null)") 取消
 
