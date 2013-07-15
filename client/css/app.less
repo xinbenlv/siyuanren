@@ -32,15 +32,43 @@
         background-color: @bgColorActive;
       }
     }
+
+    .btn-navbar {
+
+    }
+
+    .search {
+      display: inline-block;
+      margin: 5px;
+      input {
+        margin: 0px;
+        background-color: @bgColor;
+        border-corlor: @fgColor;
+        &:hover {
+          background-color: @bgColorActive;
+        }
+      }
+
+    }
+
   }
 
   header {
 
   }
+
   footer {
     @fgColor: #aaa;
     @fgColorActive: #fff;
     color: @fgColor;
+  }
 
+
+  .small-empty-row {
+    height: 20px;
+  }
+
+  .large-empty-row {
+    height: 20px;
   }
 }

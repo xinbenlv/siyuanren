@@ -27,6 +27,24 @@
   color: #ffffff;
   background-color: #333333;
 }
+.siyuanren .navbar .search {
+  display: inline-block;
+  margin: 5px;
+}
+.siyuanren .navbar .search input {
+  margin: 0px;
+  background-color: #000000;
+  border-corlor: #aaaaaa;
+}
+.siyuanren .navbar .search input:hover {
+  background-color: #333333;
+}
 .siyuanren footer {
   color: #aaaaaa;
+}
+.siyuanren .small-empty-row {
+  height: 20px;
+}
+.siyuanren .large-empty-row {
+  height: 20px;
 }

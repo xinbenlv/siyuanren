@@ -14,7 +14,6 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
         // Editable.git
         link(rel='stylesheet', href='/thirdparty/editablegrid.git/editablegrid.css', type='text/css', media='screen')
 
-        //link(rel='stylesheet', href='css/app.css')
         link(rel="stylesheet/less", type="text/css", href='css/app.less')
         script(src="/thirdparty/less/less-1.4.1.min.js", type="text/javascript")
 
@@ -31,7 +30,8 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                     span.icon-bar
                     span.icon-bar
                     span.icon-bar
-                a.brand(href='/') 思源人(beta)
+                div
+                  a.brand(href='/') 思源人(beta)
                 .nav-collapse.collapse
                     ul.nav
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
@@ -46,8 +46,10 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                             a(href='/changeHistory') 修订历史
                         li(data-access-level='{{ accessLevels.admin }}', active-nav)
                             a(href='/admin') 管理
+                        li.search
+                            input(name="q", placeholder="查询", type="text")
 
-                     ul.nav.pull-right.nav
+                    ul.nav.pull-right.nav
                         li(data-access-level='{{ accessLevels.anon }}', active-nav)
                             a(href='/login') 登录
                         li(data-access-level='{{ accessLevels.user }}')
@@ -60,6 +62,7 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
 
         div(data-ng-view='ng-view')
         .alert.alert-error(data-ng-bind="error", data-ng-show="error")
+
         footer
           .container
             .p.pull-right Copyright 2013 Zainan Victor Zhou

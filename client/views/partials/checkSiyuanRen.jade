@@ -1,18 +1,21 @@
-h1 查询
-p 确认某位同学是思源的
-.hero-unit
-  form.form-horizontal(ng-submit="submit()", name="checkSiyuanRenForm")
-    .control-group
-      label.control-label(for="fullname") 姓名
-      .controls
-        input(type="fullname", data-ng-model="fullname", placeholder="姓名", name="fullname", required)
-    .control-group
-      label.control-label(for="yearofclass") 思源学员期数
-      .controls
-        select(data-ng-model="yearofclass", name="yearofclass", required, ng-options="c for c in yearofclass_options")
-
-    .control-group
-      .controls
-        button.btn(type="submit") 查询
-  p#exist 存在
-  p#notexist 不存在
+.checkSiyuanRen.container
+  .large-empty-row.row
+  h1 查询
+  .small-empty-row.row
+  p 输入名字查询是否是思源同学
+  .small-empty-row.row
+  .hero-unit
+    form.form-horizontal(ng-submit="submit()", name="checkSiyuanRenForm")
+      .control-group
+        label.control-label(for="fullname") 姓名
+        .controls
+          input(type="text", data-ng-model="fullname", placeholder="姓名", name="fullname", required)
+      .control-group
+        label.control-label(for="yearofclass") 思源学员期数
+        .controls
+          select(data-ng-model="yearofclass", name="yearofclass", required, ng-options="c for c in yearofclass_options")
+      .control-group
+        .controls
+          button.btn.btn-primary(type="submit") 查询
+    p#exist 存在
+    p#notexist 不存在
