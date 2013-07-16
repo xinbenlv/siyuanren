@@ -14,34 +14,37 @@
                         label.span12(for="password") 密码
                     .row-fluid
                         input.span12(type="password", data-ng-model="password", name="password", required)
-                    .small-empty-row
-                    .row-fluid.btn-group
-                        button.span8.btn.btn-success(type="submit") 登录
-                        button.span4.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#")
-                            span.caret
-                        ul.dropdown-menu
-                            li
-                                a(href="", data-ng-click="loginOauth('facebook')")
-                                    i.icon-facebook-sign
-                                    | Facebook
-                            li
-                                a(href="", data-ng-click="loginOauth('twitter')")
-                                    i.icon-twitter
-                                    | Twitter
-                            li
-                                a(href="", data-ng-click="loginOauth('google')")
-                                    i.icon-google-plus-sign
-                                    | Google
-                            li
-                                a(href="", data-ng-click="loginOauth('linkedin')")
-                                    i.icon-linkedin
-                                    | LinkedIn
-                            li
-                                a(href="", data-ng-click="loginOauth('weibo')")
-                                    i.icon-weibo
-                                    | Weibo
-                            li
-                                a(href="", data-ng-click="loginOauth('renren')")
-                                    i.icon-renren
-                                    | Renren
-
+                    //.small-empty-row
+                    .row-fluid
+                        .btn-group
+                            button.btn.btn-success(type="submit") 登录
+                            button.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#")
+                                span.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href="", data-ng-click="loginOauth('facebook')")
+                                        i.icon-facebook-sign
+                                        | Facebook
+                                li
+                                    a(href="", data-ng-click="loginOauth('twitter')")
+                                        i.icon-twitter
+                                        | Twitter
+                                li
+                                    a(href="", data-ng-click="loginOauth('google')")
+                                        i.icon-google-plus-sign
+                                        | Google
+                                li
+                                    a(href="", data-ng-click="loginOauth('linkedin')")
+                                        i.icon-linkedin
+                                        | LinkedIn
+                                li
+                                    a(href="", data-ng-click="loginOauth('weibo')")
+                                        i.icon-weibo
+                                        | Weibo
+                                li
+                                    a(href="", data-ng-click="loginOauth('renren')")
+                                        i.icon-renren
+                                        | Renren
+                                li.divider
+                                li
+                                    a(href="", onclick='return false') 使用社交网站登录
