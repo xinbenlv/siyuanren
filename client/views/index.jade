@@ -7,14 +7,15 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/thirdparty/jquery/jquery.min.js')
         script(src='/thirdparty/jquery/jquery-ui.min.js')
 
-        link(href="/thirdparty/twitter-bootstrap/2.3.2/css/bootstrap.css", rel="stylesheet")
         link(href="/thirdparty/font-awesome/css/font-awesome.min.css", rel="stylesheet")
         link(href="/thirdparty/lexrus-fontdiao-830f6e7/css/fontdiao.css", rel="stylesheet")
         link(href="/thirdparty/bower_components/select2/select2.css", rel="stylesheet")
 
         link(rel='stylesheet', href='/thirdparty/editablegrid.git/editablegrid.css', type='text/css', media='screen')
 
-        link(rel="stylesheet/less", type="text/css", href='css/app.less')
+        link(rel="stylesheet/less", type="text/less", href='css/app.less')
+        link(rel="stylesheet/less", type="text/less", href='/thirdparty/twitter-bootstrap/less/responsive.less')
+
         script(src="/thirdparty/less/less-1.4.1.min.js", type="text/javascript")
 
         script(type="text/javascript")
@@ -22,7 +23,7 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                 window.location = window.location.href.replace(/#.*/, '');
             }
     body(data-ng-controller="AppCtrl", data-ng-cloak)
-        #navbar.navbar._navbar-inverse.navbar-fixed-top
+        #navbar.navbar.navbar-inverse.navbar-fixed-top
             .navbar-inner
                 .container
                     button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
@@ -52,10 +53,17 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                 a(href='/changeHistory')
                                     i.icon-calendar
                                     | 近期活动
-                            li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/peopletable')
+                            li.dropdown(data-access-level='{{ accessLevels.user }}', active-nav)
+                                a.dropdown-toggle(href='/peopletable')
                                     i.icon-table
                                     | 通讯录
+                                ul.dropdown-menu
+                                    li
+                                        a 全体
+                                    li
+                                        a 本期
+                                    li
+                                        a 本系
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
                                 a(href='/changeHistory') 修订历史
 
@@ -63,13 +71,16 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                 a(href='/admin')
                                     i.icon-gears
                                     | 管理
-                            li.search
-                                input(name="q", placeholder="查询", type="text")
-                                i.icon-search
+
+                            li
+                                form.navbar-search
+                                    input.search-query(type="text", placeholder="查询")
+                                    i.icon-search
+
+
 
                         ul.nav.pull-right.nav
                             li(data-access-level='{{ accessLevels.anon }}', active-nav)
-
                                 a(href='/login')
                                     i.icon-signin
                                     | 登录
@@ -84,11 +95,11 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                     i.icon-signout
                                     | 登出
 
-        div(data-ng-view='ng-view')
+        .wide(data-ng-view='ng-view')
         .alert.alert-error(data-ng-bind="error", data-ng-show="error")
 
         footer
-            #navbar.navbar._navbar-inverse.navbar-fixed-bottom
+            #navbar.navbar.navbar-inverse.navbar-fixed-bottom
                 .navbar-inner
                     .container
                         ul.nav.pull-right.nav

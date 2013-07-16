@@ -1,109 +1,80 @@
+//@import "../thirdparty/twitter-bootstrap/less/reset.less";
 @import "../thirdparty/less-elements/elements.less";
+
+@import "../thirdparty/twitter-bootstrap/less/bootstrap.less";
+@import "../thirdparty/twitter-bootstrap/magic-bootstrap.less";
+
 .siyuanren {
 
-  body {
-    position: relative;
-    padding-top: 40px;
+  i {
+    padding-left:3px;
+    padding-right:3px;
   }
 
-  .navbar {
-    @bgColor: #000;
-    @bgColorActive: #333;
-    @fgColor: #aaa;
-    @fgColorActive: #fff;
-
-    .navbar-inner {
-      background-image: none;
-      background-color: @bgColor;
-      border: none;
-      .active a {
-        color: @fgColorActive;
-        background-color: @bgColorActive;
-      }
-    }
-
-    .brand,
-    .nav > li > a,
-    .search i {
-      text-shadow: none;
-      color: @fgColor;
-      color: @fgColor;
-      &:hover {
-        color: @fgColorActive;
-      }
-    }
-
-    .search i {
-      margin: 4px;
-    }
-
-
-
-    .search {
-      margin: 5px 15px;
-      input {
+  body { padding-top: 41px; }
+  @media screen and (max-width: @navbarCollapseWidth) {
+    body {
+      padding: 0px;
+      .navbar-fixed-bottom, .navbar-fixed-top {
         margin: 0px;
-        background-color: @bgColor;
-        border-corlor: @fgColor;
-        color: @fgColor;
-        &:hover {
-          background-color: @bgColorActive;
-        }
-        &:focus {
-          color: @fgColorActive;
-        }
       }
-
     }
-
-
-
   }
 
-  header {
-
-  }
-
-  footer {
-    @fgColor: #aaa;
-    @fgColorActive: #fff;
-    color: @fgColor;
-  }
-  .page {
-    min-height: 400px;
-  }
 
   .small-empty-row {
     height: 20px;
   }
 
   .large-empty-row {
-    height: 20px;
+    height: 40px;
   }
 
-  @red: #9d261d;
-  @green: #46a546;
-  .icon-lock{
-    color: @red;
+  .extra-large-empty-row {
+    height: 60px;
   }
-  .icon-unlock .icon-unlock-alt{
-    color: @green;
+
+  .navbar {
+    .navbar-search{
+
+      i {
+        color: @grayLight;
+        cursor: pointer;
+        border: none;
+        &:hover {
+          color: @grayLighter;
+        }
+      }
+      input.search-query {
+        color: @white;
+        &:focus {
+          .placeholder(lighten(@navbarInverseSearchPlaceholderColor, 10%));
+        }
+      }
+    }
   }
+
+  #login-page {
+    .login-form {
+      border: 1px solid @grayLighter;
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.075);
+    }
+  }
+
+
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none;
 }
 
-body {
-  font-size: 1em;
-}
 
 #cover {
-  position: absolute;
-  height: 100%;
+  //position: relative;
+  //height: 100%;
   width: 100%;
-  background: white;
+  //background: white;
 }
 
 #userInfo {
