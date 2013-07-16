@@ -8,6 +8,8 @@ credentials.js
 *.dump
 client/thirdparty/bower_components/
 client/css/app.css
+client/thirdparty/twitter-bootstrap/magic-bootstrap.css
+client/thirdparty/twitter-bootstrap/less/*.css
 .env
 .dev_env
 
