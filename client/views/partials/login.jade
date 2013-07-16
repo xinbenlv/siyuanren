@@ -1,45 +1,47 @@
-.large-empty-row
-.container
-    .hero-unit
-        h1 请登录
-        br
-        p 思源欢迎你
+#login-page.container
+    .extra-large-empty-row
+    .row
+        form.login-form.span4.offset4(ng-submit="login()", name="loginForm")
+            .login-header 登录
+            .login-body
+                .container-fluid
 
-        form.form-horizontal(ng-submit="login()", name="loginForm")
-            .control-group
-                label.control-label(for="username") 登录邮箱
-                .controls
-                    input(type="text", data-ng-model="username", placeholder="登录邮箱", name="username", required)
-            .control-group
-                label.control-label(for="password") 密码
-                .controls
-                    input(type="password", data-ng-model="password", placeholder="密码", name="password", required)
-            .control-group
-                .controls
-                    label(for="rememberme").checkbox
-                        input(type="checkbox", data-ng-model="rememberme", name="rememberme", value="0")
-                        | 下次自动登录
-            .control-group
-                .controls
-                    button.btn(type="submit") 登录
-        hr
-        p ... 如果你已经关联社交网站账户，可以使用如下方式登录:
-        .btn-group
-            a.btn(href="", data-ng-click="loginOauth('facebook')")
-                i.icon-facebook-sign
-                |  Facebook
-            a.btn(href="", data-ng-click="loginOauth('twitter')")
-                i.icon-twitter
-                |  Twitter
-            a.btn(href="", data-ng-click="loginOauth('google')")
-                i.icon-google-plus-sign
-                |  Google
-            a.btn(href="", data-ng-click="loginOauth('linkedin')")
-                i.icon-linkedin
-                |  LinkedIn
-            a.btn(href="", data-ng-click="loginOauth('weibo')")
-                i.icon-weibo
-                |  Weibo
-            a.btn(href="", data-ng-click="loginOauth('renren')")
-                i.icon-renren
-                |  Renren
+                    .row-fluid
+                        label.span12(for="username") 邮箱
+                    .row-fluid
+                        input.span12(type="text", data-ng-model="username", name="username", required)
+                    .row-fluid
+                        label.span12(for="password") 密码
+                    .row-fluid
+                        input.span12(type="password", data-ng-model="password", name="password", required)
+                    .small-empty-row
+                    .row-fluid.btn-group
+                        button.span8.btn.btn-success(type="submit") 登录
+                        button.span4.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#")
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href="", data-ng-click="loginOauth('facebook')")
+                                    i.icon-facebook-sign
+                                    | Facebook
+                            li
+                                a(href="", data-ng-click="loginOauth('twitter')")
+                                    i.icon-twitter
+                                    | Twitter
+                            li
+                                a(href="", data-ng-click="loginOauth('google')")
+                                    i.icon-google-plus-sign
+                                    | Google
+                            li
+                                a(href="", data-ng-click="loginOauth('linkedin')")
+                                    i.icon-linkedin
+                                    | LinkedIn
+                            li
+                                a(href="", data-ng-click="loginOauth('weibo')")
+                                    i.icon-weibo
+                                    | Weibo
+                            li
+                                a(href="", data-ng-click="loginOauth('renren')")
+                                    i.icon-renren
+                                    | Renren
+

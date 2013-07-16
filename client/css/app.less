@@ -55,11 +55,35 @@
   }
 
   #login-page {
-    .login-form {
-      border: 1px solid @grayLighter;
-      border-radius: 0 0 4px 4px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.075);
+
+    label {
+      text-align: left;
+      font-fize: 16px;
+      font-weight: bold;
     }
+    .login-form {
+      .login-header {
+        color: @grayLighter;
+        background-color: @grayDark;
+        border: 1px solid @grayLighter;
+        border-radius: 4px 4px 0 0 ;
+        box-shadow: 0 -1px 0 rgba(0,0,0,0.075);
+        padding: 10px 20px;
+        font-size: 20px;
+      }
+      .login-body {
+
+        border: 1px solid @grayLighter;
+
+        box-shadow: 0 1px 3px rgba(0,0,0,0.075);
+        border-radius: 0 0 4px 4px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+      }
+
+    }
+
   }
 
 
