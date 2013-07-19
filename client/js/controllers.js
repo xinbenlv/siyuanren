@@ -259,33 +259,30 @@ angular.module('angular-client-side-auth')
         { id:1, text: '思源学员期数' },
         { id:2, text: '本科院系' },
         { id:3, text: '本科班级' },
-        { id:4, text: '常用邮箱' },
-        { id:5, text: '手机' },
-        { id:6, text: 'auth' },
-        { id:7, text: "担任辅导员"},
-        { id:8, text: "性别"},
-        { id:9, text: "研究生阶段学校院系"},
-        { id:10, text: "常驻国家"},
-        { id:11, text: "省份"},
-        { id:12, text: "常驻城市"},
-        { id:13, text: "邮政编码"},
-        { id:14, text: "目前职位"},
-        { id:15, text: "MSN"},
-        { id:16, text: "出生日期"},
-        { id:17, text: "Tshirt尺码"},
-        { id:18, text: "目前职位"},
-        { id:19, text: "新浪微博"},
-        { id:20, text: "通讯地址"},
-        { id:21, text: "微信"},
-        { id:22, text: "QQ"},
-        { id:23, text: "LinkedIn"},
-        { id:24, text: "Facebook"},
-        { id:25, text: "Dropbox"},
-        { id:26, text: "Skype"},
-        { id:27, text: "Gtalk"},
-        { id:28, text: "备注"},
-        { id:29, text: '电话号码'},
-        { id:30, text: 'Email地址'}
+        { id:4, text: "担任辅导员"},
+        { id:5, text: "性别"},
+        { id:6, text: "研究生阶段学校院系"},
+        { id:7, text: "常驻国家"},
+        { id:8, text: "省份"},
+        { id:9, text: "常驻城市"},
+        { id:10, text: "邮政编码"},
+        { id:11, text: "目前职位"},
+        { id:12, text: "MSN"},
+        { id:13, text: "出生日期"},
+        { id:14, text: "Tshirt尺码"},
+        { id:15, text: "目前职位"},
+        { id:16, text: "新浪微博"},
+        { id:17, text: "通讯地址"},
+        { id:18, text: "微信"},
+        { id:19, text: "QQ"},
+        { id:20, text: "LinkedIn"},
+        { id:21, text: "Facebook"},
+        { id:22, text: "Dropbox"},
+        { id:23, text: "Skype"},
+        { id:24, text: "Gtalk"},
+        { id:25, text: "备注"},
+        { id:26, text: '电话号码'},
+        { id:27, text: 'Email地址'}
       ];
       $scope.selectedFields = function () {
         var selectedList = $('#fieldsSelector').select2('val');
@@ -313,7 +310,7 @@ angular.module('angular-client-side-auth')
           data: fields
         });
 
-        $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3], fields[29],fields[30]]);
+        $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3], fields[26],fields[27]]);
 
       };
 

@@ -331,20 +331,19 @@
 
   EditableGrid.prototype.updatePaginator = function () {
     var paginator = $("#paginator").empty();
-
+    paginator.append($('<ul>'));
+    var link, li;
     // get interval
     var interval = this.getSlidingPageInterval(20);
     if (interval == null) return;
 
     // get pages in interval (with links except for the current page)
     var pages = this.getPagesInInterval(interval, function (pageIndex, isCurrent) {
-      if (isCurrent) return "" + (pageIndex + 1);
+      if (isCurrent) return $('<span>').append(pageIndex + 1);
       return $("<a>").css("cursor", "pointer").html(pageIndex + 1).click(function (event) {
         editableGrid.setPageIndex(parseInt($(this).html()) - 1);
       });
     });
-
-    var link;
 
     // "prev" link
     link = $("<a>").html("<i class='icon-arrow-left' />");
@@ -352,18 +351,27 @@
     else link.css("cursor", "pointer").click(function () {
       editableGrid.prevPage();
     });
-    paginator.append(link);
+    li = $("<li>");
+    li.append(link);
+
+    $('#paginator ul').append(li);
 
     // pages
-    for (p = 0; p < pages.length; p++) paginator.append(pages[p]).append(" | ");
+    for (p = 0; p < pages.length; p++){
+      li = $('<li>');
+      li.append(pages[p]);
+      $('#paginator ul').append(li);
+    }
 
     // "next" link
     link = $("<a>").html("<i class='icon-arrow-right' />");
+    li = $("<li>");
+    li.append(link);
     if (!this.canGoForward()) link.css({ opacity: 0.4, filter: "alpha(opacity=40)" });
     else link.css("cursor", "pointer").click(function () {
       editableGrid.nextPage();
     });
-    paginator.append(link);
+    $("#paginator ul").append(li);
 
   };
 
