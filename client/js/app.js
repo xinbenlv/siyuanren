@@ -72,6 +72,12 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'ChangeHistoryCtrl',
         access: access.user
       });
+    $routeProvider.when('/search',
+      {
+        templateUrl: '/partials/search',
+        controller: 'SearchCtrl',
+        access: access.anon
+      });
     $routeProvider.when('/404',
       {
         templateUrl: '/partials/404',

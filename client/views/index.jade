@@ -76,10 +76,10 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                     i.icon-gears
                                     | 管理
 
-                            li
+                            li(data-ng-controller='SearchAutoCompleteCtrl')
                                 form.navbar-search
-                                    input.search-query(type="text", placeholder="查询")
-                                    i.icon-search
+                                    input#q.search-query(type="text", placeholder="查询：请输入姓名")
+                                    i.icon-search(data-ng-click='searchBtn()')
 
 
 
@@ -134,3 +134,5 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/js/controllers.js')
         script(src='/js/directives.js')
         script(src='/js/peopletable.js')
+        script(src='/js/ctrls/searchAutoCompleteCtrl.js')
+        script(src='/js/ctrls/searchCtrl.js')

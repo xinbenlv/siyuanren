@@ -391,11 +391,6 @@
     var criteriaUrl = 'criteria=' + JSON.stringify(criteria);
 
     var fieldsUrl = 'fields=' + JSON.stringify(fields);
-    /*var fieldsUrl = 'fields="';
-    for(var i in allFields){
-      fieldsUrl += allFields[i].text +' ';
-    }
-    fieldsUrl += '"';*/
 
 
     var url = baseUrl + '&' + collectionUrl + '&' + criteriaUrl + '&' + fieldsUrl;
@@ -420,7 +415,7 @@
     });
     // filter when something is typed into filter
     _$('filter').onkeyup = function () {
-      editableGrid.filter(_$('filter').value);
+      editableGrid.filter(_$('filter').value.trim());
     };
   };
 })(typeof exports === 'undefined' ? this['peopletable'] = {} : exports);

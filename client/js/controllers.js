@@ -211,7 +211,7 @@ angular.module('angular-client-side-auth')
 
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
-    ['$rootScope', '$scope', '$filter', function ($rootScope, $scope, $filter) {
+    ['$rootScope', '$scope', '$filter','$location', function ($rootScope, $scope, $filter, $location) {
       var fields = [
         { id:0, text: '姓名',},
         { id:1, text: '思源学员期数' },
@@ -273,8 +273,15 @@ angular.module('angular-client-side-auth')
 
         $('#fieldsSelector').select2('data', [fields[0],fields[1],fields[2],fields[3], fields[29],fields[30]]);
 
-      }
+      };
 
+      $scope.displayQuery = function(query) {
+        console.log('Selected fields: ' + JSON.stringify($scope.selectedFields()));
+        addLoadingIndicator();
+        peopletable.load({'姓名':'周载南'},
+          $scope.selectedFields(),
+          removeLoadingIndicator); // TODO(zzn): use async to load page
+      };
       $scope.displayAll = function() {
         console.log('Selected fields: ' + JSON.stringify($scope.selectedFields()));
         addLoadingIndicator();
@@ -295,6 +302,14 @@ angular.module('angular-client-side-auth')
       $('#loadingIndicatorPanel').hide();
       $('#tablePanel').hide();
       initFieldsSelector();
+
+      var query = $location.search();
+      if(Object.keys(query).length > 0) {
+        // Here is a query
+        console.log(query);
+        $scope.displayQuery(query);
+      }
+
     }]);
 
 // the dialog is injected in the specified controller

@@ -1,0 +1,12 @@
+.checkSiyuanRen.container
+    .large-empty-row.row
+    #searchResult.row
+        table.table.table-bordered.span4(data-ng-show='results')
+            thead
+                tr
+                    th 姓名
+                    th 思源学员期数
+            tbody
+                tr(data-ng-repeat='r in results')
+                    td {{ r['姓名']}}
+                    td {{ r['思源学员期数']}}
