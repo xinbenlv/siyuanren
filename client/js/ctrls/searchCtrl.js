@@ -6,7 +6,7 @@ angular.module('angular-client-side-auth')
     console.log(query);
     if(query && query['姓名']){
       console.log('Valid query!');
-      $http.get('/api/publicquery?collection="SiyuanUserProfile"&criteria=' + JSON.stringify(query) + '&fields="姓名 思源学员期数"')
+      $http.get('/api/publicquery?collection="SiyuanUserProfile"&criteria=' + JSON.stringify(query) + '&fields="姓名 思源学员期数 本科院系"')
         .success(function(data ) {
           console.log(data);
           $scope.results = data;

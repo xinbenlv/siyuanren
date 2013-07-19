@@ -178,13 +178,13 @@ exports.publicquery = function(req, res) {
   var options = parseQueryOptions(req.query);
   logger.info(options);
 
-  if(!options.error && options.fields == '姓名 思源学员期数') {
+  if(!options.error && options.fields == '姓名 思源学员期数 本科院系') {
     logger.info('Query options: ' + options);
 
     SiyuanUserProfile.find(options.criteria, options.fields, function(err, docs) {
       res.send(docs);
     });
-  } else if(options.fields !== ['姓名', '思源学员期数']) {
+  } else if(options.fields !== ['姓名', '思源学员期数', '本科院系']) {
     res.send(400, 'Sorry, the fields you provided are illegal for public query.');
   } else {
     res.send(400, options.error);

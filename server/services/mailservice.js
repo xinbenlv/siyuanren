@@ -22,7 +22,7 @@ var printMandrillInfo = function () {
 
 var sendDevInstanceStartEmail = function () {
   MailService.send({
-    text: 'Local instance started! URL = ' + process.env.HOST_ROOL_URL,
+    text: 'Local instance started! URL = ' + process.env.HOST_ROOT_URL,
     from: 'admin@siyuanren.org',
     to: 'xinbenlv@gmail.com',
     subject: 'Local instance started!'}, function (err, msg) {

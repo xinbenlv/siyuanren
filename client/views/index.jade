@@ -54,7 +54,7 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
 
 
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/changeHistory')
+                                a(href='/underConstruction')
                                     i.icon-calendar
                                     | 近期活动
                             li.dropdown(data-access-level='{{ accessLevels.user }}', active-nav)
@@ -63,22 +63,19 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                     | 通讯录
                                 ul.dropdown-menu
                                     li
-                                        a 全体
+                                        a(href='/peopletable/#qt') 全体
                                     li
-                                        a 本期
+                                        a(href='/peopletable/#bq') 本期
                                     li
-                                        a 本系
-                            li(data-access-level='{{ accessLevels.user }}', active-nav)
-                                a(href='/changeHistory') 修订历史
+                                        a(href='/peopletable/#bx') 本系
+                                    li
+                                        a(href='/changeHistory') 通讯录修订记录
 
-                            li(data-access-level='{{ accessLevels.admin }}', active-nav)
-                                a(href='/admin')
-                                    i.icon-gears
-                                    | 管理
+
 
                             li(data-ng-controller='SearchAutoCompleteCtrl')
                                 form.navbar-search
-                                    input#q.search-query(type="text", placeholder="查询：请输入姓名")
+                                    input#q.search-query(type="text", data-ng-keyup="keypress($event)", placeholder="查询：请输入姓名")
                                     i.icon-search(data-ng-click='searchBtn()')
 
 
@@ -89,15 +86,20 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                                     i.icon-signin
                                     | 登录
 
-                            li(data-access-level='{{ accessLevels.user }}')
-                                a(href="", data-ng-click="logout()")
+                            li.dropdown(data-access-level='{{ accessLevels.user }}')
+                                a.dropdown-toggle(href="")
                                     i.icon-user
                                     strong {{ user.username }}&nbsp;
                                     span.label(data-ng-class='{"label-info": user.role == userRoles.user, "label-success": user.role == userRoles.admin}') {{ getUserRoleText(user.role) }}
-                            li(data-access-level='{{ accessLevels.user }}')
-                                a(href="", data-ng-click="logout()")
-                                    i.icon-signout
-                                    | 登出
+                                ul.dropdown-menu
+                                    li(data-access-level='{{ accessLevels.admin }}', active-nav)
+                                        a(href='/admin')
+                                            i.icon-gears
+                                            | 管理
+                                    li(data-access-level='{{ accessLevels.user }}')
+                                        a(href="", data-ng-click="logout()")
+                                            i.icon-signout
+                                            | 登出
 
         .wide(data-ng-view='ng-view')
         .alert.alert-error(data-ng-bind="error", data-ng-show="error")

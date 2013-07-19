@@ -304,10 +304,17 @@ angular.module('angular-client-side-auth')
       initFieldsSelector();
 
       var query = $location.search();
+      var hash = $location.hash();
       if(Object.keys(query).length > 0) {
         // Here is a query
         console.log(query);
         $scope.displayQuery(query);
+      } else if (hash === 'bx') {
+        $scope.displaySameDept();
+      } else if (hash === 'bq') {
+        $scope.displaySameYearOfClass();
+      } else if (hash === 'qt') {
+        $scope.displayAll();
       }
 
     }]);
