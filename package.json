@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app",
     "test": "mocha server/tests --recursive",
-    "postinstall": "./node_modules/bower/bin/bower install && lessc client/css/app.less  > client/css/app.css"
+    "postinstall": "./node_modules/bower/bin/bower install && ./node_modules/less/bin/lessc client/css/app.less  > client/css/app.css"
   },
 
   "dependencies": {
@@ -45,7 +45,8 @@
     "mongoose-validator": "0.2.1",
     "bower": "0.10.0",
     "express-sessions": "1.0.5",
-    "nodetime": "0.8.13"
+    "nodetime": "0.8.13",
+    "less": "1.4.1"
   },
   "devDependencies": {
     "sinon": "~1.7.2",
