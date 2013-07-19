@@ -6,6 +6,22 @@
         .small-empty-row
         div#loadingIndicator(data-ng-show="loading")
             img.centerHorizontal.centerVertical(src='/img/loadingIndicator.gif', alt='Loading...')
+
+        div.pagination
+            ul
+                li
+                    a(href='', data-ng-click='toFirst()') First
+                li
+                    a(href='', data-ng-click='toPrev()') Prev
+                li(data-ng-repeat='page in pages')
+                    span(data-ng-show='$index==currentIndex') {{$index+1}}
+                    a(data-ng-hide='$index==currentIndex', href='', data-ng-click='toPage({{$index}})') {{$index+1}}
+
+                li
+                    a(href='', data-ng-click='toNext()') Next
+                li
+                    a(href='', data-ng-click='toLast()') Last
+
         table.table.table-striped.table-bordered(data-ng-hide="loading")
             thead
                 tr
@@ -18,7 +34,7 @@
                         span 是否启用
                     th 重设
             tbody
-                tr(data-ng-repeat="user in users")
+                tr(data-ng-repeat="user in currentPage")
                     td {{ user._id }}
                     td
                         i.icon-twitter(data-ng-show="user.provider === 'twitter'")
@@ -38,3 +54,4 @@
 
                     td
                         .btn.btn-success(data-ng-click="emailReset(\"{{ user._id}}\")") 启用/重设密码
+        .large-empty-row
