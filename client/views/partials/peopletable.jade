@@ -7,14 +7,15 @@
         label.span1(for='filter') 筛选
         input.span5#filter(style='float:left;', type='text', data-cip-id='filter')
 
+
     .row
         label.span1 信息项
-
-        div#fieldsSelector.span5(type='text')
-
+        div#fieldsSelector.span4(type='text')
             label(ng-repeat="field in fields")
                 input(type="checkbox", value="{{field.name}}", ng-checked="field.checked", ng-model="field.checked")
                 span {{field.name}}
+        div
+            button.btn.btn-primary.span1(data-ng-click='search()') 刷新
 
     #loadingIndicatorPanel
         .row

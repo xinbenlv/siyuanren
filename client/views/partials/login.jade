@@ -9,21 +9,22 @@
                     .row-fluid
                         label.span12(for="username") 邮箱
                     .row-fluid
-                        input.span12(type="text", data-ng-model="username", name="username", required)
+                        input.span12(type="text", data-ng-model="username", name="username", required, tabIndex=1)
                     .row-fluid
                         label.span12(for="password") 密码
-                            a(href='/forgotPassword') （忘记密码）
+                            a(href='/forgotPassword', tabIndex=5) （忘记密码）
                     .row-fluid
-                        input.span12(type="password", data-ng-model="password", name="password", required)
+                        input.span12(type="password", data-ng-model="password", name="password", required, tabIndex=2)
                     //.small-empty-row
                     .row-fluid
                         .btn-group
-                            button.btn.btn-success(type="submit") 登录
-                            button.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#")
+                            button.btn.btn-success(type="submit", tabIndex=3) 登录
+                            button.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#", tabIndex=4)
                                 span.caret
                             ul.dropdown-menu
                                 li
                                     a(href="", onclick='return false') 使用社交网站登录
+                                li.divider
                                 li
                                     a(href="", data-ng-click="loginOauth('facebook')")
                                         i.icon-facebook-sign
@@ -48,5 +49,5 @@
                                     a(href="", data-ng-click="loginOauth('renren')")
                                         i.icon-renren
                                         | Renren
-                                li.divider
+
 
