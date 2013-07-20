@@ -177,15 +177,17 @@ routes = []
                 role = req.user.role;
                 username = req.user.username;
                 meta = req.user.meta;
-                siyuanUserProfile['本科院系'] = req.user.siyuanUserProfile['本科院系'];
-                siyuanUserProfile['思源学员期数'] = req.user.siyuanUserProfile['思源学院期数'];
+                siyuanUserProfile[encodeURIComponent('本科院系')] = encodeURIComponent(req.user.siyuanUserProfile['本科院系']);
+                siyuanUserProfile[encodeURIComponent('思源学员期数')] = encodeURIComponent(req.user.siyuanUserProfile['思源学员期数']);
             }
+
             var cookieUser = JSON.stringify({
               'username': username,
               'role': role,
               'meta': meta,
               'siyuanUserProfile' : siyuanUserProfile
             });
+
             logger.debug('cookieUser: ' + cookieUser);
             res.cookie('user', cookieUser);
             res.render('index');

@@ -328,13 +328,16 @@ angular.module('angular-client-side-auth')
       };
       $scope.displaySameYearOfClass = function() {
         addLoadingIndicator();
-        peopletable.load({'思源学员期数': $rootScope.user.siyuanUserProfile['思源学员期数']},
+
+        var c = {'思源学员期数': decodeURIComponent($rootScope.user.siyuanUserProfile[encodeURIComponent('思源学员期数')])};
+        peopletable.load(c,
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
       $scope.displaySameDept = function() {
         addLoadingIndicator();
-        peopletable.load({'本科院系': $rootScope.user.siyuanUserProfile['本科院系']},
+        var c = {'本科院系': decodeURIComponent($rootScope.user.siyuanUserProfile[encodeURIComponent('本科院系')])};
+        peopletable.load(c,
           $scope.selectedFields(),
           removeLoadingIndicator);
       };
