@@ -8,6 +8,7 @@ var GoogleStrategy = require('passport-google').Strategy;
 var constants =       require('../../shared/constants');
 var logger = require(process.env.ROOT_DIR + '/server/services/loggerservice').default;
 
+var MailService = require('../services/mailservice').MailService;
 var userRoles = require('../../client/js/routingConfig').userRoles;
 
 module.exports = {
@@ -90,6 +91,41 @@ module.exports = {
   logout: function (req, res) {
     req.logout();
     res.send(200);
+  },
+
+  passwordReset: function (req, res) {
+    var username = req.body['username'];
+    logger.debug('passworldReset: ' + JSON.stringify(req.body['username']));
+    User.findOne({username: username}, function(err, user){
+      if(err || !user) {
+        logger.debug(err);
+        logger.debug(user);
+        res.send(403, err);
+      } else {
+        var url = process.env.HOST_ROOT_URL + '/onBoard?token=' + user.registerToken;
+        var check = require('validator').check;
+        try {
+          check(user.username).isEmail();
+          MailService.send({
+            subject: 'Reset your password at ' + process.env.HOST_ROOT_URL,
+            from: 'admin@siyuanren.org',
+            to: user.username,
+            text: '您好，您可以通过如下网址重设您的思源人网站密码。 ' + url}, function (err, msg) {
+            logger.debug(msg);
+            if(err) {
+              logger.warn('Err of sending: ' + JSON.stringify(err));
+              res.send(400, err);
+            }
+            else {
+              return res.send(200);
+            }
+          });
+        }
+        catch (e) {
+          res.send(400, "Failed when sending email, reason:" + JSON.stringify(e));
+        }
+      }
+    });
   },
 
   localStrategy: new LocalStrategy(User.authenticate()),

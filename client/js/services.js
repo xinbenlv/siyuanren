@@ -41,6 +41,11 @@ angular.module('angular-client-side-auth')
           success();
         }).error(error);
       },
+      passwordReset: function(username, success, error ) {
+        $http.post('/passwordReset', username).success(function () {
+          success();
+        }).error(error);
+      },
       accessLevels: accessLevels,
       userRoles: userRoles
     };

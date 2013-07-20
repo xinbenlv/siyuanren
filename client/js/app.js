@@ -18,6 +18,12 @@ angular.module('angular-client-side-auth', ['ngCookies', 'ui.bootstrap', 'ui.aut
         controller: 'LoginCtrl',
         access: access.anon
       });
+    $routeProvider.when('/forgotPassword',
+      {
+        templateUrl: '/partials/forgotPassword',
+        controller: 'ForgotPasswordCtrl',
+        access: access.anon
+      });
     $routeProvider.when('/register',
       {
         templateUrl: '/partials/register',

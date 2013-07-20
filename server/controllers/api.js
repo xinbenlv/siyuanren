@@ -242,17 +242,17 @@ exports.emailReset = function(req, res) {
       try {
         check(user.username).isEmail();
         MailService.send({
-          subject: 'From siyuanren!!',
+          subject: 'Reset your password at ' + process.env.HOST_ROOT_URL,
           from: 'admin@siyuanren.org',
           to: user.username,
-          text: 'Please set your username and password at: ' + url}, function (err, msg) {
+          text: '您好，您可以通过如下网址重设您的思源人网站密码。 ' + url}, function (err, msg) {
           logger.debug(msg);
           if(err) {
             logger.warn('Err of sending: ' + JSON.stringify(err));
             res.send(400, err);
           }
           else {
-            return res.send(200, user.username);
+            return res.send(200);
           }
         });
       }

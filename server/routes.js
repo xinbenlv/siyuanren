@@ -86,6 +86,12 @@ routes = []
         middleware: [AuthCtrl.logout],
         accessLevel: accessLevels.public
     },
+    {
+      path: '/passwordReset',
+      httpMethod: 'POST',
+      middleware: [AuthCtrl.passwordReset],
+      accessLevel: accessLevels.public
+    },
     // User resource
     {
         path: '/users',

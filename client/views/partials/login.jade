@@ -12,6 +12,7 @@
                         input.span12(type="text", data-ng-model="username", name="username", required)
                     .row-fluid
                         label.span12(for="password") 密码
+                            a(href='/forgotPassword') （忘记密码）
                     .row-fluid
                         input.span12(type="password", data-ng-model="password", name="password", required)
                     //.small-empty-row
@@ -21,6 +22,8 @@
                             button.btn.btn-success.dropdown-toggle(data-toggle="dropdown", href="#")
                                 span.caret
                             ul.dropdown-menu
+                                li
+                                    a(href="", onclick='return false') 使用社交网站登录
                                 li
                                     a(href="", data-ng-click="loginOauth('facebook')")
                                         i.icon-facebook-sign
@@ -46,5 +49,4 @@
                                         i.icon-renren
                                         | Renren
                                 li.divider
-                                li
-                                    a(href="", onclick='return false') 使用社交网站登录
+
