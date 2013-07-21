@@ -3,6 +3,7 @@
 var passport =  require('passport');
 var User = require('../models/User.js');
 var SiyuanUserProfile = require('../models/SiyuanUserProfile.js');
+var LoginHistory = require('../models/LoginHistory.js');
 var LocalStrategy =   require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google').Strategy;
 var constants =       require('../../shared/constants');
@@ -69,6 +70,15 @@ module.exports = {
         if (err) {
           return next(err);
         }
+
+        // Add login history
+        var loginHistory = new LoginHistory();
+        loginHistory.timestamp = new Date(); // Log the time now
+        loginHistory.userId = user._id;
+        loginHistory.ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        loginHistory.userAgent = req.headers['user-agent'];
+        loginHistory.save();
+
 
         if (req.body.rememberme && req.session.cookie) req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 7;
         logger.debug('user.siyuanid:' + user.siyuanid);
