@@ -99,7 +99,34 @@ routes = []
         middleware: [ensureAuthenticated, ensureAuthorized, UserCtrl.index],
         accessLevel: accessLevels.admin
     },
-    // API resource
+    // RESTful API resource
+    {
+      path: '/api/siyuanuserprofile/:siyuanId',
+      httpMethod: 'GET',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.Restful.SiyuanUserProfile.get],
+      accessLevel: accessLevels.user
+    },
+    {
+      path: '/api/siyuanuserprofile/:siyuanId',
+      httpMethod: 'POST',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.Restful.SiyuanUserProfile.post],
+      accessLevel: accessLevels.user
+    },
+    {
+      path: '/api/siyuanuserprofile/:siyuanId',
+      httpMethod: 'PUT',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.Restful.SiyuanUserProfile.put],
+      accessLevel: accessLevels.user
+    },
+    {
+      path: '/api/siyuanuserprofile/:siyuanId',
+      httpMethod: 'DELETE',
+      middleware: [ensureAuthenticated, ensureAuthorized, ApiCtrl.Restful.SiyuanUserProfile.delete],
+      accessLevel: accessLevels.user
+    },
+
+
+    //TODO(zzn) change all API to standard RESTful API
     {
       path: '/api/siyuan/get/:theid',
       httpMethod: 'GET',
@@ -177,8 +204,9 @@ routes = []
                 role = req.user.role;
                 username = req.user.username;
                 meta = req.user.meta;
-                siyuanUserProfile[encodeURIComponent('本科院系')] = encodeURIComponent(req.user.siyuanUserProfile['本科院系']);
-                siyuanUserProfile[encodeURIComponent('思源学员期数')] = encodeURIComponent(req.user.siyuanUserProfile['思源学员期数']);
+                siyuanUserProfile.id = req.user.siyuanUserProfile.id;
+                siyuanUserProfile[encodeURIComponent('本科院系')] = encodeURIComponent(req.user.siyuanUserProfile[encodeURIComponent('本科院系')]);
+                siyuanUserProfile[encodeURIComponent('思源学员期数')] = encodeURIComponent(req.user.siyuanUserProfile[encodeURIComponent('思源学员期数')]);
             }
 
             var cookieUser = JSON.stringify({

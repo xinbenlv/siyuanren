@@ -216,9 +216,14 @@ module.exports = {
           if (data.meta) user.meta = data.meta;
           SiyuanUserProfile.findById(user.siyuanid.toString(), function(err, doc){
             if(doc){
-              user._doc.siyuanUserProfile = doc;
+              var siyuanUserProfile = {};
+              siyuanUserProfile.id = doc.id;
+              siyuanUserProfile[encodeURIComponent('本科院系')] = encodeURIComponent(doc['本科院系']);
+              siyuanUserProfile[encodeURIComponent('思源学员期数')] = encodeURIComponent(doc['思源学员期数']);
+              logger.debug('Read:' + JSON.stringify(siyuanUserProfile));
+              done(null, {'role': user.role, 'username': user.username, 'siyuanUserProfile': siyuanUserProfile});
             }
-            done(null, {'role': user.role, 'username': user.username, 'siyuanUserProfile': doc});
+            else done(null, false); // Don't allow anyone without a valid siyuan profile to pass
           });
 
         }

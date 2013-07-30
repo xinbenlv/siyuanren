@@ -296,3 +296,47 @@ exports.changeHistory = function(req, res) {
       }
     });
 };
+
+// Restful APIs
+// Reference http://pixelhandler.com/blog/2012/02/09/develop-a-restful-api-using-node-js-with-express-and-mongoose/
+exports.Restful = {};
+
+// Restful API for SiyuanUserProfile
+exports.Restful.SiyuanUserProfile = {
+  get: function(req, res) {
+    var siyuanId = req.params.siyuanId;
+    logger.debug('GET siyuanid = ' + siyuanId);
+    SiyuanUserProfile.findById(siyuanId, function(err, user) {
+       if(err) {
+         logger.error(err);
+         res.send(400, 'Something is wrong:' + JSON.stringify(err));
+       } else {
+         res.send(200, user);
+       }
+    });
+  },
+  post: function(req, res) {
+    res.send(403, 'Creating a siyuan user profile is not allowed');
+  },
+  put: function(req, res) {
+    var siyuanid = req.params.siyuanid;
+
+    SiyuanUserProfile.findById(siyuanid, function(err, user) {
+      if(err) {
+        logger.error(err);
+        res.send(400, 'Something is wrong:' + JSON.stringify(err));
+      } else {
+
+        for (var field in reg.body){
+          user[field] = req.body[field];
+        }
+        user.save();
+
+        res.send(200, user);
+      }
+    });
+  },
+  delete: function(req, res) {
+    res.send(403, 'Removing a siyuan user profile is not allowed');
+  }
+};

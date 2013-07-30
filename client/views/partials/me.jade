@@ -1,5 +1,22 @@
-.large-empty-row
-.container
-    h1
-        i.icon-pencil
-            | 本页面正在建设中
+#me-page.container
+    .large-empty-row
+    h1 我的信息
+    .small-empty-row
+    .row
+        table.table.offset3.span6#my-info
+            thead
+            tbody
+                tr(data-ng-repeat='field in fields')
+                    td
+                        div.field-label {{ field.fieldName }}
+                    td
+                        editablefield(field="field")
+                tr
+                    td
+                        div.field-label 更新时间
+                    td {{ updateTime }}
+    .row
+        button.btn.btn-primary.offset5.span1(data-ng-click='save()') 保存
+        button.btn.span1(data-ng-click='cancel()') 取消
+
+    .large-empty-row

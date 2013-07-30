@@ -254,6 +254,7 @@ angular.module('angular-client-side-auth')
 angular.module('angular-client-side-auth')
   .controller('PeopleTableCtrl',
     ['$rootScope', '$scope', '$filter','$location', function ($rootScope, $scope, $filter, $location) {
+      console.log('SiyuanUserProfile: ' + JSON.stringify($rootScope.user.siyuanUserProfile));
       var fields = [
         { id:0, text: '姓名',},
         { id:1, text: '思源学员期数' },

@@ -39,6 +39,10 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
                     .nav-collapse.collapse
                         ul.nav
                             li(data-access-level='{{ accessLevels.user }}', active-nav)
+                                a(href='/me')
+                                    i.icon-gears
+                                    | 我的信息
+                            li(data-access-level='{{ accessLevels.user }}', active-nav)
                                 a(href='/underConstruction')
                                     i.icon-home
                                     | 个人首页
@@ -121,7 +125,7 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/thirdparty/jquery/jquery.serialize-object.compiled.js')
         script(src='/thirdparty/angular-ui-autocomplete/autocomplete.js')
         script(src='/thirdparty/bower_components/select2/select2.js')
-
+        script(src='/thirdparty/bower_components/angular-resource/angular-resource.min.js')
         script(src='/thirdparty/editablegrid.git/editablegrid.js')
         script(src='/thirdparty/editablegrid.git/editablegrid_charts.js')
         script(src='/thirdparty/editablegrid.git/editablegrid_editors.js')
@@ -139,3 +143,5 @@ html.siyuanren(lang='en', data-ng-app='angular-client-side-auth')
         script(src='/js/ctrls/searchAutoCompleteCtrl.js')
         script(src='/js/ctrls/searchCtrl.js')
         script(src='/js/ctrls/forgotPasswordCtrl.js')
+        script(src='/js/ctrls/meCtrl.js')
+        script(src='/js/directives/editableField.js')
